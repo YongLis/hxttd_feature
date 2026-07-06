@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.DictMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.admin.mybatis.entity.DictEntity">
+        <id column="id" property="id"/>
+        <result column="system_code" property="systemCode"/>
+        <result column="dict_code" property="dictCode"/>
+        <result column="dict_name" property="dictName"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, system_code, dict_code, dict_name,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_dict
+        <where>
+            1=1
+            <if test="req.systemCode != null and req.systemCode != ''">
+                AND system_code = #{req.systemCode}
+            </if>
+            <if test="req.dictCode != null and req.dictCode != ''">
+                AND dict_code LIKE CONCAT('%', #{req.dictCode}, '%')
+            </if>
+            <if test="req.dictName != null and req.dictName != ''">
+                AND dict_name LIKE CONCAT('%', #{req.dictName}, '%')
+            </if>
+            <if test="req.deleted != null and req.deleted != ''">
+                AND deleted = #{req.deleted}
+            </if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,27 @@
+package com.ly.ttd.biz.admin.srv.project.req;
+
+import com.ly.ttd.biz.admin.req.PageQuery;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+/**
+ * 项目查询请求
+ *
+ * @author yong.li
+ * @since 2026-05-16
+ */
+@Data
+public class ProjectQueryReq extends PageQuery {
+
+    /**
+     * 项目名称
+     */
+    @Schema(description = "项目名称(模糊查询)", example = "特征平台")
+    private String name;
+
+    /**
+     * 项目代码
+     */
+    @Schema(description = "项目代码(精确查询)", example = "FEATURE_PLATFORM")
+    private String projectCode;
+}
