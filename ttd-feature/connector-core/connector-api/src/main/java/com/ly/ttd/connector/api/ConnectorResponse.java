@@ -1,6 +1,5 @@
 package com.ly.ttd.connector.api;
 
-import com.ly.ttd.consts.enums.ExecuteState;
 import lombok.Data;
 
 /**
@@ -28,7 +27,7 @@ public class ConnectorResponse<T extends AbstractConnectorRequest> {
     /**
      * 执行状态
      */
-    private ExecuteState state;
+    private String state;
 
     /**
      * 错误原因

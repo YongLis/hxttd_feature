@@ -9,7 +9,7 @@ import com.ly.ttd.connector.api.spi.ConnectorObserver;
 import com.ly.ttd.connector.engine.cache.ConnectorCache;
 import com.ly.ttd.connector.engine.filter.ConnectorFilter;
 import com.ly.ttd.connector.engine.mapper.OutputMapper;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +92,7 @@ public class ConnectorEngine {
      */
     @SuppressWarnings("unchecked")
     public <K extends AbstractConnectorRequest, V extends ConnectorResponse> V executeSync(
-            String connectorId, K request, Collection<ConnectorObserver<K, V>> observers) throws BizException {
+            String connectorId, K request, Collection<ConnectorObserver<K, V>> observers) throws FeatureBizException {
 
         long startTime = Instant.now().toEpochMilli();
 

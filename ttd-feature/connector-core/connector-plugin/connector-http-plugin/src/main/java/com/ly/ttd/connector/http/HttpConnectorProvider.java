@@ -3,7 +3,7 @@ package com.ly.ttd.connector.http;
 import com.ly.ttd.connector.api.ConnectorResponse;
 import com.ly.ttd.connector.api.spi.Connector;
 import com.ly.ttd.connector.api.spi.ConnectorProvider;
-import com.ly.ttd.consts.enums.ConnectorEnum;
+import com.ly.ttd.feature.common.enums.ConnectorEnum;
 
 /**
  * @author yong.li

@@ -23,15 +23,17 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>ttd-const</artifactId>
-            <scope>compile</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ly.ttd</groupId>
+            <artifactId>ttd-feature-common</artifactId>
         </dependency>
 
     </dependencies>

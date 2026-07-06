@@ -6,10 +6,10 @@ import com.ly.ttd.connector.ConnectorException;
 import com.ly.ttd.connector.api.AbstractConnector;
 import com.ly.ttd.connector.api.ConnectorResponse;
 import com.ly.ttd.connector.api.spi.ConnectorObserver;
-import com.ly.ttd.consts.enums.ConnectorEnum;
-import com.ly.ttd.consts.enums.ExecuteState;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
+import com.ly.ttd.feature.common.enums.ConnectorEnum;
+import com.ly.ttd.feature.common.enums.ExecuteStateEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -46,11 +46,11 @@ public class ElasticsearchConnector extends AbstractConnector<ElasticsearchReque
             ElasticsearchExecutor executor = new ElasticsearchExecutor(client);
             Object res = executor.execute(req.getEndpoint(), req.getDsl());
             response.setRes(res);
-            response.setState(ExecuteState.SUCCESS);
+            response.setState(ExecuteStateEnum.SUCCESS.getCode());
         } catch (Exception e) {
             log.error("elasticsearch connector execute error, txnId={}, req={}", req.getTxnId(),
                     JSON.toJSONString(req), e);
-            response.setState(ExecuteState.FAIL);
+            response.setState(ExecuteStateEnum.ERROR.getCode());
             response.setErrorMsg(e.getMessage());
         }
         stopWatch.stop();
@@ -70,14 +70,14 @@ public class ElasticsearchConnector extends AbstractConnector<ElasticsearchReque
             ElasticsearchExecutor executor = new ElasticsearchExecutor(client);
             Object res = executor.execute(req.getEndpoint(), req.getDsl());
             response.setRes(res);
-            response.setState(ExecuteState.SUCCESS);
+            response.setState(ExecuteStateEnum.SUCCESS.getCode());
             if (null != observer) {
                 observer.onComplete(req, response);
             }
         } catch (Exception e) {
             log.error("elasticsearch connector execute error, txnId={}, req={}", req.getTxnId(),
                     JSON.toJSONString(req), e);
-            response.setState(ExecuteState.FAIL);
+            response.setState(ExecuteStateEnum.ERROR.getCode());
             response.setErrorMsg(e.getMessage());
             if (null != observer) {
                 observer.onException(req, response);
