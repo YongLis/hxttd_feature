@@ -28,11 +28,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>ttd-const</artifactId>
-            <scope>compile</scope>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.ly.ttd</groupId>-->
+        <!--            <artifactId>ttd-const</artifactId>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>commons-collections</groupId>
