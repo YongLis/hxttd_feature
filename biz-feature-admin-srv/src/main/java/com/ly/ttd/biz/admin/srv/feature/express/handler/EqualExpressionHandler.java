@@ -1,11 +1,11 @@
 package com.ly.ttd.biz.admin.srv.feature.express.handler;
 
 import com.ly.ttd.biz.admin.srv.feature.express.AbstractExpressionService;
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
-import com.ly.ttd.consts.enums.ObjectTypes;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
+import com.ly.ttd.feature.common.enums.ObjectTypes;
 import com.ly.ttd.feature.common.enums.VelocityExpressionTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.DataFieldModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -58,27 +58,27 @@ public class EqualExpressionHandler extends AbstractExpressionService {
      * @param right     右侧操作数的数据帧对象。
      * @param valueType 操作数类型，动态值或固定值。
      * @param fixValue  右侧固定值（如果适用）。
-     * @throws BizException 如果操作数类型不支持或不匹配，抛出业务异常。
+     * @throws FeatureBizException 如果操作数类型不支持或不匹配，抛出业务异常。
      */
     @Override
-    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws BizException {
+    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws FeatureBizException {
         // 检查左侧返回值类型是否支持
         if (notSupportTypes().contains(left.getFieldType())) {
-            throw new BizException("01", String.format("数据【%s】返回格式【%s】不支持该表达式【%s】",
+            throw new FeatureBizException("01", String.format("数据【%s】返回格式【%s】不支持该表达式【%s】",
                     left.getFieldName(),
                     ObjectTypeEnum.getByCode(left.getFieldType()),
                     VelocityExpressionTypeEnum.getByCode(getOp())));
         }
 
         if (StringUtils.isBlank(left.getFieldType())) {
-            throw new BizException("01", "表达式左侧返回值类型为空");
+            throw new FeatureBizException("01", "表达式左侧返回值类型为空");
         }
 
 
         // 当左右两边均为动态值时，检查返回值类型是否一致
         if (VelocityValueTypeEnum.DYNAMIC_VALUE.getCode().equals(valueType)
                 && !left.getFieldType().equals(right.getFieldType())) {
-            throw new BizException("01", String.format("表达式左【%s】右【%s】数据格式不一致",
+            throw new FeatureBizException("01", String.format("表达式左【%s】右【%s】数据格式不一致",
                     ObjectTypeEnum.getByCode(left.getFieldType()),
                     ObjectTypeEnum.getByCode(right.getFieldType())));
         }
@@ -88,7 +88,7 @@ public class EqualExpressionHandler extends AbstractExpressionService {
                 (Arrays.asList(ObjectTypeEnum.LONG.getCode(),
                         ObjectTypeEnum.DOUBLE.getCode()).contains(left.getFieldType())) &&
                 !NumberUtils.isDigits(fixValue)) {
-            throw new BizException("01", "表达式左侧数字类型，右侧输入非数字");
+            throw new FeatureBizException("01", "表达式左侧数字类型，右侧输入非数字");
         }
     }
 

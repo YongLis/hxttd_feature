@@ -5,11 +5,11 @@ import com.ly.ttd.connector.ConnectorException;
 import com.ly.ttd.connector.api.AbstractConnector;
 import com.ly.ttd.connector.api.ConnectorResponse;
 import com.ly.ttd.connector.api.spi.ConnectorObserver;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.common.enums.ConnectorEnum;
 import com.ly.ttd.feature.common.enums.ExecuteStateEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -39,7 +39,7 @@ public class JdbcConnector extends AbstractConnector<JdbcRequest, ConnectorRespo
     }
 
     @Override
-    public ConnectorResponse execute(JdbcRequest req) throws BizException {
+    public ConnectorResponse execute(JdbcRequest req) throws FeatureBizException {
         StopWatch stopWatch = StopWatch.createStarted();
         ConnectorResponse response = new ConnectorResponse();
         response.setReq(req);

@@ -1,6 +1,6 @@
 package com.ly.ttd.connector.jdbc;
 
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -22,7 +22,10 @@ public class JdbcExecutor {
 
 
     public Object execute(String sql, Map<String, Object> param, String returnType) throws Exception {
-        ObjectTypeEnum typeEnum = ObjectTypeEnum.valueOf(returnType);
+        ObjectTypeEnum typeEnum = ObjectTypeEnum.getByCode(returnType);
+        if (typeEnum == null) {
+            throw new IllegalArgumentException("不支持的返回类型: " + returnType);
+        }
         switch (typeEnum) {
             case DICT:
             case LONG:

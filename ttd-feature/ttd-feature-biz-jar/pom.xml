@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.ly.ttd</groupId>
         <artifactId>ttd-feature</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>2026.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>ttd-feature-biz-jar</artifactId>
@@ -24,13 +24,8 @@
         </dependency>
         <dependency>
             <groupId>com.ly.ttd</groupId>
-            <artifactId>language</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>api</artifactId>
+            <artifactId>ttd-language</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -87,15 +82,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>utils</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>ttd-const</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.ly.ttd</groupId>

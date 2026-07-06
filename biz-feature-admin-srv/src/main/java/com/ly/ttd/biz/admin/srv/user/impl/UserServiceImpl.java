@@ -13,7 +13,7 @@ import com.ly.ttd.biz.admin.srv.user.req.UserLoginReq;
 import com.ly.ttd.biz.admin.srv.user.res.UserCurrentRes;
 import com.ly.ttd.biz.admin.srv.user.res.UserInfo;
 import com.ly.ttd.biz.admin.srv.user.res.UserLoginRes;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -37,15 +37,15 @@ public class UserServiceImpl implements UserService {
     private ProjectUserMapper projectUserMapper;
 
     @Override
-    public UserLoginRes login(UserLoginReq req) throws BizException {
+    public UserLoginRes login(UserLoginReq req) throws FeatureBizException {
         UserLoginRes res = new UserLoginRes();
         if (StringUtils.isEmpty(req.getUserName()) || StringUtils.isEmpty(req.getPassword())) {
-            throw new BizException("0001", "用户名或密码不能为空");
+            throw new FeatureBizException("0001", "用户名或密码不能为空");
         }
 
         Object errorCount = UserCache.INSTANCE.getIfPresent(USER_LOGIN_ERROR_COUNT);
         if (null != errorCount && ((Integer) errorCount) >= 5) {
-            throw new BizException("0002", "登录失败次数超过5次，账号已被锁定");
+            throw new FeatureBizException("0002", "登录失败次数超过5次，账号已被锁定");
         }
 
         if (isLoginSuccess(req.getUserName(), req.getPassword())) {
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
             res.setUserInfo(userInfo);
         } else {
-            throw new BizException("0003", "账号或密码错误");
+            throw new FeatureBizException("0003", "账号或密码错误");
         }
         return res;
     }
@@ -77,11 +77,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserLoginRes getCurrentUser() throws BizException {
+    public UserLoginRes getCurrentUser() throws FeatureBizException {
         UserLoginRes res = new UserLoginRes();
         UserInfo userInfo = LoginUserUtils.INSTANCE.getUserInfo();
         if (null == userInfo) {
-            throw new BizException("0004", "用户未登录");
+            throw new FeatureBizException("0004", "用户未登录");
         } else {
             res.setUserInfo(userInfo);
         }
@@ -89,15 +89,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserCurrentRes getCurrentUserInfo() throws BizException {
+    public UserCurrentRes getCurrentUserInfo() throws FeatureBizException {
         UserInfo userInfo = LoginUserUtils.INSTANCE.getUserInfo();
         if (null == userInfo) {
-            throw new BizException("0004", "用户未登录");
+            throw new FeatureBizException("0004", "用户未登录");
         }
 
         String userName = userInfo.getUserName();
         if (StringUtils.isEmpty(userName)) {
-            throw new BizException("0005", "用户名称为空");
+            throw new FeatureBizException("0005", "用户名称为空");
         }
 
         // 查询用户的项目关联信息

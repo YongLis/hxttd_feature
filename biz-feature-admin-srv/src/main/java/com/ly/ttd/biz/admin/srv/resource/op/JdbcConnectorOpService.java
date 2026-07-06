@@ -17,8 +17,8 @@ import com.ly.ttd.biz.admin.srv.connector.req.ConnectorUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.connector.JdbcConnectorModel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         ConnectorAddReq addReq = (ConnectorAddReq) req;
         String key = projectService.getResourceKey(addReq.getProjectId(),
                 FeatureResourceType.CONNECTOR_JDBC.getPrefix(), addReq.getResourceKey());
@@ -53,7 +53,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
         checkWrapper.eq(ConnectorEntity::getResourceKey, addReq.getResourceKey());
         checkWrapper.eq(ConnectorEntity::getDeleted, false);
         if (connectorMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
 
         ConnectorEntity entity = new ConnectorEntity();
@@ -80,12 +80,12 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         ConnectorUpdateReq updateReq = (ConnectorUpdateReq) req;
 
         ConnectorEntity entity = connectorMapper.selectById(updateReq.getId());
         if (entity == null) {
-            throw new BizException("不存在");
+            throw new FeatureBizException("不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
 
@@ -109,7 +109,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -140,10 +140,10 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         ConnectorEntity entity = connectorMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("连接器不存在");
+            throw new FeatureBizException("连接器不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -153,7 +153,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity entity = auditMapper.selectById(id);
         JdbcConnectorAuditDetail detail = new JdbcConnectorAuditDetail();
         detail.setBefore(JdbcConnectorAuditDetail.jsonConvert(entity.getBeforeContent()));

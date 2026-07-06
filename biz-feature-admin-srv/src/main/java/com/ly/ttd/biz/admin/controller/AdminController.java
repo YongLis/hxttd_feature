@@ -5,7 +5,7 @@ import com.ly.ttd.biz.admin.req.BaseRequest;
 import com.ly.ttd.biz.admin.srv.user.UserService;
 import com.ly.ttd.biz.admin.srv.user.req.UserLoginReq;
 import com.ly.ttd.biz.admin.srv.user.res.UserLoginRes;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -36,7 +36,7 @@ public class AdminController {
         try {
             UserLoginRes res = userService.login(req);
             return Result.success(res);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getCode(), e.getMessage());
         }
     }
@@ -59,7 +59,7 @@ public class AdminController {
         try {
             UserLoginRes res = userService.getCurrentUser();
             return Result.success(res);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getCode(), e.getMessage());
         }
     }

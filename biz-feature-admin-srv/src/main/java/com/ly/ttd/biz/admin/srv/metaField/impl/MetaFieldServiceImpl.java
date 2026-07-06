@@ -8,7 +8,7 @@ import com.ly.ttd.biz.admin.srv.metaField.MetaFieldService;
 import com.ly.ttd.biz.admin.srv.metaField.req.MetaFieldAddReq;
 import com.ly.ttd.biz.admin.srv.metaField.req.MetaFieldUpdateReq;
 import com.ly.ttd.biz.admin.srv.project.ProjectService;
-import com.ly.ttd.consts.enums.ResourceTypeEnum;
+import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,7 +27,7 @@ public class MetaFieldServiceImpl extends ServiceImpl<MetaFieldMapper, MetaField
 
     @Override
     public boolean addMetaField(MetaFieldAddReq req) {
-        String key = projectService.getResourceKey(req.getProjectId(), ResourceTypeEnum.META.getPrefix(), req.getResourceKey());
+        String key = projectService.getResourceKey(req.getProjectId(), FeatureResourceType.META_FIELD.getPrefix(), req.getResourceKey());
         req.setResourceKey(key);
         // 检查资源键唯一性
         LambdaQueryWrapper<MetaFieldEntity> checkWrapper = new LambdaQueryWrapper<>();

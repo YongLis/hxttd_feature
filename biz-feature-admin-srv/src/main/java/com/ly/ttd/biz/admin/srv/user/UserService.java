@@ -4,7 +4,7 @@ import com.ly.ttd.biz.admin.req.BaseRequest;
 import com.ly.ttd.biz.admin.srv.user.req.UserLoginReq;
 import com.ly.ttd.biz.admin.srv.user.res.UserCurrentRes;
 import com.ly.ttd.biz.admin.srv.user.res.UserLoginRes;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 
 /**
  * @author yong.li
@@ -19,16 +19,16 @@ public interface UserService {
      * @param req
      * @return
      */
-    UserLoginRes login(UserLoginReq req) throws BizException;
+    UserLoginRes login(UserLoginReq req) throws FeatureBizException;
 
     Boolean logout(BaseRequest req);
 
-    UserLoginRes getCurrentUser() throws BizException;
+    UserLoginRes getCurrentUser() throws FeatureBizException;
 
     /**
      * 获取当前登录用户的完整信息（角色、租户、项目列表）
      *
      * @return 用户当前信息
      */
-    UserCurrentRes getCurrentUserInfo() throws BizException;
+    UserCurrentRes getCurrentUserInfo() throws FeatureBizException;
 }

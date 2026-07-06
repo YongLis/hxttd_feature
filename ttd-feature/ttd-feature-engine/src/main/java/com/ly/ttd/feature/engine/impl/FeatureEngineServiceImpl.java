@@ -1,11 +1,11 @@
 package com.ly.ttd.feature.engine.impl;
 
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.cfg.ThreadPoolNames;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
 import com.ly.ttd.feature.common.event.doris.VelEventData;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.AccessPointModel;
 import com.ly.ttd.feature.common.model.struct.DataStructModel;
 import com.ly.ttd.feature.common.model.struct.FieldModel;
@@ -55,7 +55,7 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
     private TtdFeatureConfig ttdFeatureConfig;
 
     @Override
-    public void asyncWrite(@Validated TxnFeatureReq req) throws BizException {
+    public void asyncWrite(@Validated TxnFeatureReq req) throws FeatureBizException {
         CompletableFuture.runAsync(() -> {
             try {
                 TxnParamContext ctx = new TxnParamContext();
@@ -81,11 +81,11 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
     }
 
 
-    private void validParam(TxnFeatureReq req) throws BizException {
+    private void validParam(TxnFeatureReq req) throws FeatureBizException {
         String pointCode = req.getPointCode();
         AccessPointModel accessPointModel = featureConfiguration.getPointMap().get(pointCode);
         if (null == accessPointModel) {
-            throw new BizException("01", "接入点不存在");
+            throw new FeatureBizException("01", "接入点不存在");
         }
     }
 
@@ -95,17 +95,17 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
             validParam(req);
             Object value = factorGetValueService.getValue(req.getFactorCode(), buildTxnParamContent(req));
             return ExecuteResult.success(value);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             log.error("查询指指标失败", e);
             return ExecuteResult.fail(e.getMessage());
         }
 
     }
 
-    private TxnParamContext buildTxnParamContent(TxnFeatureReq req) throws BizException {
+    private TxnParamContext buildTxnParamContent(TxnFeatureReq req) throws FeatureBizException {
         AccessPointModel point = featureConfiguration.getPointMap().get(req.getPointCode());
         if (null == point) {
-            throw new BizException("01", "接入点不存在");
+            throw new FeatureBizException("01", "接入点不存在");
         }
         TxnParamContext ctx = new TxnParamContext();
         ctx.setProjectId(point.getProjectId());
@@ -124,20 +124,20 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
         try {
             validParam(req);
             if (StringUtils.isEmpty(req.getModelCode())) {
-                throw new BizException("01", "modelCode不允许为空");
+                throw new FeatureBizException("01", "modelCode不允许为空");
             }
             AccessPointModel point = featureConfiguration.getPointMap().get(req.getPointCode());
             if (null == point) {
-                throw new BizException("01", "接入点不存在");
+                throw new FeatureBizException("01", "接入点不存在");
             }
 
             if (!point.getSubModels().contains(req.getModelCode())) {
-                throw new BizException("01", "模型不存在");
+                throw new FeatureBizException("01", "模型不存在");
             }
 
             DataStructModel dataStructModel = featureConfiguration.getDataStructMap().get(req.getModelCode());
             if (null == dataStructModel) {
-                throw new BizException("01", "模型不存在");
+                throw new FeatureBizException("01", "模型不存在");
             }
 
 
@@ -160,7 +160,7 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
             });
 
             return ExecuteResult.success(valueMap);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return ExecuteResult.failReturnEmpty(e.getMessage());
         } catch (Exception e) {
             return ExecuteResult.failReturnEmpty("查询模型指标失败");

@@ -1,7 +1,7 @@
 package com.ly.ttd.feature.srv.connector;
 
 import com.ly.ttd.connector.api.ConnectorResponse;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.srv.connector.req.ConnectorReq;
 
 /**
@@ -10,7 +10,7 @@ import com.ly.ttd.feature.srv.connector.req.ConnectorReq;
  */
 public interface ConnectorService {
 
-    ConnectorResponse execute(ConnectorReq req) throws BizException;
+    ConnectorResponse execute(ConnectorReq req) throws FeatureBizException;
 
 
 }

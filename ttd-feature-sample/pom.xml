@@ -14,7 +14,7 @@
 
     <groupId>com.ly.ttd</groupId>
     <artifactId>ttd-feature-sample</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2026.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>ttd-feature-sample</name>
     <description>TTD 统一特征平台 — 示例/测试模块，演示如何接入和引用特征引擎</description>

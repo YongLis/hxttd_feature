@@ -9,9 +9,9 @@ import com.ly.ttd.biz.admin.srv.connector.req.ConnectorQueryReq;
 import com.ly.ttd.biz.admin.srv.connector.req.ConnectorUpdateReq;
 import com.ly.ttd.biz.admin.srv.connector.res.ConnectorQueryRes;
 import com.ly.ttd.biz.admin.srv.resource.ResourceOpFactory;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.ConnectorEnum;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -58,7 +58,7 @@ public class ConnectorController {
             String resourceType = toFeatureResourceType(req.getConnectorType());
             ResourceOpFactory.getService(resourceType).add(req);
             return Result.success(true);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getMessage());
         } catch (Exception e2) {
             log.error("add connector error", e2);
@@ -73,7 +73,7 @@ public class ConnectorController {
             String resourceType = toFeatureResourceType(req.getConnectorType());
             ResourceOpFactory.getService(resourceType).update(req);
             return Result.success(true);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getMessage());
         } catch (Exception e2) {
             log.error("update connector error", e2);
@@ -87,13 +87,13 @@ public class ConnectorController {
     private String toFeatureResourceType(String connectorType) {
         ConnectorEnum ce = ConnectorEnum.getEnumByCode(connectorType);
         if (ce == null) {
-            throw new BizException("01", "不支持的连接器类型: " + connectorType);
+            throw new FeatureBizException("01", "不支持的连接器类型: " + connectorType);
         }
         return switch (ce) {
             case JDBC -> FeatureResourceType.CONNECTOR_JDBC.getType();
             case ES -> FeatureResourceType.CONNECTOR_ES.getType();
             case HTTP -> FeatureResourceType.CONNECTOR_HTTP.getType();
-            default -> throw new BizException("01", "不支持的连接器类型: " + connectorType);
+            default -> throw new FeatureBizException("01", "不支持的连接器类型: " + connectorType);
         };
     }
 
@@ -105,7 +105,7 @@ public class ConnectorController {
             String resourceType = toFeatureResourceType(connectorType);
             ResourceOpFactory.getService(resourceType).delete(id);
             return Result.success(true);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getMessage());
         } catch (Exception e2) {
             log.error("delete connector error", e2);

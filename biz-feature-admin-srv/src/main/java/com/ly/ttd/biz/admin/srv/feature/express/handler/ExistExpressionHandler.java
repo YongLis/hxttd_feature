@@ -2,10 +2,10 @@ package com.ly.ttd.biz.admin.srv.feature.express.handler;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.ly.ttd.biz.admin.srv.feature.express.AbstractExpressionService;
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityExpressionTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.DataFieldModel;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,28 +42,28 @@ public class ExistExpressionHandler extends AbstractExpressionService {
     }
 
     @Override
-    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws BizException {
+    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws FeatureBizException {
 
         if (!ObjectTypeEnum.LIST.getCode().equals(left.getFieldType())) {
-            throw new BizException("01", "该表达式左侧返回值类型必须为集合");
+            throw new FeatureBizException("01", "该表达式左侧返回值类型必须为集合");
         }
 
         if (VelocityValueTypeEnum.DYNAMIC_VALUE.getCode().equals(valueType)) {
             if (!ObjectTypeEnum.LIST.getCode().equals(right.getFieldType())) {
-                throw new BizException("01", "该表达式右侧返回值类型必须为集合");
+                throw new FeatureBizException("01", "该表达式右侧返回值类型必须为集合");
             }
         } else {
             if (StringUtils.isBlank(fixValue)) {
-                throw new BizException("01", "该表达式右侧类型必须为集合");
+                throw new FeatureBizException("01", "该表达式右侧类型必须为集合");
             }
             try {
                 List tmp = JSONArray.parseArray(fixValue);
                 if (CollectionUtils.isEmpty(tmp)) {
-                    throw new BizException("01", "表达式固定值集合数据不允许为空");
+                    throw new FeatureBizException("01", "表达式固定值集合数据不允许为空");
                 }
 
             } catch (Exception e) {
-                throw new BizException("01", "表达式固定值集合数据不合规范");
+                throw new FeatureBizException("01", "表达式固定值集合数据不合规范");
             }
         }
     }

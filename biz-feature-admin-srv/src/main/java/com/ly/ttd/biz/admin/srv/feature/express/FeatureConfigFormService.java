@@ -2,7 +2,7 @@ package com.ly.ttd.biz.admin.srv.feature.express;
 
 
 import com.ly.ttd.biz.admin.srv.feature.req.FeatureConfigForm;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.vel.FeatureConfigModel;
 
 /**
@@ -17,6 +17,6 @@ public interface FeatureConfigFormService {
     /**
      * 表单转脚本
      */
-    FeatureConfigModel convertForm(FeatureConfigForm form) throws BizException;
+    FeatureConfigModel convertForm(FeatureConfigForm form) throws FeatureBizException;
 
 }

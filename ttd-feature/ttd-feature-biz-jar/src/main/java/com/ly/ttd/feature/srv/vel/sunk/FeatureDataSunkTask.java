@@ -2,7 +2,6 @@ package com.ly.ttd.feature.srv.vel.sunk;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.cfg.ThreadPoolNames;
@@ -10,6 +9,7 @@ import com.ly.ttd.feature.common.event.doris.VelEventData;
 import com.ly.ttd.feature.common.event.doris.VelHistorySnapshot;
 import com.ly.ttd.feature.common.event.doris.VelMasterValueRecord;
 import com.ly.ttd.feature.common.event.dto.VelWindowData;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.request.TxnFeatureRequest;
 import com.ly.ttd.feature.srv.data.FeatureMiddleDataSaveService;
 import com.ly.ttd.feature.srv.data.dto.FeatureMiddleData;
@@ -45,12 +45,12 @@ public class FeatureDataSunkTask extends FeatureTask implements FeatureConfigura
     private FeatureMiddleDataSaveService featureMiddleDataSaveService;
 
     @Override
-    public void execute(TxnFeatureRequest request) throws BizException {
+    public void execute(TxnFeatureRequest request) throws FeatureBizException {
 
         if (CollectionUtils.isEmpty(request.getEventDataList())) {
             log.warn("FeatureDataSunkTask warn, pointCode: {},txnId: {}, eventDataDos is empty",
                     request.getPointCode(), request.getTxnId());
-            throw new BizException("01", "实时特征事件流数据为空");
+            throw new FeatureBizException("01", "实时特征事件流数据为空");
         }
 
         // 保存实时特征事件流数据

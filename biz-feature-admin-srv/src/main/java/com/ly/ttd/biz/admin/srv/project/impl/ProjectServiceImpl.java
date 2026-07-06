@@ -11,7 +11,7 @@ import com.ly.ttd.biz.admin.srv.project.ProjectService;
 import com.ly.ttd.biz.admin.srv.project.req.ProjectAddReq;
 import com.ly.ttd.biz.admin.srv.project.req.ProjectUpdateReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -80,7 +80,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectEntity
     }
 
     @Override
-    public Boolean deleteProject(Long projectId) throws BizException {
+    public Boolean deleteProject(Long projectId) throws FeatureBizException {
         checkProject(projectId);
 
         UpdateWrapper<ProjectEntity> updateWrapper = new UpdateWrapper<>();
@@ -93,12 +93,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectEntity
     private void checkProject(Long projectId) {
         ProjectEntity projectEntity = getById(projectId);
         if (null == projectEntity) {
-            throw new BizException("01", "项目不存在");
+            throw new FeatureBizException("01", "项目不存在");
         }
     }
 
     @Override
-    public void addProjectUser(Long projectId, String userAccount) throws BizException {
+    public void addProjectUser(Long projectId, String userAccount) throws FeatureBizException {
         checkProject(projectId);
 
         QueryWrapper<ProjectUserEntity> queryWrapper = new QueryWrapper<>();
@@ -123,7 +123,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectEntity
     }
 
     @Override
-    public void deleteProjectUser(Long projectId, String userName) throws BizException {
+    public void deleteProjectUser(Long projectId, String userName) throws FeatureBizException {
 
         QueryWrapper<ProjectUserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("project_id", projectId);

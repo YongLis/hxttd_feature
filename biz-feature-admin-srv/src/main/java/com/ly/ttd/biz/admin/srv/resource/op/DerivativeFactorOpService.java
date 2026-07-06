@@ -20,9 +20,9 @@ import com.ly.ttd.biz.admin.srv.factor.req.DerivativeFactorUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FactorTypeEnum;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.factor.resource.DerivativeFactorResourceModel;
 import com.ly.ttd.feature.common.model.factor.resource.MetaFactorResourceModel;
 import jakarta.annotation.Resource;
@@ -53,7 +53,7 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         DerivativeFactorAddReq addReq = (DerivativeFactorAddReq) req;
         String key = checkAndBuildResourceKey(addReq.getProjectId(), addReq.getResourceKey());
         addReq.setResourceKey(key);
@@ -107,7 +107,7 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
 
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         DerivativeFactorUpdateReq updateReq = (DerivativeFactorUpdateReq) req;
         FactorEntity entity = buildDerivativeFactorEntity(updateReq);
         entity.setId(updateReq.getId());
@@ -132,7 +132,7 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -191,10 +191,10 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         FactorEntity entity = factorMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("指标不存在");
+            throw new FeatureBizException("指标不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -204,10 +204,10 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity audit = auditMapper.selectById(id);
         if (audit == null) {
-            throw new BizException("审核记录不存在");
+            throw new FeatureBizException("审核记录不存在");
         }
         DerivativeFactorAuditDetail detail = new DerivativeFactorAuditDetail();
         detail.setId(audit.getId());
@@ -232,13 +232,13 @@ public class DerivativeFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws BizException {
+    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws FeatureBizException {
         if (StringUtils.isEmpty(req.getResourceKey())) {
-            throw new BizException("资源键不能为空");
+            throw new FeatureBizException("资源键不能为空");
         }
         FactorEntity entity = factorMapper.selectByResourceKey(req.getResourceKey());
         if (entity == null) {
-            throw new BizException("指标不存在");
+            throw new FeatureBizException("指标不存在");
         }
         return queryUpstreamDependency(req.getProjectId(), req.getResourceKey());
     }

@@ -1,6 +1,6 @@
 package com.ly.ttd.feature.srv.vel;
 
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.request.TxnFeatureRequest;
 import com.ly.ttd.feature.srv.TxnFeatureService;
 import com.ly.ttd.feature.srv.vel.sunk.FeatureDataSunkTask;
@@ -25,7 +25,7 @@ public class TxnFeatureServiceImpl implements TxnFeatureService {
     public void write(TxnFeatureRequest request) {
         try {
             featureDataSunkTask.execute(request);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             log.error("writeFeature error, txnId={}", request.getTxnId(), e);
         }
 

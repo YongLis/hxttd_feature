@@ -18,8 +18,8 @@ import com.ly.ttd.biz.admin.srv.metaField.req.MetaFieldAddReq;
 import com.ly.ttd.biz.admin.srv.metaField.req.MetaFieldUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +44,7 @@ public class MetaFieldOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         MetaFieldAddReq addReq = (MetaFieldAddReq) req;
         String key = projectService.getResourceKey(addReq.getProjectId(), FeatureResourceType.META_FIELD.getPrefix(), addReq.getResourceKey());
         addReq.setResourceKey(key);
@@ -53,7 +53,7 @@ public class MetaFieldOpService extends AbstractResourceOpService {
         checkWrapper.eq(MetaFieldEntity::getResourceKey, addReq.getResourceKey());
         checkWrapper.eq(MetaFieldEntity::getDeleted, false);
         if (metaFieldMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
 
         MetaFieldEntity entity = new MetaFieldEntity();
@@ -82,12 +82,12 @@ public class MetaFieldOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         MetaFieldUpdateReq updateReq = (MetaFieldUpdateReq) req;
 
         MetaFieldEntity entity = metaFieldMapper.selectById(updateReq.getId());
         if (entity == null) {
-            throw new BizException("元字段不存在");
+            throw new FeatureBizException("元字段不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
 
@@ -112,7 +112,7 @@ public class MetaFieldOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -145,10 +145,10 @@ public class MetaFieldOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         MetaFieldEntity entity = metaFieldMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("元字段不存在");
+            throw new FeatureBizException("元字段不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -158,7 +158,7 @@ public class MetaFieldOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity entity = auditMapper.selectById(id);
 
         MetaFieldAuditDetail detail = new MetaFieldAuditDetail();
@@ -174,13 +174,13 @@ public class MetaFieldOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws BizException {
+    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws FeatureBizException {
         if (StringUtils.isEmpty(req.getResourceKey())) {
-            throw new BizException("资源键不能为空");
+            throw new FeatureBizException("资源键不能为空");
         }
         MetaFieldEntity fieldEntity = metaFieldMapper.selectByResourceKey(req.getResourceKey());
         if (fieldEntity == null) {
-            throw new BizException("元字段不存在");
+            throw new FeatureBizException("元字段不存在");
         }
         return queryUpstreamDependency(req.getProjectId(), req.getResourceKey());
     }

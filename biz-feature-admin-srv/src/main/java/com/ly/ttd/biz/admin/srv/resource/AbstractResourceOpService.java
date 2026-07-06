@@ -19,8 +19,8 @@ import com.ly.ttd.biz.admin.srv.factor.FactorDependencyQueryService;
 import com.ly.ttd.biz.admin.srv.project.ProjectService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -53,37 +53,37 @@ public abstract class AbstractResourceOpService {
     /**
      * 添加资源
      */
-    public abstract void add(BaseRequest req) throws BizException;
+    public abstract void add(BaseRequest req) throws FeatureBizException;
 
 
     /**
      * 修改
      */
-    public abstract void update(BaseRequest req) throws BizException;
+    public abstract void update(BaseRequest req) throws FeatureBizException;
 
 
     /**
      * 审核通过/ 拒绝
      */
-    public abstract void submitAudit(AuditApproveReq req) throws BizException;
+    public abstract void submitAudit(AuditApproveReq req) throws FeatureBizException;
 
     /**
      * 审核详情
      */
-    public abstract AuditDetail getDetail(Long id) throws BizException;
+    public abstract AuditDetail getDetail(Long id) throws FeatureBizException;
 
 
     /**
      * 删除
      */
-    public abstract void delete(Long id) throws BizException;
+    public abstract void delete(Long id) throws FeatureBizException;
 
 
     /**
      * 查询血缘
      */
-    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws BizException {
-        throw new BizException("不支持血缘查询");
+    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws FeatureBizException {
+        throw new FeatureBizException("不支持血缘查询");
     }
 
     protected void addFactorDependency(Long projectId, String parent, String parentType, List<String> childs, String user) {
@@ -135,14 +135,14 @@ public abstract class AbstractResourceOpService {
         auditMapper.insert(record);
     }
 
-    protected AuditEntity checkAudit(AuditApproveReq req) throws BizException {
+    protected AuditEntity checkAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity record = auditMapper.selectById(req.getId());
         if (record == null) {
-            throw new BizException("01", "审核记录不存在");
+            throw new FeatureBizException("01", "审核记录不存在");
         }
         if (record.getAuditStatus().equals(AuditStatusEnum.APPROVED.getCode())
                 || record.getAuditStatus().equals(AuditStatusEnum.REJECTED.getCode())) {
-            throw new BizException("02", "已审核");
+            throw new FeatureBizException("02", "已审核");
         }
         return record;
     }

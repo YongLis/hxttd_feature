@@ -9,11 +9,11 @@
 
     <groupId>com.ly.ttd</groupId>
     <artifactId>ttd-feature</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2026.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>ttd-feature</name>
-    <description>TTD Unified Feature Platform - 统一特征平台</description>
+    <description>统一特征平台</description>
     <url>http://maven.apache.org</url>
 
     <modules>
@@ -21,7 +21,6 @@
         <module>ttd-feature-common</module>
         <module>ttd-feature-biz-jar</module>
         <module>connector-core</module>
-        <module>ttd-feature-flink-task</module>
         <module>ttd-feature-engine</module>
     </modules>
 
@@ -189,29 +188,6 @@
                 <version>${ttd.engine.version}</version>
             </dependency>
 
-            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-java</artifactId>
-                <version>2.2.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-clients</artifactId>
-                <version>2.2.0</version>
-                <scope>compile</scope>
-            </dependency>
-            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka -->
-            <dependency>
-                <groupId>org.apache.flink</groupId>
-                <artifactId>flink-connector-kafka</artifactId>
-                <version>4.0.1-2.0</version>
-                <scope>compile</scope>
-            </dependency>
-
-
             <dependency>
                 <groupId>com.ly.ttd</groupId>
                 <artifactId>ttd-feature-common</artifactId>
@@ -259,16 +235,6 @@
                 <artifactId>connector-http-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.ly.ttd</groupId>
-                <artifactId>language</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ly.ttd</groupId>
-                <artifactId>api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.ly.ttd</groupId>
@@ -288,11 +254,6 @@
                 <version>3.2.3</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.ly.ttd</groupId>
-                <artifactId>ttd-const</artifactId>
-                <version>${ttd.engine.version}</version>
-            </dependency>
             <!-- Source: https://mvnrepository.com/artifact/com.alibaba/druid -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -368,6 +329,12 @@
             <dependency>
                 <groupId>com.ly.ttd</groupId>
                 <artifactId>ttd-nacos-common</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-language</artifactId>
                 <version>2026.0.0-SNAPSHOT</version>
             </dependency>
 

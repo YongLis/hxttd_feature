@@ -1,6 +1,6 @@
 package com.ly.ttd.feature.engine;
 
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.engine.req.ModelQueryReq;
 import com.ly.ttd.feature.engine.req.SingleQueryReq;
 import com.ly.ttd.feature.engine.req.TxnFeatureReq;
@@ -20,7 +20,7 @@ public interface FeatureEngineService {
     /**
      * 实时特征写(异步)
      */
-    void asyncWrite(@Validated TxnFeatureReq req) throws BizException;
+    void asyncWrite(@Validated TxnFeatureReq req) throws FeatureBizException;
 
 
     /**

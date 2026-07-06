@@ -7,10 +7,10 @@ import com.ly.ttd.biz.admin.srv.feature.req.ColumnCondition;
 import com.ly.ttd.biz.admin.srv.feature.req.ConditionMeta;
 import com.ly.ttd.biz.admin.srv.feature.req.FeatureConfigForm;
 import com.ly.ttd.biz.admin.srv.metaField.MetaFieldQueryService;
-import com.ly.ttd.consts.enums.ScriptType;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.consts.FeatureConsts;
+import com.ly.ttd.feature.common.enums.ScriptType;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.DataFieldModel;
 import com.ly.ttd.feature.common.model.vel.FeatureConfigModel;
 import jakarta.annotation.Resource;
@@ -33,7 +33,7 @@ public class FeatureConfigFormServiceImpl implements FeatureConfigFormService {
     private MetaFieldQueryService metaFieldQueryService;
 
     @Override
-    public FeatureConfigModel convertForm(FeatureConfigForm form) throws BizException {
+    public FeatureConfigModel convertForm(FeatureConfigForm form) throws FeatureBizException {
         Map<String, MetaFieldEntity> map = metaFieldQueryService.getByProjectId(form.getProjectId());
         FeatureConfigModel configModel = new FeatureConfigModel();
 //        configModel.setId();
@@ -42,7 +42,7 @@ public class FeatureConfigFormServiceImpl implements FeatureConfigFormService {
         configModel.setVersion(form.getVersion());
         configModel.setProjectId(form.getProjectId());
         configModel.setFeatureCode(form.getFeatureCode());
-        configModel.setLanguage(ScriptType.AVIATOR.getCode());
+        configModel.setLanguage(ScriptType.JEXL.getCode());
         configModel.setConditionScript(convertCondition(form.getConditions(), map));
         configModel.setMainDimScript(form.getMainDimension());
         configModel.setSlaveDimScript(form.getSlaveDimension());
@@ -63,7 +63,7 @@ public class FeatureConfigFormServiceImpl implements FeatureConfigFormService {
         return configModel;
     }
 
-    private String convertCondition(List<ColumnCondition> conditions, Map<String, MetaFieldEntity> metaFieldMap) throws BizException {
+    private String convertCondition(List<ColumnCondition> conditions, Map<String, MetaFieldEntity> metaFieldMap) throws FeatureBizException {
         List<String> condScripts = new ArrayList<>();
         for (ColumnCondition condition : conditions) {
             List<String> scripts = new ArrayList<>();
@@ -75,7 +75,7 @@ public class FeatureConfigFormServiceImpl implements FeatureConfigFormService {
                         .checkThenConvertJexl(leftField, rightField, meta.getRightType(), meta.getRight());
 
                 if (StringUtils.isEmpty(script)) {
-                    throw new BizException("01", "特征配置转换异常");
+                    throw new FeatureBizException("01", "特征配置转换异常");
                 }
                 scripts.add(script);
             }
@@ -86,7 +86,7 @@ public class FeatureConfigFormServiceImpl implements FeatureConfigFormService {
         }
 
         if (CollectionUtils.isEmpty(condScripts)) {
-            throw new BizException("01", "特征配置转换异常");
+            throw new FeatureBizException("01", "特征配置转换异常");
         }
         return StringUtils.join(condScripts, " || ");
     }

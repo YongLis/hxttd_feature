@@ -1,6 +1,6 @@
 package com.ly.ttd.feature.srv.fallback;
 
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import com.ly.ttd.utils.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 

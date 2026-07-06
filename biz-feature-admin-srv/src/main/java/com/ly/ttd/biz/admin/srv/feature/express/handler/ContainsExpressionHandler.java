@@ -1,10 +1,10 @@
 package com.ly.ttd.biz.admin.srv.feature.express.handler;
 
 import com.ly.ttd.biz.admin.srv.feature.express.AbstractExpressionService;
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityExpressionTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.DataFieldModel;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +47,17 @@ public class ContainsExpressionHandler extends AbstractExpressionService {
     }
 
     @Override
-    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws BizException {
+    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws FeatureBizException {
         if (notSupportTypes().contains(left.getFieldType())) {
-            throw new BizException("01", String.format("数据【%s】返回格式【%s】不支持该表达式【%s】", left.getFieldName(), ObjectTypeEnum.getByCode(left.getFieldType()), VelocityExpressionTypeEnum.getByCode(getOp())));
+            throw new FeatureBizException("01", String.format("数据【%s】返回格式【%s】不支持该表达式【%s】", left.getFieldName(), ObjectTypeEnum.getByCode(left.getFieldType()), VelocityExpressionTypeEnum.getByCode(getOp())));
         }
         if (!ObjectTypeEnum.STRING.getCode().equals(left.getFieldType())) {
-            throw new BizException("01", "该表达式左侧返回值类型必须为字符串");
+            throw new FeatureBizException("01", "该表达式左侧返回值类型必须为字符串");
         }
 
         if (VelocityValueTypeEnum.DYNAMIC_VALUE.getCode().equals(valueType)) {
             if (!ObjectTypeEnum.STRING.getCode().equals(right.getFieldType())) {
-                throw new BizException("01", "该表达式右侧返回值类型必须为字符串");
+                throw new FeatureBizException("01", "该表达式右侧返回值类型必须为字符串");
             }
         }
     }

@@ -21,9 +21,9 @@ import com.ly.ttd.biz.admin.srv.factor.req.FeatureFactorUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FactorTypeEnum;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.factor.resource.DerivativeFactorResourceModel;
 import com.ly.ttd.feature.common.model.factor.resource.MetaFactorResourceModel;
 import jakarta.annotation.Resource;
@@ -54,7 +54,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         FeatureFactorAddReq addReq = (FeatureFactorAddReq) req;
         FeatureConfigEntity config = featureConfigMapper.selectByFeatureCode(addReq.getFeatureCode());
         String featureCodePrefix = projectService.getPrefix(addReq.getProjectId(), FeatureResourceType.FEATURE_CONFIG.getPrefix());
@@ -73,14 +73,14 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
 
     }
 
-    private String checkAndBuildResourceKey(Long projectId, String resourceKey) throws BizException {
+    private String checkAndBuildResourceKey(Long projectId, String resourceKey) throws FeatureBizException {
         String key = projectService.getResourceKey(projectId, FeatureResourceType.FACTOR_FEATURE.getPrefix(), resourceKey);
         // 检查资源键唯一性
         LambdaQueryWrapper<FactorEntity> checkWrapper = new LambdaQueryWrapper<>();
         checkWrapper.eq(FactorEntity::getResourceKey, key);
         checkWrapper.eq(FactorEntity::getDeleted, false);
         if (factorMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("01", "资源键已存在");
+            throw new FeatureBizException("01", "资源键已存在");
         }
         return key;
     }
@@ -103,7 +103,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
 
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         FeatureFactorUpdateReq updateReq = (FeatureFactorUpdateReq) req;
         FactorEntity entity = buildFeatureFactorEntity(updateReq);
         entity.setId(updateReq.getId());
@@ -128,7 +128,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -187,10 +187,10 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         FactorEntity entity = factorMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("01", "指标不存在");
+            throw new FeatureBizException("01", "指标不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -200,10 +200,10 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity audit = auditMapper.selectById(id);
         if (audit == null) {
-            throw new BizException("审核记录不存在");
+            throw new FeatureBizException("审核记录不存在");
         }
         FeatureFactorAuditDetail detail = new FeatureFactorAuditDetail();
         detail.setId(audit.getId());

@@ -1,15 +1,15 @@
 package com.ly.ttd.feature.srv.factor.velocity.vel.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.ly.ttd.api.language.ScriptVariable;
-import com.ly.ttd.consts.enums.ScriptType;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.cfg.ThreadPoolNames;
 import com.ly.ttd.feature.common.consts.TxnConsts;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
+import com.ly.ttd.feature.common.enums.ScriptType;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
 import com.ly.ttd.feature.common.event.doris.VelEventData;
+import com.ly.ttd.feature.common.language.ScriptVariable;
 import com.ly.ttd.feature.common.model.vel.FeatureConfigModel;
 import com.ly.ttd.feature.srv.factor.velocity.MetaFieldQueryService;
 import com.ly.ttd.feature.srv.factor.velocity.dto.FeatureScriptResult;
@@ -100,8 +100,6 @@ public class VelocityFilterServiceImpl implements VelocityFilterService, Feature
         ScriptVariable variable = new ScriptVariable();
         variable.setLang(ScriptType.JEXL.getCode());
         variable.setScript(script);
-        variable.setBizOrderNo(ctx.getTxnId());
-        variable.setTxnTime(ctx.getTxnTime());
         variable.setParams(params);
         return variable;
     }
@@ -290,8 +288,6 @@ public class VelocityFilterServiceImpl implements VelocityFilterService, Feature
         ScriptVariable variable = new ScriptVariable();
         variable.setLang(ScriptType.JEXL.getCode());
         variable.setScript(script);
-        variable.setBizOrderNo(ctx.getTxnId());
-        variable.setTxnTime(ctx.getTxnTime());
         variable.setParams(ctx.getParams());
         return variable;
     }

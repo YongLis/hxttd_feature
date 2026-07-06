@@ -1,11 +1,11 @@
 package com.ly.ttd.feature.srv.meta;
 
 import com.alibaba.fastjson.JSON;
-import com.ly.ttd.api.language.ScriptVariable;
-import com.ly.ttd.consts.enums.ScriptType;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
+import com.ly.ttd.feature.common.enums.ScriptType;
+import com.ly.ttd.feature.common.language.ScriptVariable;
 import com.ly.ttd.feature.common.model.meta.MetaFieldModel;
 import com.ly.ttd.feature.srv.fallback.FallBackExecutor;
 import com.ly.ttd.feature.srv.fallback.ValueConvertor;
@@ -78,8 +78,6 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
         variable.setLang(ScriptType.GROOVY.getCode());
         variable.setScript(field.getScript());
         variable.setParams(ctx.getReq());
-        variable.setBizOrderNo(ctx.getTxnId());
-        variable.setTxnTime(ctx.getTxnTime());
 
         return FallBackExecutor.getWithTimeout(() -> scriptLanguageService.execute(variable),
                 field.getTimeout(), TimeUnit.MILLISECONDS,

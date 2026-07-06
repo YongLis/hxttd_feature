@@ -50,8 +50,8 @@ public class JdbcExecutorTest extends TestCase {
         // 建表
         jdbcTemplate.getJdbcTemplate().execute(CREATE_TABLE_SQL);
 
-        // 清空数据
-        jdbcTemplate.getJdbcTemplate().execute("DELETE FROM t_order");
+        // 清空数据（TRUNCATE 会重置自增计数器）
+        jdbcTemplate.getJdbcTemplate().execute("TRUNCATE TABLE t_order");
 
         // 插入测试数据
         Map<String, Object> params1 = new HashMap<>();

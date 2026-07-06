@@ -20,9 +20,9 @@ import com.ly.ttd.biz.admin.srv.feature.req.FeatureConfigUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.sequence.LocalSeqService;
-import com.ly.ttd.consts.enums.ScriptType;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.enums.ScriptType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.vel.FeatureConfigModel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class FeatureOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         FeatureConfigAddReq addReq = (FeatureConfigAddReq) req;
         String key = projectService.getResourceKey(addReq.getProjectId(), FeatureResourceType.FEATURE_CONFIG.getPrefix(), addReq.getResourceKey());
         addReq.setResourceKey(key);
@@ -63,7 +63,7 @@ public class FeatureOpService extends AbstractResourceOpService {
         checkWrapper.eq(FeatureConfigEntity::getResourceKey, addReq.getResourceKey());
         checkWrapper.eq(FeatureConfigEntity::getDeleted, false);
         if (featureConfigMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
         String featureCode = getFeatureCode();
         FeatureConfigEntity entity = new FeatureConfigEntity();
@@ -108,12 +108,12 @@ public class FeatureOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         FeatureConfigUpdateReq updateReq = (FeatureConfigUpdateReq) req;
 
         FeatureConfigEntity entity = featureConfigMapper.selectById(updateReq.getId());
         if (entity == null) {
-            throw new BizException("特征配置不存在");
+            throw new FeatureBizException("特征配置不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
 
@@ -149,7 +149,7 @@ public class FeatureOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -185,10 +185,10 @@ public class FeatureOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         FeatureConfigEntity entity = featureConfigMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("特征配置不存在");
+            throw new FeatureBizException("特征配置不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -198,7 +198,7 @@ public class FeatureOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity entity = auditMapper.selectById(id);
 
         FeatureConfigAuditDetail detail = new FeatureConfigAuditDetail();

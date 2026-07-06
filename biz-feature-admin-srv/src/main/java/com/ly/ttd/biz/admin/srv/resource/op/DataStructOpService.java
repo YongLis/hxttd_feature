@@ -15,8 +15,8 @@ import com.ly.ttd.biz.admin.srv.dataStruct.req.DataStructAddReq;
 import com.ly.ttd.biz.admin.srv.dataStruct.req.DataStructUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class DataStructOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         DataStructAddReq addReq = (DataStructAddReq) req;
         String key = projectService.getResourceKey(addReq.getProjectId(), FeatureResourceType.DATA_STRUCT.getPrefix(), addReq.getResourceKey());
         addReq.setResourceKey(key);
@@ -50,7 +50,7 @@ public class DataStructOpService extends AbstractResourceOpService {
         checkWrapper.eq(DataStructEntity::getResourceKey, addReq.getResourceKey());
         checkWrapper.eq(DataStructEntity::getDeleted, false);
         if (dataStructMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
 
         DataStructEntity entity = new DataStructEntity();
@@ -70,12 +70,12 @@ public class DataStructOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         DataStructUpdateReq updateReq = (DataStructUpdateReq) req;
 
         DataStructEntity entity = dataStructMapper.selectById(updateReq.getId());
         if (entity == null) {
-            throw new BizException("数据集不存在");
+            throw new FeatureBizException("数据集不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
 
@@ -92,7 +92,7 @@ public class DataStructOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -125,10 +125,10 @@ public class DataStructOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         DataStructEntity entity = dataStructMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("01", "数据集不存在");
+            throw new FeatureBizException("01", "数据集不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);

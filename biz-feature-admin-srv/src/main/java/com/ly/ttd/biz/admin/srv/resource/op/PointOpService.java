@@ -27,8 +27,8 @@ import com.ly.ttd.biz.admin.srv.dict.req.DictAddReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.sequence.LocalSeqService;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -68,7 +68,7 @@ public class PointOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         AccessPointAddReq addReq = (AccessPointAddReq) req;
         String key = localSeqService.generateSeq(FeatureResourceType.POINT.getPrefix(), 5, SequenceConst.END_POINT);
 
@@ -77,7 +77,7 @@ public class PointOpService extends AbstractResourceOpService {
         checkWrapper.eq("point_code", key);
         checkWrapper.eq("deleted", false);
         if (accessPointMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
 
         AccessPointEntity entity = new AccessPointEntity();
@@ -101,12 +101,12 @@ public class PointOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
         AccessPointUpdateReq updateReq = (AccessPointUpdateReq) req;
 
         AccessPointEntity entity = accessPointMapper.selectById(updateReq.getId());
         if (entity == null) {
-            throw new BizException("接入点不存在");
+            throw new FeatureBizException("接入点不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
 
@@ -142,7 +142,7 @@ public class PointOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -186,7 +186,7 @@ public class PointOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity entity = auditMapper.selectById(id);
 
         AccessPointAuditDetail detail = new AccessPointAuditDetail();
@@ -202,10 +202,10 @@ public class PointOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         AccessPointEntity entity = accessPointMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("接入点不存在");
+            throw new FeatureBizException("接入点不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);

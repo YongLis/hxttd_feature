@@ -20,9 +20,9 @@ import com.ly.ttd.biz.admin.srv.factor.req.MetaFactorUpdateReq;
 import com.ly.ttd.biz.admin.srv.resource.AbstractResourceOpService;
 import com.ly.ttd.biz.admin.srv.resource.req.ResourceChgReq;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
 import com.ly.ttd.feature.common.enums.FactorTypeEnum;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.factor.resource.DerivativeFactorResourceModel;
 import com.ly.ttd.feature.common.model.factor.resource.MetaFactorResourceModel;
 import jakarta.annotation.Resource;
@@ -53,7 +53,7 @@ public class MetaFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void add(BaseRequest req) throws BizException {
+    public void add(BaseRequest req) throws FeatureBizException {
         MetaFactorAddReq addReq = (MetaFactorAddReq) req;
         String metaFieldCodePrefix = projectService.getPrefix(addReq.getProjectId(), FeatureResourceType.META_FIELD.getPrefix());
         String tmp = addReq.getMetaFieldCode().replace(metaFieldCodePrefix, "");
@@ -71,14 +71,14 @@ public class MetaFactorOpService extends AbstractResourceOpService {
 
     }
 
-    private String checkAndBuildResourceKey(Long projectId, String resourceKey) throws BizException {
+    private String checkAndBuildResourceKey(Long projectId, String resourceKey) throws FeatureBizException {
         String key = projectService.getResourceKey(projectId, FeatureResourceType.FACTOR_META.getPrefix(), resourceKey);
         // 检查资源键唯一性
         LambdaQueryWrapper<FactorEntity> checkWrapper = new LambdaQueryWrapper<>();
         checkWrapper.eq(FactorEntity::getResourceKey, key);
         checkWrapper.eq(FactorEntity::getDeleted, false);
         if (factorMapper.selectCount(checkWrapper) > 0) {
-            throw new BizException("资源键已存在");
+            throw new FeatureBizException("资源键已存在");
         }
         return key;
     }
@@ -103,7 +103,7 @@ public class MetaFactorOpService extends AbstractResourceOpService {
 
 
     @Override
-    public void update(BaseRequest req) throws BizException {
+    public void update(BaseRequest req) throws FeatureBizException {
 
         MetaFactorUpdateReq updateReq = (MetaFactorUpdateReq) req;
         FactorEntity entity = buildMetaFactorEntity(updateReq);
@@ -129,7 +129,7 @@ public class MetaFactorOpService extends AbstractResourceOpService {
 
     @Override
     @Transactional
-    public void submitAudit(AuditApproveReq req) throws BizException {
+    public void submitAudit(AuditApproveReq req) throws FeatureBizException {
         AuditEntity audit = checkAudit(req);
         audit.setAuditStatus(req.getAuditStatus());
         audit.setAuditComment(req.getAuditComment());
@@ -188,10 +188,10 @@ public class MetaFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public void delete(Long id) throws BizException {
+    public void delete(Long id) throws FeatureBizException {
         FactorEntity entity = factorMapper.selectById(id);
         if (entity == null) {
-            throw new BizException("指标不存在");
+            throw new FeatureBizException("指标不存在");
         }
         String beforeJson = JSON.toJSONString(entity);
         entity.setDeleted(true);
@@ -201,10 +201,10 @@ public class MetaFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public AuditDetail getDetail(Long id) throws BizException {
+    public AuditDetail getDetail(Long id) throws FeatureBizException {
         AuditEntity audit = auditMapper.selectById(id);
         if (audit == null) {
-            throw new BizException("审核记录不存在");
+            throw new FeatureBizException("审核记录不存在");
         }
         MetaFactorAuditDetail detail = new MetaFactorAuditDetail();
         detail.setId(audit.getId());
@@ -229,13 +229,13 @@ public class MetaFactorOpService extends AbstractResourceOpService {
     }
 
     @Override
-    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws BizException {
+    public DependencyQueryRes queryDependency(DependencyQueryReq req) throws FeatureBizException {
         if (StringUtils.isEmpty(req.getResourceKey())) {
-            throw new BizException("资源键不能为空");
+            throw new FeatureBizException("资源键不能为空");
         }
         FactorEntity entity = factorMapper.selectByResourceKey(req.getResourceKey());
         if (entity == null) {
-            throw new BizException("指标不存在");
+            throw new FeatureBizException("指标不存在");
         }
         return queryUpstreamDependency(req.getProjectId(), req.getResourceKey());
     }

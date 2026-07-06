@@ -3,7 +3,7 @@ package com.ly.ttd.biz.admin.controller;
 import com.ly.ttd.biz.admin.common.Result;
 import com.ly.ttd.biz.admin.srv.user.UserService;
 import com.ly.ttd.biz.admin.srv.user.res.UserCurrentRes;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -31,7 +31,7 @@ public class UserController {
         try {
             UserCurrentRes res = userService.getCurrentUserInfo();
             return Result.success(res);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getCode(), e.getMessage());
         }
     }

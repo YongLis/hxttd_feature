@@ -1,6 +1,6 @@
 package com.ly.ttd.feature.srv.vel.sunk;
 
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.request.TxnFeatureRequest;
 import com.ly.ttd.feature.srv.vel.monitor.FeatureMonitorSinkService;
 import jakarta.annotation.Resource;
@@ -20,8 +20,8 @@ public abstract class FeatureTask {
      * 执行
      *
      * @param request 上下文
-     * @throws BizException
+     * @throws FeatureBizException
      */
-    public abstract void execute(TxnFeatureRequest request) throws BizException;
+    public abstract void execute(TxnFeatureRequest request) throws FeatureBizException;
 
 }

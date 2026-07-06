@@ -12,7 +12,7 @@ import com.ly.ttd.biz.admin.srv.metaField.req.*;
 import com.ly.ttd.biz.admin.srv.metaField.res.MetaFieldQueryRes;
 import com.ly.ttd.biz.admin.srv.metaField.res.TestCaseRes;
 import com.ly.ttd.biz.admin.srv.resource.ResourceOpFactory;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import com.ly.ttd.language.srv.impl.LanguageExecuteFactory;
 import io.swagger.v3.oas.annotations.Operation;
@@ -77,7 +77,7 @@ public class MetaFieldController {
             ResourceOpFactory.getService(FeatureResourceType.META_FIELD.getType())
                     .add(req);
             return Result.success(true);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("add meta field error", e);
@@ -93,7 +93,7 @@ public class MetaFieldController {
             ResourceOpFactory.getService(FeatureResourceType.META_FIELD.getType())
                     .update(req);
             return Result.success(true);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("update meta field error", e);
@@ -107,7 +107,7 @@ public class MetaFieldController {
         try {
             ResourceOpFactory.getService(FeatureResourceType.META_FIELD.getType()).delete(id);
             return Result.success(true);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getMessage());
         } catch (Exception e) {
             log.error("delete meta field error", e);

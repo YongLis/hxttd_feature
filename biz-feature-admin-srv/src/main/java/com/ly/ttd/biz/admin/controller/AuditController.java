@@ -8,7 +8,7 @@ import com.ly.ttd.biz.admin.srv.audit.req.AuditApproveReq;
 import com.ly.ttd.biz.admin.srv.audit.req.AuditQueryReq;
 import com.ly.ttd.biz.admin.srv.audit.res.*;
 import com.ly.ttd.biz.admin.srv.resource.ResourceOpFactory;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,7 +45,7 @@ public class AuditController {
             AccessPointAuditDetail detail = (AccessPointAuditDetail) ResourceOpFactory.getService(FeatureResourceType.POINT.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get point audit detail error, id={}", id, e);
@@ -60,7 +60,7 @@ public class AuditController {
             MetaFieldAuditDetail detail = (MetaFieldAuditDetail) ResourceOpFactory.getService(FeatureResourceType.META_FIELD.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get meta audit detail error, id={}", id, e);
@@ -75,7 +75,7 @@ public class AuditController {
             FeatureConfigAuditDetail detail = (FeatureConfigAuditDetail) ResourceOpFactory.getService(FeatureResourceType.FEATURE_CONFIG.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get feature config audit detail error, id={}", id, e);
@@ -90,7 +90,7 @@ public class AuditController {
             MetaFactorAuditDetail detail = (MetaFactorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.FACTOR_META.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get factor audit detail error, id={}", id, e);
@@ -105,7 +105,7 @@ public class AuditController {
             DerivativeFactorAuditDetail detail = (DerivativeFactorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.FACTOR_DERIVATIVE.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get factor audit detail error, id={}", id, e);
@@ -120,7 +120,7 @@ public class AuditController {
             FeatureFactorAuditDetail detail = (FeatureFactorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.FACTOR_FEATURE.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get factor audit detail error, id={}", id, e);
@@ -136,7 +136,7 @@ public class AuditController {
             JdbcConnectorAuditDetail detail = (JdbcConnectorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.CONNECTOR_JDBC.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get jdbc connector audit detail error, id={}", id, e);
@@ -151,7 +151,7 @@ public class AuditController {
             EsConnectorAuditDetail detail = (EsConnectorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.CONNECTOR_ES.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get es connector audit detail error, id={}", id, e);
@@ -166,7 +166,7 @@ public class AuditController {
             HttpConnectorAuditDetail detail = (HttpConnectorAuditDetail) ResourceOpFactory.getService(FeatureResourceType.CONNECTOR_HTTP.getType())
                     .getDetail(id);
             return Result.success(detail);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("get http connector audit detail error, id={}", id, e);
@@ -182,7 +182,7 @@ public class AuditController {
             ResourceOpFactory.getService(entity.getResourceType())
                     .submitAudit(req);
             return Result.success(true);
-        } catch (BizException e1) {
+        } catch (FeatureBizException e1) {
             return Result.error(e1.getMessage());
         } catch (Exception e) {
             log.error("submit audit error, id={}", req.getId(), e);

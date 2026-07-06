@@ -1,10 +1,10 @@
 package com.ly.ttd.biz.admin.srv.feature.express.handler;
 
 import com.ly.ttd.biz.admin.srv.feature.express.AbstractExpressionService;
-import com.ly.ttd.consts.enums.ObjectTypeEnum;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityExpressionTypeEnum;
 import com.ly.ttd.feature.common.enums.VelocityValueTypeEnum;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.DataFieldModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -38,27 +38,27 @@ public class InExpressionHandler extends AbstractExpressionService {
     }
 
     @Override
-    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws BizException {
+    public void checkValue(DataFieldModel left, DataFieldModel right, String valueType, String fixValue) throws FeatureBizException {
 
         if (VelocityValueTypeEnum.DYNAMIC_VALUE.getCode().equals(valueType)) {
             if (left.getFieldType().equals(right.getFieldType())) {
-                throw new BizException("01", "该表达式不支持左右2边返回类型一致");
+                throw new FeatureBizException("01", "该表达式不支持左右2边返回类型一致");
             }
             if (!ObjectTypeEnum.LIST.getCode().equals(right.getFieldType())) {
-                throw new BizException("01", "表达式右侧必须为集合类型");
+                throw new FeatureBizException("01", "表达式右侧必须为集合类型");
             }
         } else {
             // 右侧为固定值时，固定值不允许为空
             if (StringUtils.isBlank(fixValue)) {
-                throw new BizException("01", "表达式右侧固定值不允许为空");
+                throw new FeatureBizException("01", "表达式右侧固定值不允许为空");
             }
             // 右侧为固定值时，左侧表达式返回类型不能是集合类型
             if (ObjectTypeEnum.LIST.getCode().equals(left.getFieldType())) {
-                throw new BizException("01", "表达式左侧返回值类型不能为集合类型");
+                throw new FeatureBizException("01", "表达式左侧返回值类型不能为集合类型");
             }
             // 右侧为固定值时，左侧表达式返回类型不能是日期类型
             if (ObjectTypeEnum.DATE.getCode().equals(left.getFieldType())) {
-                throw new BizException("01", "表达式左侧返回值类型不能为日期类型");
+                throw new FeatureBizException("01", "表达式左侧返回值类型不能为日期类型");
             }
         }
     }

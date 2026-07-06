@@ -13,7 +13,7 @@ import com.ly.ttd.biz.admin.srv.feature.res.FeatureConfigListRes;
 import com.ly.ttd.biz.admin.srv.feature.res.FeatureConfigQueryRes;
 import com.ly.ttd.biz.admin.srv.resource.ResourceOpFactory;
 import com.ly.ttd.biz.admin.srv.user.LoginUser;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -86,7 +86,7 @@ public class FeatureConfigController {
             ResourceOpFactory.getService(FeatureResourceType.FEATURE_CONFIG.getType())
                     .add(req);
             return Result.success();
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getCode(), e.getMessage());
         } catch (Exception e1) {
             log.error("add feature config failed", e1);
@@ -102,7 +102,7 @@ public class FeatureConfigController {
             ResourceOpFactory.getService(FeatureResourceType.FEATURE_CONFIG.getType())
                     .update(req);
             return Result.success();
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getCode(), e.getMessage());
         } catch (Exception e1) {
             log.error("update feature config failed", e1);
@@ -130,7 +130,7 @@ public class FeatureConfigController {
         try {
             ResourceOpFactory.getService(FeatureResourceType.FEATURE_CONFIG.getType()).delete(id);
             return Result.success(true);
-        } catch (BizException e) {
+        } catch (FeatureBizException e) {
             return Result.error(e.getMessage());
         } catch (Exception e1) {
             log.error("delete feature config failed", e1);

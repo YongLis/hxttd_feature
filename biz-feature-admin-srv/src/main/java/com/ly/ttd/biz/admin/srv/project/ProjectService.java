@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ly.ttd.biz.admin.mybatis.entity.ProjectEntity;
 import com.ly.ttd.biz.admin.srv.project.req.ProjectAddReq;
 import com.ly.ttd.biz.admin.srv.project.req.ProjectUpdateReq;
-import com.ly.ttd.consts.exception.BizException;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
 
 import java.util.List;
 
@@ -49,17 +49,17 @@ public interface ProjectService extends IService<ProjectEntity> {
     /**
      * 删除项目
      */
-    Boolean deleteProject(Long projectId) throws BizException;
+    Boolean deleteProject(Long projectId) throws FeatureBizException;
 
     /**
      * 添加项目成员
      */
-    void addProjectUser(Long projectId, String userAccount) throws BizException;
+    void addProjectUser(Long projectId, String userAccount) throws FeatureBizException;
 
     /**
      * 删除项目成员
      */
-    void deleteProjectUser(Long projectId, String userAccount) throws BizException;
+    void deleteProjectUser(Long projectId, String userAccount) throws FeatureBizException;
 
 
 }
