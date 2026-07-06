@@ -1,0 +1,71 @@
+.lineage-container {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.lineage-title {
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #262626;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.lineage-flow-wrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ========== Custom Node ========== */
+
+.lineage-node {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  background: #fff;
+  border: 2px solid #1677ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-size: 13px;
+  transition: box-shadow 0.2s;
+}
+
+.lineage-node:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.lineage-node-type {
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.lineage-node-label {
+  padding: 8px 10px;
+  color: #262626;
+  text-align: center;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+/* ========== ReactFlow overrides ========== */
+
+.react-flow__node-custom {
+  padding: 0 !important;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: #b1b1b7;
+  border: 2px solid #fff;
+}

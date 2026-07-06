@@ -1,0 +1,286 @@
+@font-face {
+  font-family: "AlibabaSans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("//mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*1GSgSYDD_aIAAAAAQsAAAAgAegCCAQ/AlibabaSans-Light.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "AlibabaSans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("//mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*2zEUQqnPNesAAAAAQtAAAAgAegCCAQ/AlibabaSans-Regular.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "AlibabaSans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("//mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*E_cxRbMlZqUAAAAAQuAAAAgAegCCAQ/AlibabaSans-Medium.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "AlibabaSans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("//mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*E_cxRbMlZqUAAAAAQuAAAAgAegCCAQ/AlibabaSans-Bold.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "AlibabaSans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("//mdn.alipayobjects.com/huamei_iwk9zp/afts/file/A*E_cxRbMlZqUAAAAAQuAAAAgAegCCAQ/AlibabaSans-Heavy.woff2")
+    format("woff2");
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family:
+    AlibabaSans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+.ant-pro-sider.ant-layout-sider.ant-pro-sider-fixed {
+  left: unset;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: 768px) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 通用表格样式 - 表头浅蓝色背景，表格展示边框
+.ant-pro-table,
+.ant-table-wrapper {
+  .ant-table {
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    
+    // 表头样式
+    .ant-table-thead > tr > th {
+      background-color: #f5f7fa !important;
+      border-bottom: 1px solid #e8e8e8;
+      border-right: 1px solid #e8e8e8;
+      font-weight: 600;
+      
+      &:last-child {
+        border-right: none;
+      }
+    }
+    
+    // 表格主体样式
+    .ant-table-tbody > tr > td {
+      border-bottom: 1px solid #e8e8e8;
+      border-right: 1px solid #e8e8e8;
+      
+      &:last-child {
+        border-right: none;
+      }
+    }
+    
+    // 最后一行不需要底部边框
+    .ant-table-tbody > tr:last-child > td {
+      border-bottom: none;
+    }
+  }
+  
+  // 表格外层容器边框
+  .ant-table-container {
+    border: none;
+  }
+}
+
+// 文章内容滚动条样式
+.rich-content {
+  // Webkit 浏览器滚动条样式 (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    
+    &:hover {
+      background: #a8a8a8;
+    }
+  }
+  
+  // Firefox 滚动条样式
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+
+  // 文章内容样式
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 16px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  // 图片容器样式（用于小图预览）
+  div[style*="text-align: center"] {
+    margin: 16px 0;
+    
+    img {
+      max-width: 300px;
+      display: inline-block;
+    }
+    
+    div[style*="font-size: 12px"] {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+  }
+
+  p {
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0 12px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  h1 { font-size: 28px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+
+  code {
+    background-color: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #e83e8c;
+  }
+
+  pre {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 16px 0;
+
+    code {
+      background-color: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: 14px;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #40a9ff;
+    padding: 12px 16px;
+    margin: 16px 0;
+    background-color: #f0f7ff;
+    border-radius: 0 4px 4px 0;
+    color: #666;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+
+    th, td {
+      border: 1px solid #e8e8e8;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f5f7fa;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+  }
+
+  ul, ol {
+    padding-left: 24px;
+    margin: 12px 0;
+
+    li {
+      margin: 6px 0;
+      line-height: 1.8;
+    }
+  }
+
+  a {
+    color: #1890ff;
+    text-decoration: none;
+
+    &:hover {
+      color: #40a9ff;
+      text-decoration: underline;
+    }
+  }
+}
+
