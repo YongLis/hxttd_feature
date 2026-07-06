@@ -1,0 +1,383 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ly.ttd</groupId>
+        <artifactId>ttd-parent</artifactId>
+        <version>2026.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ly.ttd</groupId>
+    <artifactId>ttd-feature</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>ttd-feature</name>
+    <description>TTD Unified Feature Platform - 统一特征平台</description>
+    <url>http://maven.apache.org</url>
+
+    <modules>
+        <module>ttd-feature-cfg-jar</module>
+        <module>ttd-feature-common</module>
+        <module>ttd-feature-biz-jar</module>
+        <module>connector-core</module>
+        <module>ttd-feature-flink-task</module>
+        <module>ttd-feature-engine</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!-- 依赖版本管理 -->
+        <spring.version>6.0.16</spring.version>
+        <commons-lang3.version>3.14.0</commons-lang3.version>
+        <aviator.version>5.3.3</aviator.version>
+        <lombok.version>1.18.44</lombok.version>
+        <junit.version>3.8.1</junit.version>
+        <javax.annotation.version>1.3.2</javax.annotation.version>
+        <ttd.engine.version>1.0.0-SNAPSHOT</ttd.engine.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
+            <!-- 校验规范API -->
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+            <!-- 校验规范实现 -->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>8.0.2.Final</version>
+            </dependency>
+
+            <!-- 测试依赖 -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- 工具依赖 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- Spring 依赖 -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>5.0.4</version>
+                <type>pom</type>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Drools 规则引擎依赖 -->
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-core</artifactId>
+                <version>9.44.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-compiler</artifactId>
+                <version>9.44.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-decisiontables</artifactId>
+                <version>9.44.0.Final</version>
+            </dependency>
+
+            <!-- JSON 处理依赖 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.58</version>
+            </dependency>
+
+            <!-- RocketMQ 依赖 -->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-acl</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>3.1.3</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.21</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-smile</artifactId>
+                <version>2.20.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-hibernate5-jakarta</artifactId>
+                <version>2.20.1</version>
+            </dependency>
+
+            <!-- 工具依赖 -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.15</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>utils</artifactId>
+                <version>${ttd.engine.version}</version>
+            </dependency>
+
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-streaming-java</artifactId>
+                <version>2.2.0</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-clients</artifactId>
+                <version>2.2.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka -->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-connector-kafka</artifactId>
+                <version>4.0.1-2.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-feature-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-feature-cfg-jar</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>cache</artifactId>
+                <version>${ttd.engine.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-es-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-hbase-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-http-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>language</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>connector-jdbc-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-feature-biz-jar</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-const</artifactId>
+                <version>${ttd.engine.version}</version>
+            </dependency>
+            <!-- Source: https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.2.28</version>
+            </dependency>
+
+            <dependency>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
+                <version>8.1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>6.0.21</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-client</artifactId>
+                <version>2.6.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.14</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>8.3.0</version>
+            </dependency>
+
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>4.2.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>liteflow-spring</artifactId>
+                <version>2.15.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+
+            <!-- Source: https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.11.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>3.52.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-nacos-common</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.3.232</version> <!-- 建议使用最新稳定版 -->
+                <scope>test</scope> <!-- 如果只在测试中使用，可添加此范围 -->
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
