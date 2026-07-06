@@ -1,0 +1,23 @@
+package com.ly.ttd.connector.http;
+
+import com.ly.ttd.connector.api.ConnectorResponse;
+import com.ly.ttd.connector.api.spi.Connector;
+import com.ly.ttd.connector.api.spi.ConnectorProvider;
+import com.ly.ttd.consts.enums.ConnectorEnum;
+
+/**
+ * @author yong.li
+ * @since 2026/4/14 15:04
+ */
+public class HttpConnectorProvider implements ConnectorProvider<HttpConnectorRequest, ConnectorResponse> {
+    @Override
+    public String getConnectorType() {
+        return ConnectorEnum.HTTP.getCode();
+    }
+
+    @Override
+    public Connector<HttpConnectorRequest, ConnectorResponse> createConnector() {
+        return new HttpConnector(getConnectorType());
+    }
+
+}
