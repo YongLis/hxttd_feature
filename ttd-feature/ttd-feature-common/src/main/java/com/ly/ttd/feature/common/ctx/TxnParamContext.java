@@ -3,6 +3,8 @@ package com.ly.ttd.feature.common.ctx;
 import com.ly.ttd.feature.common.consts.TxnConsts;
 import com.ly.ttd.feature.common.enums.RunModeEnum;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2026/6/10 09:29
  */
 @Data
+@Slf4j
 public class TxnParamContext {
 
     /**
@@ -40,6 +43,8 @@ public class TxnParamContext {
 
     private Map<String, Object> req;
 
+    private Set<String> computingSet = ConcurrentHashMap.newKeySet();
+
     public TxnParamContext() {
         traceId = UUID.randomUUID().toString();
     }
@@ -54,7 +59,13 @@ public class TxnParamContext {
     }
 
     public void put(String factorCode, Object val) {
-        variable.put(factorCode, val);
+        if (null != val) {
+            variable.put(factorCode, val);
+        } else {
+            log.warn("{} field calculate result is null", factorCode);
+        }
+        // 无论是否计算成功，都添加计算集合中
+        computingSet.add(factorCode);
     }
 
     public Object get(String factorCode) {
@@ -72,8 +83,18 @@ public class TxnParamContext {
 
     public Map<String, Object> getParamByFields(List<String> factorCodes) {
         Map<String, Object> param = new HashMap<>();
+        if (CollectionUtils.isEmpty(factorCodes)) {
+            return param;
+        }
         factorCodes.forEach(factorCode -> param.put(factorCode, get(factorCode)));
         return param;
+    }
+
+    /**
+     * 已计算集合包含当前依赖的因子判定
+     */
+    public boolean isComputed(List<String> refFactorCodes) {
+        return refFactorCodes.stream().allMatch(computingSet::contains);
     }
 
 

@@ -3,6 +3,7 @@ package com.ly.ttd.feature.srv.meta;
 import com.alibaba.fastjson.JSON;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
+import com.ly.ttd.feature.cfg.ThreadPoolNames;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
 import com.ly.ttd.feature.common.enums.ScriptType;
 import com.ly.ttd.feature.common.language.ScriptVariable;
@@ -42,8 +43,8 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
             return toLoadValue(fieldKey, ctx);
         } catch (Exception e) {
             // 不会走到
+            return null;
         }
-        return null;
     }
 
     private Object toLoadValue(String fieldKey, TxnParamContext ctx) {
@@ -53,12 +54,13 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
         } else {
             Object res = doLoadValue(fieldKey, ctx);
             ctx.put(fieldKey, res);
+            ctx.getComputingSet().add(fieldKey);
             return res;
         }
     }
 
-    public void batchLoadValue(String fieldKey, TxnParamContext ctx) {
-        triggerPointCodeMetaField(fieldKey, ctx.getPointCode(), ctx);
+    public void batchLoadValue(TxnParamContext ctx) {
+        triggerPointCodeMetaField(ctx.getPointCode(), ctx);
     }
 
     private Object doLoadValue(String fieldKey, TxnParamContext ctx) {
@@ -80,6 +82,7 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
         variable.setParams(ctx.getReq());
 
         return FallBackExecutor.getWithTimeout(() -> scriptLanguageService.execute(variable),
+                featureConfiguration.getThreadPool(ThreadPoolNames.THREAD_META_FIELD),
                 field.getTimeout(), TimeUnit.MILLISECONDS,
                 ValueConvertor.convert(field.getReturnType(), field.getDefaultValue()),
                 ValueConvertor.convert(field.getReturnType(), field.getExceptionValue()));
@@ -89,22 +92,26 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
      * 异步全量触发通接入点下的元字段
      */
 
-    private void triggerPointCodeMetaField(String fieldKey, String pointCode, TxnParamContext ctx) {
+    private void triggerPointCodeMetaField(String pointCode, TxnParamContext ctx) {
 
         List<CompletableFuture<FieldCodeValue>> futures = new ArrayList<>();
 
         List<String> pointCodeFields = featureConfiguration.getPointCodeMetaFieldMap().get(pointCode);
+
         if (pointCodeFields == null || pointCodeFields.isEmpty()) {
             return;
         }
-        pointCodeFields.forEach(x -> {
-            futures.add(triggerMetaField(x, ctx));
-        });
+        pointCodeFields
+                .stream().filter(t -> !ctx.getComputingSet().contains(t))
+                .forEach(x -> {
+                    futures.add(triggerMetaField(x, ctx));
+                });
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .join();
         futures.stream().forEach(t -> {
             FieldCodeValue dto = t.join();
+            ctx.getComputingSet().add(dto.getCode());
             ctx.put(dto.getCode(), dto.getValue());
         });
     }
@@ -115,7 +122,7 @@ public class AccessMetaFieldCalculate implements FeatureConfigurationAware {
             fieldDto.setCode(fieldKey);
             fieldDto.setValue(loadValue(fieldKey, ctx));
             return fieldDto;
-        });
+        }, featureConfiguration.getThreadPool(ThreadPoolNames.THREAD_META_FIELD));
     }
 
     @Override

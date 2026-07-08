@@ -3,6 +3,7 @@ package com.ly.ttd.feature.srv.fallback;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -24,12 +25,18 @@ public class FallBackExecutor {
      * @param <T>          结果类型
      * @return 任务结果或默认值
      */
-    public static <T> T getWithTimeout(Supplier<T> supplier, long timeout, TimeUnit unit, T defaultValue, T exceptionValue) {
+    public static <T> T getWithTimeout(Supplier<T> supplier, ThreadPoolExecutor executor, long timeout, TimeUnit unit, T defaultValue, T exceptionValue) {
         try {
-            T res = CompletableFuture
-                    .supplyAsync(supplier)
-                    .orTimeout(timeout, unit)
-                    .join();
+
+            T res = null != executor ?
+                    CompletableFuture.supplyAsync(supplier, executor)
+                            .orTimeout(timeout, unit)
+                            .join()
+                    :
+                    CompletableFuture
+                            .supplyAsync(supplier)
+                            .orTimeout(timeout, unit)
+                            .join();
 
             return null == res
                     || (res instanceof String && StringUtils.isEmpty((String) res)) ? defaultValue : res;

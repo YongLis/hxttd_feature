@@ -2,6 +2,7 @@ package com.ly.ttd.feature.srv.factor;
 
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
+import com.ly.ttd.feature.cfg.ThreadPoolNames;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
 import com.ly.ttd.feature.common.enums.FactorTypeEnum;
 import com.ly.ttd.feature.common.model.factor.MetaFactorModel;
@@ -32,6 +33,7 @@ public class FactorGetValueServiceImpl implements FactorGetValueService, Feature
         MetaFactorModel metaFactorConfig = featureConfiguration.getMetaFactorMap().get(factorCode);
         return FallBackExecutor.getWithTimeout(
                 () -> getFactorValue(factorCode, ctx),
+                featureConfiguration.getThreadPool(ThreadPoolNames.THREAD_FACTOR_GET_VALUE),
                 metaFactorConfig.getTimeout(),
                 TimeUnit.MILLISECONDS,
                 metaFactorConfig.getDefaultValue(),

@@ -133,6 +133,7 @@ public class FeatureConfiguration {
         for (ConnectorInterceptor interceptor : interceptorLoader) {
             interceptors.add(interceptor);
         }
+
         ServiceLoader<ConnectorProvider> loader = ServiceLoader.load(ConnectorProvider.class);
         for (ConnectorProvider provider : loader) {
             log.info("connector {} register", provider.getConnectorType());

@@ -1,10 +1,8 @@
 package com.ly.ttd.feature.common.model.connector;
 
 import com.alibaba.fastjson.JSON;
-import com.ly.ttd.feature.common.model.DataFieldModel;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +18,6 @@ public class HttpConnectorModel extends ConnectorModel {
     private String method;
     private Map<String, Object> header;
     private Map<String, Object> param;
-    /**
-     * 参数列表
-     */
-    private List<DataFieldModel> fields;
 
     public static HttpConnectorModel convertResource(String resourceJson) {
         return JSON.parseObject(resourceJson, HttpConnectorModel.class);

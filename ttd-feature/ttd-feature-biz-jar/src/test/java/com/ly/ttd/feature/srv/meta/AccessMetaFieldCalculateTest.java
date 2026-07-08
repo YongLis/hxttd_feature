@@ -184,7 +184,7 @@ class AccessMetaFieldCalculateTest {
         ctx.setPointCode("EMPTY_POINT");
         featureConfiguration.getPointCodeMetaFieldMap().put("EMPTY_POINT", Collections.emptyList());
 
-        calculate.batchLoadValue(FIELD_KEY, ctx);
+        calculate.batchLoadValue(ctx);
 
         verify(scriptLanguageService, never()).execute(any());
     }
@@ -212,7 +212,7 @@ class AccessMetaFieldCalculateTest {
             return null;
         });
 
-        calculate.batchLoadValue(FIELD_KEY, ctx);
+        calculate.batchLoadValue(ctx);
 
         assertEquals("value_a", ctx.get("field_a"));
         assertEquals("value_b", ctx.get("field_b"));
@@ -237,7 +237,7 @@ class AccessMetaFieldCalculateTest {
 
         when(scriptLanguageService.execute(any())).thenReturn("value_b");
 
-        calculate.batchLoadValue(FIELD_KEY, ctx);
+        calculate.batchLoadValue(ctx);
 
         assertEquals("already_cached", ctx.get("field_a"));
         assertEquals("value_b", ctx.get("field_b"));
@@ -285,7 +285,7 @@ class AccessMetaFieldCalculateTest {
     void testBatchLoadValue_PointCodeNotInMap() {
         ctx.setPointCode("UNREGISTERED_POINT");
 
-        calculate.batchLoadValue(FIELD_KEY, ctx);
+        calculate.batchLoadValue(ctx);
 
         verify(scriptLanguageService, never()).execute(any());
     }
@@ -302,7 +302,7 @@ class AccessMetaFieldCalculateTest {
 
         when(scriptLanguageService.execute(any())).thenThrow(new RuntimeException("script error"));
 
-        calculate.batchLoadValue(FIELD_KEY, ctx);
+        calculate.batchLoadValue(ctx);
 
         assertEquals("error_fallback", ctx.get("fail_field"));
     }

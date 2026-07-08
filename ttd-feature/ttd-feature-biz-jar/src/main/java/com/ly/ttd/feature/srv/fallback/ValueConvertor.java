@@ -16,6 +16,9 @@ public class ValueConvertor {
 
     public static Object convert(String returnType, String defaultValue) {
         ObjectTypeEnum typeEnum = ObjectTypeEnum.valueOf(returnType);
+        if (null != typeEnum && StringUtils.isEmpty(defaultValue)) {
+            defaultValue = typeEnum.getDefaultValue();
+        }
         switch (typeEnum) {
             case LONG:
                 return Long.parseLong(defaultValue);
@@ -28,7 +31,7 @@ public class ValueConvertor {
             case LIST:
                 return new ArrayList<>();
             case DATE:
-                return StringUtils.isEmpty(defaultValue) ? DateUtil.parse(DateUtil.PATTERN_YYYYMMDDHHMMSS, defaultValue) : null;
+                return StringUtils.isNoneEmpty(defaultValue) ? DateUtil.parse(DateUtil.PATTERN_YYYYMMDDHHMMSS, defaultValue) : null;
             case DICT:
                 return new HashMap<>();
             default:

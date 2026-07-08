@@ -4,6 +4,7 @@ import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.cfg.ThreadPoolNames;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
+import com.ly.ttd.feature.common.enums.RunModeEnum;
 import com.ly.ttd.feature.common.event.doris.VelEventData;
 import com.ly.ttd.feature.common.exception.FeatureBizException;
 import com.ly.ttd.feature.common.model.AccessPointModel;
@@ -20,16 +21,14 @@ import com.ly.ttd.feature.srv.FactorGetValueService;
 import com.ly.ttd.feature.srv.TxnFeatureService;
 import com.ly.ttd.feature.srv.factor.velocity.VelocityAdminService;
 import com.ly.ttd.feature.srv.vel.compile.FieldCodeValue;
+import com.ly.ttd.utils.Md5Util;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -66,6 +65,10 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
                 ctx.setTxnTime(req.getTxnTime());
                 ctx.setTraceId(req.getTraceId());
                 ctx.setReq(req.getReq());
+
+                ctx.setRunMode(req.getRunMode());
+                ctx.setTraceId(req.getTraceId());
+
                 List<VelEventData> eventDataDtos = velocityAdminService.filterVelAndBuildEventData(ctx);
                 TxnFeatureRequest velocityRequest = new TxnFeatureRequest();
                 velocityRequest.setPointCode(req.getPointCode());
@@ -83,6 +86,14 @@ public class FeatureEngineServiceImpl implements FeatureEngineService, FeatureCo
 
     private void validParam(TxnFeatureReq req) throws FeatureBizException {
         String pointCode = req.getPointCode();
+        if (StringUtils.isEmpty(req.getRunMode())) {
+            req.setRunMode(RunModeEnum.TEST.getCode());
+        }
+
+        if (StringUtils.isEmpty(req.getTraceId())) {
+            req.setTraceId(Md5Util.MD5(UUID.randomUUID().toString()));
+        }
+
         AccessPointModel accessPointModel = featureConfiguration.getPointMap().get(pointCode);
         if (null == accessPointModel) {
             throw new FeatureBizException("01", "接入点不存在");
