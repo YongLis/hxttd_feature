@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ProjectUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ProjectUserEntity">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="user_account" property="userAccount"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, user_account,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.projectId != null">
+                AND project_id = #{req.projectId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_project_user
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+
+    <select id="getAll" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ProjectUserEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from ttd_project_user
+        where deleted = 0
+        and project_id = #{projectId}
+    </select>
+
+</mapper>

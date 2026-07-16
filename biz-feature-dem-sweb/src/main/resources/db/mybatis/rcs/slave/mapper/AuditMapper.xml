@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AuditMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AuditEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="resource_type" property="resourceType" jdbcType="VARCHAR"/>
+        <result column="resource_key" property="resourceKey" jdbcType="VARCHAR"/>
+        <result column="resource_name" property="resourceName" jdbcType="VARCHAR"/>
+        <result column="audit_status" property="auditStatus" jdbcType="VARCHAR"/>
+        <result column="operation_type" property="operationType" jdbcType="VARCHAR"/>
+        <result column="before_content" property="beforeContent" jdbcType="LONGVARCHAR"/>
+        <result column="after_content" property="afterContent" jdbcType="LONGVARCHAR"/>
+        <result column="audit_comment" property="auditComment" jdbcType="VARCHAR"/>
+        <result column="submit_user" property="submitUser" jdbcType="VARCHAR"/>
+        <result column="audit_user" property="auditUser" jdbcType="VARCHAR"/>
+        <result column="submit_time" property="submitTime" jdbcType="TIMESTAMP"/>
+        <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 基础查询字段列表 -->
+    <sql id="Base_Column_List">
+        id, resource_type, resource_key, resource_name, audit_status,
+        operation_type, before_content, after_content, audit_comment,
+        submit_user, audit_user, submit_time, audit_time
+    </sql>
+
+    <!-- 查询条件片段 -->
+    <sql id="Query_Condition">
+        <where>
+            <if test="req.resourceKey != null and req.resourceKey != ''">
+                AND resource_key = #{req.resourceKey}
+            </if>
+            <if test="req.resourceType != null and req.resourceType != ''">
+                AND resource_type = #{req.resourceType}
+            </if>
+            <if test="req.auditStatus != null and req.auditStatus != ''">
+                AND audit_status = #{req.auditStatus}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_audit
+        <include refid="Query_Condition"/>
+        ORDER BY submit_time DESC
+    </select>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_audit
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据资源类型和资源key查询 -->
+    <select id="selectByResource" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_audit
+        WHERE resource_type = #{resourceType}
+        AND resource_key = #{resourceKey}
+        ORDER BY submit_time DESC
+    </select>
+    <select id="getWaitAuditCount" resultType="java.lang.Long">
+        select count(*) as num from
+        ttd_audit where resource_key = #{resourceKey}
+        and deleted = 0
+    </select>
+
+</mapper>

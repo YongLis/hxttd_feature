@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.AccessPointParamMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.admin.mybatis.entity.AccessPointParamEntity">
+        <id column="id" property="id"/>
+        <result column="access_point_code" property="accessPointCode"/>
+        <result column="param_name" property="paramName"/>
+        <result column="version" property="version"/>
+        <result column="param_code" property="paramCode"/>
+        <result column="param_type" property="paramType"/>
+        <result column="required" property="required"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="remark" property="remark"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="parent_param_code" property="parentParamCode"/>
+        <result column="param_level" property="paramLevel"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, access_point_code, param_name, version, param_code, param_type,
+        required, default_value, remark, sort_order,
+        parent_param_code, param_level,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+</mapper>

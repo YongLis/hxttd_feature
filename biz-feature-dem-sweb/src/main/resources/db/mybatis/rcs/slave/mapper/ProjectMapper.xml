@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ProjectMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ProjectEntity">
+        <id column="id" property="id"/>
+        <result column="project_code" property="projectCode"/>
+        <result column="name" property="name"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_code, name,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.name != null and req.name != ''">
+                AND name LIKE CONCAT('%', #{req.name}, '%')
+            </if>
+            <if test="req.projectCode != null and req.projectCode != ''">
+                AND project_code = #{req.projectCode}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultType="com.ly.ttd.biz.feature.dem.sweb.service.project.res.ProjectQueryRes">
+        SELECT id, project_code, name,
+               crt_user, crt_time
+        FROM ttd_project
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+
+
+</mapper>

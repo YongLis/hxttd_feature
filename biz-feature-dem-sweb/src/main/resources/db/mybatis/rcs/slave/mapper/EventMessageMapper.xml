@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.EventMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.EventMessageEntity">
+        <id column="id" property="id"/>
+        <result column="event_id" property="eventId"/>
+        <result column="event_type" property="eventType"/>
+        <result column="operation_type" property="operationType"/>
+        <result column="body" property="body"/>
+        <result column="status" property="status"/>
+        <result column="retry_count" property="retryCount"/>
+        <result column="error_message" property="errorMessage"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="upt_user" property="uptUser"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, event_id, event_type, operation_type, body, status,
+        retry_count, error_message, crt_time, upt_time, crt_user, upt_user
+    </sql>
+
+    <sql id="Query_Condition">
+        <where>
+            <if test="req.eventId != null and req.eventId != ''">
+                AND event_id = #{req.eventId}
+            </if>
+            <if test="req.status != null and req.status != ''">
+                AND status = #{req.status}
+            </if>
+            <if test="req.operationType != null and req.operationType != ''">
+                AND operation_type = #{req.operationType}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_event_message
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+</mapper>

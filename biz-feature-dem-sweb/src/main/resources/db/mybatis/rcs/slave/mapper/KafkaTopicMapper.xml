@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.KafkaTopicMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.KafkaTopic">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="partitions" property="partitions"/>
+        <result column="replicas" property="replicas"/>
+        <result column="consumer_group" property="consumerGroup"/>
+        <result column="topic_status" property="topicStatus"/>
+        <result column="remark" property="remark"/>
+        <result column="audit_reason" property="auditReason"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, partitions, replicas, consumer_group,topic_status,
+        remark, audit_reason,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+
+    <select id="selectByTopicName"
+            resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.KafkaTopic">
+        select
+        <include refid="Base_Column_List"/>
+        from ttd_kafka_topic
+        where deleted = 0
+        and name= #{topicName}
+    </select>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.name != null and req.name != ''">
+                AND name LIKE CONCAT('%', #{req.name}, '%')
+            </if>
+            <if test="req.status != null and req.status != ''">
+                AND status = #{req.status}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.KafkaTopic">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_kafka_topic
+        <include refid="Query_Condition"/>
+    </select>
+
+
+</mapper>

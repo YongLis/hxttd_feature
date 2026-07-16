@@ -1,0 +1,21 @@
+package com.ly.ttd.biz.feature.dem.sweb.service.connector.req;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+/**
+ * 连接器更新请求
+ *
+ * @author yong.li
+ * @since 2026-05-27
+ */
+@Data
+public class JdbcConnectorUpdateReq extends JdbcConnectorAddReq {
+
+    @NotNull(message = "ID不能为空")
+    @Schema(description = "连接器ID", example = "1")
+    private Long id;
+
+
+}

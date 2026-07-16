@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="version" property="version"/>
+        <result column="remark" property="remark"/>
+        <result column="project_id" property="projectId"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+        <result column="api_json" property="apiJson"/>
+    </resultMap>
+
+    <!-- 公共查询字段 -->
+    <sql id="Base_Column_List">
+        id, code, name, version, remark, project_id, api_json,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <!-- 分页查询条件片段 -->
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.code != null and req.code != ''">
+                AND code = #{req.code}
+            </if>
+            <if test="req.name != null and req.name != ''">
+                AND name LIKE CONCAT('%', #{req.name}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_access_point
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+    <!-- 根据项目ID查询接入点列表 -->
+    <select id="listByProjectId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_access_point
+        WHERE project_id = #{projectId}
+        AND deleted = 0
+        ORDER BY crt_time DESC
+    </select>
+
+    <!-- 根据编码查询接入点 -->
+    <select id="getByCode" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_access_point
+        WHERE code = #{code}
+        AND deleted = 0
+    </select>
+
+</mapper>

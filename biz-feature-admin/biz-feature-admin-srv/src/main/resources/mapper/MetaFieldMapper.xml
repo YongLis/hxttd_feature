@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.MetaFieldMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.admin.mybatis.entity.MetaFieldEntity">
+        <id column="id" property="id"/>
+        <result column="resource_key" property="resourceKey"/>
+        <result column="resource_name" property="resourceName"/>
+        <result column="version" property="version"/>
+        <result column="project_id" property="projectId"/>
+        <result column="language" property="language"/>
+        <result column="script" property="script"/>
+        <result column="return_type" property="returnType"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="exception_value" property="exceptionValue"/>
+        <result column="category_tag" property="categoryTag"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <!-- 公共查询字段 -->
+    <sql id="Base_Column_List">
+        id, resource_key, resource_name, version, project_id,
+        language, script, return_type, default_value, exception_value,
+        category_tag, crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <!-- 分页查询条件片段 -->
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+
+            <if test="req.resourceName != null and req.resourceName != ''">
+                AND resource_name LIKE CONCAT('%', #{req.resourceName}, '%')
+            </if>
+            <if test="req.resourceKey != null and req.resourceKey != ''">
+                AND resource_key = #{req.resourceKey}
+            </if>
+            <if test="req.categoryTag != null and req.categoryTag != ''">
+                AND category_tag = #{req.categoryTag}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="getByProjectId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_meta_field
+        where project_id = #{projectId}
+        and deleted = 0
+    </select>
+    <select id="selectByResourceKey" resultType="com.ly.ttd.biz.feature.admin.mybatis.entity.MetaFieldEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_meta_field
+        where resource_key = #{resourceKey}
+        and deleted = 0
+    </select>
+
+</mapper>

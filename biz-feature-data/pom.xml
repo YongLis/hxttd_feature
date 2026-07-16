@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ly.ttd</groupId>
+        <artifactId>ttd-parent</artifactId>
+        <version>2026.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ly.ttd</groupId>
+    <artifactId>biz-feature-data</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>biz-feature-data</name>
+    <description>特征数据管理</description>
+    <url>http://maven.apache.org</url>
+
+    <modules>
+        <module>biz-feature-data-api</module>
+        <module>biz-feature-data-srv</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-base</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- ttd-xpro-inf RPC 注解 (仅依赖 rpc-api) -->
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>rpc-api</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <!-- ttd-xpro-inf Nacos RPC 框架 -->
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>rpc-spring-boot-starter</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-base</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.38</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.1.1</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.38</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- 校验规范API -->
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- 校验规范实现 -->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>8.0.2.Final</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

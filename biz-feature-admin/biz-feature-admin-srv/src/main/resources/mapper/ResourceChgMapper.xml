@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.ResourceChgMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.admin.mybatis.entity.ResourceChgEntity">
+        <id column="id" property="id"/>
+        <result column="resource_key" property="resourceKey"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="operation_type" property="operationType"/>
+        <result column="before_version" property="beforeVersion"/>
+        <result column="after_version" property="afterVersion"/>
+        <result column="before_content" property="beforeContent"/>
+        <result column="after_content" property="afterContent"/>
+        <result column="audit_status" property="auditStatus"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="crt_user" property="crtUser"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, resource_key, resource_type, operation_type,
+        before_version, after_version, before_content, after_content,
+        audit_status, crt_time, crt_user
+    </sql>
+
+</mapper>

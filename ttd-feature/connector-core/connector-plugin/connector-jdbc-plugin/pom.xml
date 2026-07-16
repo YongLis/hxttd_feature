@@ -23,11 +23,6 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>utils</artifactId>
-        </dependency>
-
         <!-- Source: https://mvnrepository.com/artifact/com.alibaba/druid -->
         <dependency>
             <groupId>com.alibaba</groupId>

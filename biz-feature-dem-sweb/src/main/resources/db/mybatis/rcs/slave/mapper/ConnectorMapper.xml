@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ConnectorMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ConnectorEntity">
+        <id column="id" property="id"/>
+        <result column="resource_key" property="resourceKey"/>
+        <result column="resource_name" property="resourceName"/>
+        <result column="version" property="version"/>
+        <result column="project_id" property="projectId"/>
+        <result column="connector_type" property="connectorType"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="exception_value" property="exceptionValue"/>
+        <result column="timeout" property="timeout"/>
+        <result column="resource_json" property="resourceJson"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, resource_key, resource_name, version, project_id,
+        connector_type, default_value, exception_value, timeout,
+        resource_json,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.resourceKey != null and req.resourceKey != ''">
+                AND resource_key LIKE CONCAT('%', #{req.resourceKey}, '%')
+            </if>
+            <if test="req.resourceName != null and req.resourceName != ''">
+                AND resource_name LIKE CONCAT('%', #{req.resourceName}, '%')
+            </if>
+            <if test="req.connectorType != null and req.connectorType != ''">
+                AND connector_type = #{req.connectorType}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultType="com.ly.ttd.biz.feature.dem.sweb.service.connector.res.ConnectorQueryRes">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_connector
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+</mapper>

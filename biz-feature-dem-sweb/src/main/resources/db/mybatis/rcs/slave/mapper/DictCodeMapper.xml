@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DictCodeMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.DictCodeEntity">
+        <id column="id" property="id"/>
+        <result column="dict_id" property="dictId"/>
+        <result column="dict_key" property="dictKey"/>
+        <result column="dict_value" property="dictValue"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, dict_id, dict_key, dict_value,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <sql id="Query_Condition">
+        <where>
+            <if test="req.dictId != null">
+                AND dict_id = #{req.dictId}
+            </if>
+            <if test="req.dictKey != null and req.dictKey != ''">
+                AND dict_key LIKE CONCAT('%', #{req.dictKey}, '%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_dict_code
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+</mapper>

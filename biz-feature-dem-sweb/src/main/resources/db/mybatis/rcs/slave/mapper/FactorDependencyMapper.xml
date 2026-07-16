@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FactorDependencyMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorDependencyEntity">
+        <id column="id" property="id"/>
+        <result column="project_id" property="projectId"/>
+        <result column="parent" property="parent"/>
+        <result column="parent_type" property="parentType"/>
+        <result column="child" property="child"/>
+        <result column="crt_user" property="crtUser"/>
+        <result column="crt_time" property="crtTime"/>
+        <result column="upt_user" property="uptUser"/>
+        <result column="upt_time" property="uptTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, parent, parent_type, child,
+        crt_user, crt_time, upt_user, upt_time, deleted
+    </sql>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+
+            <if test="req.projectId != null">
+                AND project_id = #{req.projectId}
+            </if>
+            <if test="req.factorCode != null and req.factorCode != ''">
+                <choose>
+                    <when test="req.direction == 'UP'">
+                        AND parent = #{req.factorCode}
+                    </when>
+                    <when test="req.direction == 'DOWN'">
+                        AND child = #{req.factorCode}
+                    </when>
+                    <otherwise>
+                        AND (parent = #{req.factorCode} OR child = #{req.factorCode})
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="pageQuery" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_factor_dependency
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+    <update id="removeDependency">
+        update ttd_factor_dependency set deleted = 1
+        where project_id = #{projectId}
+        and parent = #{parent}
+    </update>
+
+
+    <select id="queryDependency" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorDependencyEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_factor_dependency
+        where deleted = 0
+        and project_id = #{projectId}
+        <if test="parents != null and parents.size() > 0">
+            AND parent IN
+            <foreach collection="parents" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+    <select id="queryUpstreamDependency"
+            resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorDependencyEntity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ttd_factor_dependency
+        where deleted = 0
+        and project_id = #{projectId}
+        <if test="childs != null and childs.size() > 0">
+            AND child IN
+            <foreach collection="childs" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

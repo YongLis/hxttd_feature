@@ -241,6 +241,18 @@ export default [
     },
 
     {
+        path: '/data-pipeline',
+        name: '数据通道',
+        routes: [
+            {
+                path: '/data-pipeline/kafka-topic',
+                name: '主题管理',
+                component: './kafkaTopic/KafkaTopicIndex'
+            },
+        ]
+    },
+
+    {
         path: '/audit',
         name: '审核管理',
         routes: [

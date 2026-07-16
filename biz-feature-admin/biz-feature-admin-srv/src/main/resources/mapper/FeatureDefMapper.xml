@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.FeatureDefMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.admin.mybatis.entity.FeatureDef">
+        <id property="defId" column="def_id" jdbcType="BIGINT"/>
+        <result property="featureName" column="feature_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="objectType" column="object_type" jdbcType="VARCHAR"/>
+        <result property="transform" column="transform" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
+        <result property="viewId" column="view_id" jdbcType="VARCHAR"/>
+        <result property="crtUser" column="crt_user" jdbcType="VARCHAR"/>
+        <result property="uptUser" column="upt_user" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="uptTime" column="upt_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        def_id,feature_name,remark,
+        object_type,transform,version,
+        view_id,crt_user,upt_user,
+        crt_time,upt_time,deleted
+    </sql>
+
+
+</mapper>

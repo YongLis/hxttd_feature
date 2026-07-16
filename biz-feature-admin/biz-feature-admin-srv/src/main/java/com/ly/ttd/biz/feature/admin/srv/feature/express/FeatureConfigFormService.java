@@ -1,0 +1,22 @@
+package com.ly.ttd.biz.feature.admin.srv.feature.express;
+
+
+import com.ly.ttd.feature.admin.api.dto.FeatureConfigForm;
+import com.ly.ttd.feature.common.exception.FeatureBizException;
+import com.ly.ttd.feature.common.model.vel.FeatureConfigModel;
+
+/**
+ * 表单配置转脚本
+ *
+ * @author yong.li
+ * @since 2026/6/2 14:51
+ */
+public interface FeatureConfigFormService {
+
+
+    /**
+     * 表单转脚本
+     */
+    FeatureConfigModel convertForm(FeatureConfigForm form) throws FeatureBizException;
+
+}
