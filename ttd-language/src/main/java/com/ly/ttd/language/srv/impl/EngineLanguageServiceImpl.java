@@ -1,7 +1,7 @@
 package com.ly.ttd.language.srv.impl;
 
-import com.ly.ttd.feature.common.language.ScriptVariable;
 import com.ly.ttd.language.srv.ScriptLanguageService;
+import com.ly.ttd.language.srv.req.ScriptVariable;
 import org.springframework.stereotype.Service;
 
 /**

@@ -2,9 +2,9 @@ package com.ly.ttd.language.srv.impl.aviator.fun.seq;
 
 import com.googlecode.aviator.runtime.function.seq.SeqNewMapFunction;
 import com.googlecode.aviator.runtime.type.AviatorObject;
-import com.ly.ttd.feature.common.tip.FunctionDef;
-import com.ly.ttd.feature.common.tip.MethodName;
 import com.ly.ttd.language.srv.impl.aviator.fun.TtdAviatorDefineFun;
+import com.ly.ttd.language.srv.tip.FunctionDef;
+import com.ly.ttd.language.srv.tip.MethodName;
 
 import java.util.Map;
 

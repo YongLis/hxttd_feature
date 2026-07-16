@@ -2,9 +2,9 @@ package com.ly.ttd.feature.srv.meta;
 
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.common.ctx.TxnParamContext;
-import com.ly.ttd.feature.common.language.ScriptVariable;
 import com.ly.ttd.feature.common.model.meta.MetaFieldModel;
 import com.ly.ttd.language.srv.ScriptLanguageService;
+import com.ly.ttd.language.srv.req.ScriptVariable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

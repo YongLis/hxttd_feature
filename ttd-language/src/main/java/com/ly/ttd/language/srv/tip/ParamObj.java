@@ -1,4 +1,4 @@
-package com.ly.ttd.feature.common.tip;
+package com.ly.ttd.language.srv.tip;
 
 /**
  * @author yong.li

@@ -1,9 +1,9 @@
 package com.ly.ttd.language.srv;
 
-import com.ly.ttd.feature.common.tip.FunctionDef;
-import com.ly.ttd.feature.common.tip.FunctionTip;
-import com.ly.ttd.feature.common.tip.MethodName;
-import com.ly.ttd.feature.common.tip.ParamObj;
+import com.ly.ttd.language.srv.tip.FunctionDef;
+import com.ly.ttd.language.srv.tip.FunctionTip;
+import com.ly.ttd.language.srv.tip.MethodName;
+import com.ly.ttd.language.srv.tip.ParamObj;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;

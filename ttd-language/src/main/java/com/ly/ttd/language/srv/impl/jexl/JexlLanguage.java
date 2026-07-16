@@ -1,9 +1,9 @@
 package com.ly.ttd.language.srv.impl.jexl;
 
-import com.ly.ttd.feature.common.enums.ScriptType;
-import com.ly.ttd.feature.common.tip.FunctionTip;
+import com.ly.ttd.language.srv.consts.ScriptType;
 import com.ly.ttd.language.srv.impl.AbstractLanguageEngine;
 import com.ly.ttd.language.srv.impl.jexl.fun.JexlFunction;
+import com.ly.ttd.language.srv.tip.FunctionTip;
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlScript;
 import org.apache.commons.jexl3.MapContext;

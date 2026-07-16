@@ -1,6 +1,5 @@
-package com.ly.ttd.feature.engine.req;
+package com.ly.ttd.feature.api.req;
 
-import com.ly.ttd.feature.common.enums.RunModeEnum;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -16,27 +15,28 @@ import java.util.Map;
 @Data
 public class TxnFeatureReq {
     // 运行模式(不保存trace)
-    private String runMode = RunModeEnum.TEST.getCode();
+    @NotBlank(message = "运行模式不允许为空")
+    private String runMode;
 
     /**
      * 交易号
      */
-    @NotBlank(message = "交易号不能为空")
+    @NotBlank(message = "交易号不允许为空")
     private String txnId;
     /**
      * 接入点编码
      */
-    @NotBlank(message = "接入点编码不能为空")
+    @NotBlank(message = "接入点编码不允许为空")
     private String pointCode;
     /**
      * 业务代码
      */
-    @NotBlank(message = "业务代码不能为空")
+    @NotBlank(message = "业务代码不允许为空")
     private String bizCode;
     /**
      * 交易时间
      */
-    @NotBlank(message = "交易时间不能为空")
+    @NotBlank(message = "交易时间不允许为空")
     private Date txnTime;
 
     private String traceId;

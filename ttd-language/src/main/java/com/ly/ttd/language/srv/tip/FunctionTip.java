@@ -1,4 +1,4 @@
-package com.ly.ttd.feature.common.tip;
+package com.ly.ttd.language.srv.tip;
 
 
 import java.util.List;

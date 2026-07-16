@@ -1,5 +1,9 @@
 package com.ly.ttd.feature.engine.impl;
 
+import com.ly.ttd.feature.api.req.ModelQueryReq;
+import com.ly.ttd.feature.api.req.SingleQueryReq;
+import com.ly.ttd.feature.api.req.TxnFeatureReq;
+import com.ly.ttd.feature.api.res.ExecuteResult;
 import com.ly.ttd.feature.cfg.FeatureConfiguration;
 import com.ly.ttd.feature.cfg.FeatureConfigurationAware;
 import com.ly.ttd.feature.cfg.ThreadPoolNames;
@@ -12,10 +16,6 @@ import com.ly.ttd.feature.common.model.struct.DataStructModel;
 import com.ly.ttd.feature.common.model.struct.FieldModel;
 import com.ly.ttd.feature.engine.FeatureEngineService;
 import com.ly.ttd.feature.engine.config.TtdFeatureConfig;
-import com.ly.ttd.feature.engine.req.ModelQueryReq;
-import com.ly.ttd.feature.engine.req.SingleQueryReq;
-import com.ly.ttd.feature.engine.req.TxnFeatureReq;
-import com.ly.ttd.feature.engine.res.ExecuteResult;
 import com.ly.ttd.feature.request.TxnFeatureRequest;
 import com.ly.ttd.feature.srv.FactorGetValueService;
 import com.ly.ttd.feature.srv.TxnFeatureService;

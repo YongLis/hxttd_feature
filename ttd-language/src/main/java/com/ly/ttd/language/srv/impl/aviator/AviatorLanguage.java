@@ -2,10 +2,10 @@ package com.ly.ttd.language.srv.impl.aviator;
 
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.runtime.function.math.MathAbsFunction;
-import com.ly.ttd.feature.common.enums.ScriptType;
-import com.ly.ttd.feature.common.tip.FunctionTip;
 import com.ly.ttd.language.srv.FunctionTipsLoader;
+import com.ly.ttd.language.srv.consts.ScriptType;
 import com.ly.ttd.language.srv.impl.AbstractLanguageEngine;
+import com.ly.ttd.language.srv.tip.FunctionTip;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

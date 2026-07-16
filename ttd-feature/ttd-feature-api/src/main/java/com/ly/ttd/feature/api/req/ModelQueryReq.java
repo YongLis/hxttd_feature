@@ -1,6 +1,5 @@
-package com.ly.ttd.feature.engine.req;
+package com.ly.ttd.feature.api.req;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -14,6 +13,5 @@ public class ModelQueryReq extends TxnFeatureReq {
     /**
      * 按模型查询
      */
-    @NotBlank(message = "模型编码不能为空")
     private String modelCode;
 }

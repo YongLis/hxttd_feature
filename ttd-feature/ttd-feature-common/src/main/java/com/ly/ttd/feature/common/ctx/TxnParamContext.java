@@ -4,7 +4,7 @@ import com.ly.ttd.feature.common.consts.TxnConsts;
 import com.ly.ttd.feature.common.enums.RunModeEnum;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

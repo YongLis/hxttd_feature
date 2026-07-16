@@ -1,6 +1,7 @@
 package com.ly.ttd.language.srv;
 
-import com.ly.ttd.feature.common.language.ScriptVariable;
+
+import com.ly.ttd.language.srv.req.ScriptVariable;
 
 /**
  * @author yong.li

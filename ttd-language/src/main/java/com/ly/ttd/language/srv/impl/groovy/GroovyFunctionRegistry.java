@@ -4,7 +4,6 @@ import com.ly.ttd.language.srv.impl.groovy.fun.GroovyFun;
 import groovy.lang.Binding;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,6 @@ import java.util.Map;
  * @since 2026/7/1 11:04
  */
 @Component
-@Slf4j
 public class GroovyFunctionRegistry {
     @Resource
     private ListableBeanFactory beanFactory;
@@ -35,7 +33,6 @@ public class GroovyFunctionRegistry {
                 throw new IllegalStateException("函数名重复: " + name);
             }
             functionMap.put(name, fun);
-            log.info("注册 Groovy 函数: " + name + " -> " + fun.getClass().getSimpleName());
         }
     }
 

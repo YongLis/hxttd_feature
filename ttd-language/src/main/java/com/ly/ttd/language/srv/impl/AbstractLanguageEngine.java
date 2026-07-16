@@ -1,7 +1,7 @@
 package com.ly.ttd.language.srv.impl;
 
 
-import com.ly.ttd.feature.common.tip.FunctionTip;
+import com.ly.ttd.language.srv.tip.FunctionTip;
 
 import java.util.List;
 import java.util.Map;

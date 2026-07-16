@@ -24,6 +24,7 @@ public enum FeatureResourceType {
     CONNECTOR_HTTP("CONNECTOR_HTTP", "连接器", "C"),
     KAFKA_TOPIC("KAFKA_TOPIC", "Kafka主题", "T"),
     TABLE_DEF("TABLE_DEF", "表定义", "E"),
+    PIPE_TASK("PIPE_TASK", "管道任务", "P"),
 
 
     ;

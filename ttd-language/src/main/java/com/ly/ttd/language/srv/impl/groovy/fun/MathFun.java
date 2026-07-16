@@ -1,7 +1,7 @@
 package com.ly.ttd.language.srv.impl.groovy.fun;
 
-import com.ly.ttd.feature.common.tip.FunctionDef;
-import com.ly.ttd.feature.common.tip.MethodName;
+import com.ly.ttd.language.srv.tip.FunctionDef;
+import com.ly.ttd.language.srv.tip.MethodName;
 
 /**
  * @author yong.li

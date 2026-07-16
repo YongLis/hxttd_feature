@@ -28,11 +28,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.ly.ttd</groupId>-->
-        <!--            <artifactId>ttd-const</artifactId>-->
-        <!--            <scope>compile</scope>-->
-        <!--        </dependency>-->
 
         <dependency>
             <groupId>commons-collections</groupId>
@@ -56,21 +51,22 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.ly.ttd</groupId>
-            <artifactId>utils</artifactId>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ly.ttd</groupId>
+            <artifactId>ttd-utils</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.4</version>
-            <scope>compile</scope>
-        </dependency>
+
         <!-- Source: https://mvnrepository.com/artifact/commons-jxpath/commons-jxpath -->
         <dependency>
             <groupId>commons-jxpath</groupId>
@@ -83,6 +79,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>33.2.1-jre</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>tools.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-smile</artifactId>
+            <version>3.2.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

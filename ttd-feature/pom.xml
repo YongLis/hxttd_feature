@@ -22,6 +22,7 @@
         <module>ttd-feature-biz-jar</module>
         <module>connector-core</module>
         <module>ttd-feature-engine</module>
+        <module>ttd-feature-api</module>
     </modules>
 
     <properties>
@@ -149,7 +150,13 @@
             <dependency>
                 <groupId>tools.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>3.1.3</version>
+                <version>3.2.0</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>3.2.0</version>
                 <scope>compile</scope>
             </dependency>
 
@@ -164,11 +171,6 @@
                 <artifactId>jackson-dataformat-smile</artifactId>
                 <version>2.20.1</version>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-hibernate5-jakarta</artifactId>
-                <version>2.20.1</version>
-            </dependency>
 
             <!-- 工具依赖 -->
             <dependency>
@@ -181,13 +183,6 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>2.0.15</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.ly.ttd</groupId>
-                <artifactId>utils</artifactId>
-                <version>${ttd.engine.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.ly.ttd</groupId>
                 <artifactId>ttd-feature-common</artifactId>
@@ -337,12 +332,22 @@
                 <artifactId>ttd-language</artifactId>
                 <version>2026.0.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-feature-api</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>2.3.232</version> <!-- 建议使用最新稳定版 -->
                 <scope>test</scope> <!-- 如果只在测试中使用，可添加此范围 -->
+            </dependency>
+            <dependency>
+                <groupId>com.ly.ttd</groupId>
+                <artifactId>ttd-utils</artifactId>
+                <version>2026.0.0-SNAPSHOT</version>
             </dependency>
 
         </dependencies>

@@ -73,6 +73,10 @@
             <artifactId>spring-core</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ly.ttd</groupId>
+            <artifactId>ttd-feature-api</artifactId>
+        </dependency>
 
         <!-- 校验规范API -->
         <dependency>

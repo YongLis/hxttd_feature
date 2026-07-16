@@ -1,11 +1,11 @@
 package com.ly.ttd.language.srv.impl.groovy;
 
 import com.alibaba.fastjson.JSON;
-import com.ly.ttd.feature.common.enums.ScriptType;
-import com.ly.ttd.feature.common.tip.FunctionTip;
+import com.ly.ttd.language.srv.consts.ScriptType;
 import com.ly.ttd.language.srv.impl.groovy.fun.GroovyFun;
 import com.ly.ttd.language.srv.impl.groovy.fun.ListFun;
 import com.ly.ttd.language.srv.impl.groovy.fun.MathFun;
+import com.ly.ttd.language.srv.tip.FunctionTip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

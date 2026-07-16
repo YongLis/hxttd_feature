@@ -3,6 +3,8 @@ package com.ly.ttd.nacos.kafka.client;
 import com.ly.ttd.nacos.util.EnvPropertyUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.KafkaAdminClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -29,6 +31,21 @@ public class KafkaConfig {
 
     private static final String PRODUCER_PREFIX = "spring.kafka.producer.";
     private static final String CONSUMER_PREFIX = "spring.kafka.consumer.";
+
+    @Bean
+    public AdminClient buildKafkaClient() {
+        String bootstrapServers = env.getProperty("spring.kafka.bootstrap.servers");
+        if (bootstrapServers == null || bootstrapServers.isEmpty()) {
+            throw new IllegalStateException("spring.kafka.bootstrap.servers is missing");
+        }
+
+        Properties properties = EnvPropertyUtil.collect(env, PRODUCER_PREFIX);
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+
+        log.info("Kafka producer config loaded, bootstrap={}", bootstrapServers);
+        return KafkaAdminClient.create(properties);
+    }
+
 
     @Bean
     public KafkaProducer<String, String> buildKafkaProducer() {

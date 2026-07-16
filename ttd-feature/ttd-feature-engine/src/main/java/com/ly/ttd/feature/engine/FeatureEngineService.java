@@ -1,10 +1,10 @@
 package com.ly.ttd.feature.engine;
 
+import com.ly.ttd.feature.api.req.ModelQueryReq;
+import com.ly.ttd.feature.api.req.SingleQueryReq;
+import com.ly.ttd.feature.api.req.TxnFeatureReq;
+import com.ly.ttd.feature.api.res.ExecuteResult;
 import com.ly.ttd.feature.common.exception.FeatureBizException;
-import com.ly.ttd.feature.engine.req.ModelQueryReq;
-import com.ly.ttd.feature.engine.req.SingleQueryReq;
-import com.ly.ttd.feature.engine.req.TxnFeatureReq;
-import com.ly.ttd.feature.engine.res.ExecuteResult;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Map;

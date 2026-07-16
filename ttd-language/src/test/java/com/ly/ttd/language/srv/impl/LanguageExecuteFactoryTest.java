@@ -1,6 +1,6 @@
 package com.ly.ttd.language.srv.impl;
 
-import com.ly.ttd.feature.common.tip.FunctionTip;
+import com.ly.ttd.language.srv.tip.FunctionTip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.ly.ttd.feature.common.model.factor;
 
 import lombok.Data;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
