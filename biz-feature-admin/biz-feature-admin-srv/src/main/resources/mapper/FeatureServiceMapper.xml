@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.admin.mybatis.mapper.FeatureServiceMapper">
+<mapper namespace="com.ly.ttd.biz.feature.admin.mybatis.mapper.FeatureServiceMapper">
 
     <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.admin.mybatis.entity.FeatureService">
         <id property="serviceId" column="service_id" jdbcType="BIGINT"/>
