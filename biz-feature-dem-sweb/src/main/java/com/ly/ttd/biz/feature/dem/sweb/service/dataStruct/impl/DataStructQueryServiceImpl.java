@@ -2,16 +2,17 @@ package com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.DataStructEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.DataStructMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.DataStructQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.req.DataStructQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.res.DataStructQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.DataStructEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DataStructMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +30,9 @@ public class DataStructQueryServiceImpl implements DataStructQueryService {
     public PageResult<DataStructQueryRes> pageQuery(DataStructQueryReq req) {
         PageResult<DataStructQueryRes> result = new PageResult<>();
         Page<DataStructEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        dataStructMapper.pageQuery(page, req);
+        List<DataStructEntity> records = dataStructMapper.pageQuery(page, req);
+        page.setRecords(records);
+
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             result.setData(page.getRecords().stream().map(e -> {
                 DataStructQueryRes res = new DataStructQueryRes();

@@ -5,13 +5,14 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.dict.DictQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.dict.req.DictQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.dict.res.DictQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.DictEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DictMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.DictEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.DictMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +30,8 @@ public class DictQueryServiceImpl implements DictQueryService {
     public PageResult<DictQueryRes> pageQuery(DictQueryReq req) {
         PageResult<DictQueryRes> result = new PageResult<>();
         Page<DictEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        dictMapper.pageQuery(page, req);
+        List<DictEntity> records = dictMapper.pageQuery(page, req);
+        page.setRecords(records);
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             result.setData(page.getRecords().stream().map(e -> {
                 DictQueryRes res = new DictQueryRes();

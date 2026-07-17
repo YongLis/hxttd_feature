@@ -1,13 +1,11 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.metaField.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.MetaFieldMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.MetaFieldAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.MetaFieldAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.MetaFieldUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.MetaFieldMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dto.MetaFieldDto;
 import com.ly.ttd.feature.admin.api.metaField.MetaFieldService;
@@ -45,10 +43,7 @@ public class MetaFieldAdminServiceImpl implements MetaFieldAdminService {
         dto.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<MetaFieldEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (metaFieldMapper.selectCount(checkWrapper) > 0) {
+        if (metaFieldMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);

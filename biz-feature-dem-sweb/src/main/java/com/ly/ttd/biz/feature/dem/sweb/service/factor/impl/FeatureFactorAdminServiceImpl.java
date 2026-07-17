@@ -6,8 +6,8 @@ import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.FeatureFactorAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.FeatureFactorAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.FeatureFactorUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FactorMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FactorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FactorMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dto.FactorDto;
 import com.ly.ttd.feature.admin.api.factor.FeatureFactorService;
@@ -43,10 +43,7 @@ public class FeatureFactorAdminServiceImpl implements FeatureFactorAdminService 
         dto.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<FactorEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (factorMapper.selectCount(checkWrapper) > 0) {
+        if (factorMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
 

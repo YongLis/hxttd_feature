@@ -1,13 +1,11 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.KafkaTopicMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.KafkaTopicAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.KafkaTopic;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.KafkaTopicMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.project.ProjectAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dto.KafkaTopicDto;
@@ -40,10 +38,8 @@ public class KafkaTopicAdminServiceImpl implements KafkaTopicAdminService {
         KafkaTopicDto dto = convertDto(req);
 
         // 检查资源键唯一性
-        QueryWrapper<KafkaTopic> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("name", req.getName());
-        checkWrapper.eq("deleted", false);
-        if (kafkaTopicMapper.selectCount(checkWrapper) > 0) {
+
+        if (kafkaTopicMapper.selectCountByName(req.getName()) > 0) {
             throw new BizException("topic已存在");
         }
         auditQueryService.waitAuditCheck(req.getName());

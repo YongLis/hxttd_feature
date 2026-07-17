@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AccessPointMapper">
 
     <!-- 结果映射 -->
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointEntity">
         <id column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="name" property="name"/>
@@ -65,4 +65,28 @@
         AND deleted = 0
     </select>
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_access_point
+        WHERE id = #{id} AND deleted = 0
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_access_point
+        WHERE deleted = 0
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询总数 -->
+        <select id="selectCountByKey" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ttd_access_point
+        WHERE deleted = 0
+        AND code = #{key}
+    </select>
 </mapper>

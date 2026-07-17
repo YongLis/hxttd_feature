@@ -2,7 +2,7 @@ package com.ly.ttd.biz.feature.dem.sweb.service.audit.res;
 
 import com.alibaba.fastjson.JSON;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.res.FeatureFactorDetailRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FactorEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

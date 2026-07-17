@@ -1,18 +1,18 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.KafkaTopic;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.KafkaTopicMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.KafkaTopicQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.res.KafkaTopicDetail;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.KafkaTopic;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.KafkaTopicMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -32,13 +32,14 @@ public class KafkaTopicQueryServiceImpl implements KafkaTopicQueryService {
     public PageResult<KafkaTopicDetail> pageQuery(KafkaTopicQueryReq req) {
         PageResult<KafkaTopicDetail> result = new PageResult<>();
         Page<KafkaTopic> page = new Page<>(req.getCurrent(), req.getPageSize());
-        IPage<KafkaTopic> iPage = kafkaTopicMapper.pageQuery(page, req);
-        if (CollectionUtils.isNotEmpty(iPage.getRecords())) {
-            result.setData(iPage.getRecords().stream().map(this::entityConvert).collect(Collectors.toList()));
+        List<KafkaTopic> records = kafkaTopicMapper.pageQuery(page, req);
+        page.setRecords(records);
+        if (CollectionUtils.isNotEmpty(records)) {
+            result.setData(records.stream().map(this::entityConvert).collect(Collectors.toList()));
         }
-        result.setTotal(iPage.getTotal());
-        result.setCurrent(iPage.getCurrent());
-        result.setPageSize(iPage.getSize());
+        result.setTotal(page.getTotal());
+        result.setCurrent(page.getCurrent());
+        result.setPageSize(page.getSize());
         result.setCode("0000");
         return result;
     }

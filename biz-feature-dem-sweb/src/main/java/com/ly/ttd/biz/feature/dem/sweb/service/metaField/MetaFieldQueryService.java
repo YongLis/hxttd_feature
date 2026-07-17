@@ -4,7 +4,7 @@ package com.ly.ttd.biz.feature.dem.sweb.service.metaField;
 import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.MetaFieldQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.MetaFieldQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.MetaFieldEntity;
 
 import java.util.List;
 import java.util.Map;

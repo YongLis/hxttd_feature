@@ -6,8 +6,8 @@ import com.ly.ttd.biz.feature.dem.sweb.service.feature.FeatureConfigQueryService
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.req.FeatureConfigQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigListRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FeatureConfigMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FeatureConfigMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
@@ -29,9 +29,10 @@ public class FeatureConfigQueryServiceImpl implements FeatureConfigQueryService 
     public PageResult<FeatureConfigQueryRes> pageQuery(FeatureConfigQueryReq req) {
         PageResult<FeatureConfigQueryRes> result = new PageResult<>();
         Page<FeatureConfigEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        featureConfigMapper.pageQuery(page, req);
-        if (CollectionUtils.isNotEmpty(page.getRecords())) {
-            result.setData(page.getRecords().stream().map(e -> {
+        List<FeatureConfigEntity> records = featureConfigMapper.pageQuery(page, req);
+        page.setRecords(records);
+        if (CollectionUtils.isNotEmpty(records)) {
+            result.setData(records.stream().map(e -> {
                 FeatureConfigQueryRes res = new FeatureConfigQueryRes();
                 res.setId(e.getId());
                 res.setResourceKey(e.getResourceKey());

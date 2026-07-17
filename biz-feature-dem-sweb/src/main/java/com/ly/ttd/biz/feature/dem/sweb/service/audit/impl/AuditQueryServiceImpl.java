@@ -3,17 +3,18 @@ package com.ly.ttd.biz.feature.dem.sweb.service.audit.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.exception.BizException;
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AuditEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AuditMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.req.AuditQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.res.AuditDetail;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.res.AuditQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AuditEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AuditMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +30,9 @@ public class AuditQueryServiceImpl implements AuditQueryService {
     public PageResult<AuditQueryRes> pageQuery(AuditQueryReq req) {
         PageResult<AuditQueryRes> result = new PageResult<>();
         Page<AuditEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        auditMapper.pageQuery(page, req);
-        if (CollectionUtils.isNotEmpty(page.getRecords())) {
-            result.setData(page.getRecords().stream().map(t -> {
+        List<AuditEntity> records = auditMapper.pageQuery(page, req);
+        if (CollectionUtils.isNotEmpty(records)) {
+            result.setData(records.stream().map(t -> {
                 AuditQueryRes res = new AuditQueryRes();
                 res.setId(t.getId());
                 res.setResourceType(t.getResourceType());

@@ -2,8 +2,8 @@ package com.ly.ttd.biz.feature.dem.sweb.service.project.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ProjectUserEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ProjectUserMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ProjectUserEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.ProjectUserMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.project.ProjectUserQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.project.req.ProjectUserQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.project.res.ProjectUserQueryRes;
@@ -28,8 +28,9 @@ public class ProjectUserQueryServiceImpl implements ProjectUserQueryService {
     public PageResult<ProjectUserQueryRes> pageQuery(ProjectUserQueryReq req) {
         PageResult<ProjectUserQueryRes> result = new PageResult<>();
         Page<ProjectUserEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        projectUserMapper.pageQuery(page, req);
-        List<ProjectUserQueryRes> list = page.getRecords().stream()
+        List<ProjectUserEntity> records = projectUserMapper.pageQuery(page, req);
+        page.setRecords(records);
+        List<ProjectUserQueryRes> list = records.stream()
                 .map(t -> entityConvertRes(t)).toList();
 
         result.setData(list);

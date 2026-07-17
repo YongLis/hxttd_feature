@@ -180,6 +180,7 @@ const MetaFieldIndex: React.FC = () => {
     ];
 
     return (
+      <>
         <CustomPageContainer title={false}>
             <CustomProTable<MetaFieldDetail>
                 actionRef={actionRef}
@@ -207,23 +208,22 @@ const MetaFieldIndex: React.FC = () => {
                 }}
                 columns={columns}
             />
-
-            {
-                showDepModal &&
-                <React.Suspense fallback={<Spin tip="加载血缘组件..."
-                                                style={{display: 'flex', justifyContent: 'center', padding: 80}}>
-                    <div/>
-                </Spin>}>
-                    <LineageGraph
-                        resourceKey={resourceKey}
-                        resourceType={'META'}
-                        visible={showDepModal}
-                        onCancel={() => setShowDepModal(false)}/>
-                </React.Suspense>
-            }
-
-
         </CustomPageContainer>
+        {
+            showDepModal &&
+            <React.Suspense fallback={
+            <Spin tip="加载血缘组件..."
+                                            style={{display: 'flex', justifyContent: 'center', padding: 80}}>
+                <div/>
+            </Spin>}>
+                <LineageGraph
+                    resourceKey={resourceKey}
+                    resourceType={'META'}
+                    visible={showDepModal}
+                    onCancel={() => setShowDepModal(false)}/>
+            </React.Suspense>
+        }
+        </>
     );
 };
 

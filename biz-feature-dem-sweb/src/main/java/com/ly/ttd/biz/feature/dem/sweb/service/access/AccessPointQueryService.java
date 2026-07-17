@@ -5,7 +5,7 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointDocRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointEntity;
 
 import java.util.List;
 

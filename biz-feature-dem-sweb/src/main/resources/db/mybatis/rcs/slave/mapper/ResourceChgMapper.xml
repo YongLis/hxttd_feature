@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ResourceChgMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.ResourceChgMapper">
 
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ResourceChgEntity">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ResourceChgEntity">
         <id column="id" property="id"/>
         <result column="resource_key" property="resourceKey"/>
         <result column="resource_type" property="resourceType"/>
@@ -22,4 +22,22 @@
         audit_status, crt_time, crt_user
     </sql>
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_resource_chg
+        WHERE id = #{id}
+    </select>
+
+    <select id="pageQuery"
+            resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ResourceChgEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from ttd_resource_chg
+        where deleted = 0
+        and resource_key = #{resourceKey}
+        order by crt_time desc
+    </select>
 </mapper>

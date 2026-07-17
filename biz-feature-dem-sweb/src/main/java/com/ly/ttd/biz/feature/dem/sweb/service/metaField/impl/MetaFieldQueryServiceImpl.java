@@ -5,8 +5,8 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.MetaFieldQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.MetaFieldQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.MetaFieldQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.MetaFieldMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.MetaFieldEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.MetaFieldMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import jakarta.annotation.Resource;
@@ -33,7 +33,8 @@ public class MetaFieldQueryServiceImpl implements MetaFieldQueryService {
     public PageResult<MetaFieldQueryRes> pageQuery(MetaFieldQueryReq req) {
         PageResult<MetaFieldQueryRes> result = new PageResult<>();
         Page<MetaFieldEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        metaFieldMapper.pageQuery(page, req);
+        List<MetaFieldEntity> records = metaFieldMapper.pageQuery(page, req);
+        page.setRecords(records);
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             List<MetaFieldQueryRes> list = page.getRecords().stream().map(MetaFieldQueryServiceImpl::convertRes).collect(Collectors.toList());
             result.setData(list);

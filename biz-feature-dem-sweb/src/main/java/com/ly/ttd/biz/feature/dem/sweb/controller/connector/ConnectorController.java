@@ -7,7 +7,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.connector.ConnectorAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.ConnectorQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.req.*;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.res.ConnectorQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ConnectorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ConnectorEntity;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

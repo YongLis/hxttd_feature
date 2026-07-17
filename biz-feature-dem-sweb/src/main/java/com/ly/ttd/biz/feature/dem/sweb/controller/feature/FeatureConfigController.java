@@ -12,7 +12,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.feature.req.FeatureConfigUpdateRe
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigDetailRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigListRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

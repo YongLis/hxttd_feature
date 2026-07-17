@@ -1,13 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.DataStructEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.DataStructMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.DataStructAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.req.DataStructAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.dataStruct.req.DataStructUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.DataStructEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DataStructMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dataStruct.DataStructService;
 import com.ly.ttd.feature.admin.api.dto.DataStructDto;
@@ -44,10 +43,7 @@ public class DataStructAdminServiceImpl implements DataStructAdminService {
         req.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<DataStructEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (dataStructMapper.selectCount(checkWrapper) > 0) {
+        if (dataStructMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);

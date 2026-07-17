@@ -1,13 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.access.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AccessPointMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.AccessPointAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointUpdateReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.sequence.SequenceQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.access.AccessPointService;
@@ -45,15 +44,10 @@ public class AccessPointAdminServiceImpl implements AccessPointAdminService {
         AccessPointDto dto = convertDto(req);
 
         // 检查资源键唯一性
-        QueryWrapper<AccessPointEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("point_code", req.getCode());
-        checkWrapper.eq("deleted", false);
-        if (accessPointMapper.selectCount(checkWrapper) > 0) {
+        if (accessPointMapper.selectCountByKey(req.getCode()) > 0) {
             throw new BizException("资源键已存在");
         }
-
         accessPointService.add(dto);
-
     }
 
 

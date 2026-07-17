@@ -5,8 +5,8 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.FactorDependencyQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.FactorDependencyQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.res.FactorDependencyQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorDependencyEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FactorDependencyMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FactorDependencyEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FactorDependencyMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
@@ -33,7 +33,8 @@ public class FactorDependencyQueryServiceImpl implements FactorDependencyQuerySe
     public PageResult<FactorDependencyQueryRes> pageQuery(FactorDependencyQueryReq req) {
         PageResult<FactorDependencyQueryRes> result = new PageResult<>();
         Page<FactorDependencyEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        factorDependencyMapper.pageQuery(page, req);
+        List<FactorDependencyEntity> records = factorDependencyMapper.pageQuery(page, req);
+        page.setRecords(records);
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             result.setData(page.getRecords().stream().map(t -> {
                 FactorDependencyQueryRes res = new FactorDependencyQueryRes();
@@ -95,7 +96,7 @@ public class FactorDependencyQueryServiceImpl implements FactorDependencyQuerySe
         if (CollectionUtils.isEmpty(dependencyEntities)) {
             return;
         }
-        factorDependencyMapper.insert(dependencyEntities);
+//        factorDependencyMapper.insert(dependencyEntities);
     }
 
     private void queryChild(Long projectId, List<FactorDependencyEntity> result, List<String> parents) {

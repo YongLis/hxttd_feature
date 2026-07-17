@@ -4,7 +4,7 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.req.FeatureConfigQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigListRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.res.FeatureConfigQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity;
 
 import java.util.List;
 

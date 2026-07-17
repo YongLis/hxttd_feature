@@ -9,7 +9,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointUpdateReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointDocRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointEntity;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

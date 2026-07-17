@@ -3,7 +3,7 @@ package com.ly.ttd.biz.feature.dem.sweb.service.factor;
 import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.FactorDependencyQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.res.FactorDependencyQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorDependencyEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FactorDependencyEntity;
 
 import java.util.List;
 

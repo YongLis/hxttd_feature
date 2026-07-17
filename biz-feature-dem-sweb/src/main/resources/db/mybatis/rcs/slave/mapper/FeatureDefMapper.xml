@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FeatureDefMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FeatureDefMapper">
 
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureDef">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureDef">
         <id property="defId" column="def_id" jdbcType="BIGINT"/>
         <result property="featureName" column="feature_name" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
@@ -27,4 +27,28 @@
     </sql>
 
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_feature_def
+        WHERE id = #{id} AND deleted = 0
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_feature_def
+        WHERE deleted = 0
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="selectByFeatureName" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ttd_feature_def
+        WHERE deleted = 0
+        AND feature_name = #{featureName}
+    </select>
 </mapper>

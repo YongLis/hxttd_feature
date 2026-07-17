@@ -5,13 +5,14 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.FactorQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.FactorQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.res.FactorQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FactorMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FactorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FactorMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +32,9 @@ public class FactorQueryServiceImpl implements FactorQueryService {
     public PageResult<FactorQueryRes> pageQuery(FactorQueryReq req) {
         PageResult<FactorQueryRes> result = new PageResult<>();
         Page<FactorEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        factorMapper.pageQuery(page, req);
+        List<FactorEntity> records = factorMapper.pageQuery(page, req);
+        page.setRecords(records);
+
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             result.setData(page.getRecords().stream().map(t -> {
                 FactorQueryRes res = new FactorQueryRes();

@@ -1,6 +1,6 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.audit.res;
 
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AuditEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AuditEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

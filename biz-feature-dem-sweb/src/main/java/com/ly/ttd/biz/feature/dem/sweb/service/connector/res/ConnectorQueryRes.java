@@ -1,6 +1,6 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.connector.res;
 
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ConnectorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ConnectorEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

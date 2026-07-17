@@ -5,8 +5,8 @@ import com.ly.ttd.base.exception.BizException;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.ConnectorAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.req.*;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ConnectorEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ConnectorMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ConnectorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.ConnectorMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.connector.EsConnectorService;
 import com.ly.ttd.feature.admin.api.connector.HttpConnectorService;
@@ -52,11 +52,7 @@ public class ConnectorAdminServiceImpl implements ConnectorAdminService {
                 FeatureResourceType.CONNECTOR_JDBC.getPrefix(), req.getResourceKey());
         req.setResourceKey(resourceKey);
 
-        // 检查资源键唯一性
-        QueryWrapper<ConnectorEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (connectorMapper.selectCount(checkWrapper) > 0) {
+        if (connectorMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);
@@ -83,10 +79,7 @@ public class ConnectorAdminServiceImpl implements ConnectorAdminService {
         req.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<ConnectorEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (connectorMapper.selectCount(checkWrapper) > 0) {
+        if (connectorMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);
@@ -155,10 +148,7 @@ public class ConnectorAdminServiceImpl implements ConnectorAdminService {
         req.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<ConnectorEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (connectorMapper.selectCount(checkWrapper) > 0) {
+        if (connectorMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);

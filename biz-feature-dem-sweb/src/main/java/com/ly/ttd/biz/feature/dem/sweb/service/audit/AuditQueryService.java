@@ -6,7 +6,7 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.req.AuditQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.res.AuditDetail;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.res.AuditQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AuditEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AuditEntity;
 
 /**
  * 特征审核服务

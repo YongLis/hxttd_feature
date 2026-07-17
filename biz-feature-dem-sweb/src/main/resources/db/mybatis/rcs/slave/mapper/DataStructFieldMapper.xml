@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DataStructFieldMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.DataStructFieldMapper">
 
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.DataFieldEntity">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.DataFieldEntity">
         <id column="id" property="id"/>
         <result column="data_struct_code" property="dataStructCode"/>
         <result column="field_code" property="fieldCode"/>
@@ -18,4 +18,26 @@
         object_type, default_value, sort_order
     </sql>
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_data_field
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_data_field
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="selectCountByKey" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ttd_data_field
+        WHERE data_struct_code = #{key}
+    </select>
 </mapper>

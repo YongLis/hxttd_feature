@@ -5,13 +5,14 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.eventMessage.FeatureTraceQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.eventMessage.req.FeatureTraceQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.eventMessage.res.FeatureTraceQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.EventMessageEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.EventMessageMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.EventMessageEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.EventMessageMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +30,9 @@ public class FeatureTraceQueryServiceImpl implements FeatureTraceQueryService {
     public PageResult<FeatureTraceQueryRes> pageQuery(FeatureTraceQueryReq req) {
         PageResult<FeatureTraceQueryRes> result = new PageResult<>();
         Page<EventMessageEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        eventMessageMapper.pageQuery(page, req);
+        List<EventMessageEntity> records = eventMessageMapper.pageQuery(page, req);
+        page.setRecords(records);
+
         if (CollectionUtils.isNotEmpty(page.getRecords())) {
             result.setData(page.getRecords().stream().map(e -> {
                 FeatureTraceQueryRes res = new FeatureTraceQueryRes();

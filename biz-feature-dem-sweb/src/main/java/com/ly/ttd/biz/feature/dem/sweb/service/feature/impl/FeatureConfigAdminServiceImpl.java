@@ -1,13 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.feature.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FeatureConfigMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.FeatureConfigAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.req.FeatureConfigAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.feature.req.FeatureConfigUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FeatureConfigMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dto.FeatureConfigDto;
 import com.ly.ttd.feature.admin.api.feature.FeatureConfigService;
@@ -43,11 +42,8 @@ public class FeatureConfigAdminServiceImpl implements FeatureConfigAdminService 
                 FeatureResourceType.FEATURE_CONFIG.getPrefix(), req.getResourceKey());
         req.setResourceKey(resourceKey);
 
-        // 检查资源键唯一性
-        QueryWrapper<FeatureConfigEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (featureConfigMapper.selectCount(checkWrapper) > 0) {
+        // 检查资源键唯一性;
+        if (featureConfigMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
         auditQueryService.waitAuditCheck(resourceKey);

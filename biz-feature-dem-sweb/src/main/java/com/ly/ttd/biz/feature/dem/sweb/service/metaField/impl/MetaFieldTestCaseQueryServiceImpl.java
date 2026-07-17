@@ -5,8 +5,8 @@ import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.MetaFieldTestCaseQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.TestCaseQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.TestCaseQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldTestCaseEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.MetaFieldTestCaseMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.MetaFieldTestCaseEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.MetaFieldTestCaseMapper;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
@@ -28,8 +28,9 @@ public class MetaFieldTestCaseQueryServiceImpl implements MetaFieldTestCaseQuery
     public PageResult<TestCaseQueryRes> pageQuery(TestCaseQueryReq req) {
         PageResult<TestCaseQueryRes> result = new PageResult<>();
         Page<MetaFieldTestCaseEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        testCaseMapper.pageQuery(page, req);
-        if (CollectionUtils.isNotEmpty(page.getRecords())) {
+        List<MetaFieldTestCaseEntity> records = testCaseMapper.pageQuery(page, req);
+        page.setRecords(records);
+        if (CollectionUtils.isNotEmpty(records)) {
             List<TestCaseQueryRes> list = page.getRecords().stream().map(MetaFieldTestCaseQueryServiceImpl::convertRes).collect(Collectors.toList());
             result.setData(list);
         }

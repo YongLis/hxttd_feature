@@ -1,13 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.connector.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ConnectorEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.ConnectorMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.ConnectorQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.req.ConnectorQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.connector.res.ConnectorQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ConnectorEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ConnectorMapper;
 import com.ly.ttd.feature.common.enums.ConnectorEnum;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import com.ly.ttd.feature.common.model.DataFieldModel;
@@ -37,10 +36,10 @@ public class ConnectorQueryServiceImpl implements ConnectorQueryService {
     @Override
     public PageResult<ConnectorQueryRes> pageQuery(ConnectorQueryReq req) {
         Page<ConnectorQueryRes> page = new Page<>(req.getCurrent(), req.getPageSize());
-        IPage<ConnectorQueryRes> result = connectorMapper.pageQuery(page, req);
+        List<ConnectorQueryRes> result = connectorMapper.pageQuery(page, req);
 
-        if (CollectionUtils.isNotEmpty(page.getRecords())) {
-            for (ConnectorQueryRes res : page.getRecords()) {
+        if (CollectionUtils.isNotEmpty(result)) {
+            for (ConnectorQueryRes res : result) {
                 if (StringUtils.isNotBlank(res.getResourceJson())) {
                     res.setFactorCodes(parseFactorCodes(res.getConnectorType(), res.getResourceJson()));
                 }
@@ -48,10 +47,10 @@ public class ConnectorQueryServiceImpl implements ConnectorQueryService {
         }
 
         PageResult<ConnectorQueryRes> pageResult = new PageResult<>();
-        pageResult.setData(result.getRecords());
-        pageResult.setTotal(result.getTotal());
-        pageResult.setCurrent(result.getCurrent());
-        pageResult.setPageSize(result.getSize());
+        pageResult.setData(result);
+        pageResult.setTotal(page.getTotal());
+        pageResult.setCurrent(page.getCurrent());
+        pageResult.setPageSize(page.getSize());
         pageResult.setCode(FeatureResultCodeEnum.SUCCESS.getCode());
         return pageResult;
     }

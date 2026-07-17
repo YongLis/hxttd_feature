@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointParamMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AccessPointParamMapper">
 
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointParamEntity">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointParamEntity">
         <id column="id" property="id"/>
         <result column="access_point_code" property="accessPointCode"/>
         <result column="param_name" property="paramName"/>
@@ -11,7 +11,7 @@
         <result column="param_type" property="paramType"/>
         <result column="required" property="required"/>
         <result column="default_value" property="defaultValue"/>
-        <result column="remark" property="remark"/>
+<!--        <result column="remark" property="remark"/>-->
         <result column="sort_order" property="sortOrder"/>
         <result column="parent_param_code" property="parentParamCode"/>
         <result column="param_level" property="paramLevel"/>
@@ -24,9 +24,36 @@
 
     <sql id="Base_Column_List">
         id, access_point_code, param_name, version, param_code, param_type,
-        required, default_value, remark, sort_order,
+        required, default_value, sort_order,
         parent_param_code, param_level,
         crt_user, crt_time, upt_user, upt_time, deleted
     </sql>
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_access_point_param
+        WHERE id = #{id} AND deleted = 0
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="selectByAccessPointCode" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_access_point_param
+        WHERE deleted = 0
+        and access_point_code = #{accessPointCode}
+        and version = #{version}
+        ORDER BY id DESC
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="selectCountByKey" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ttd_access_point_param
+        WHERE deleted = 0
+        AND access_point_code = #{accessPointCode}
+        and param_code = #{paramCode}
+    </select>
 </mapper>

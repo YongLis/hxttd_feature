@@ -1,6 +1,5 @@
 package com.ly.ttd.biz.feature.dem.sweb.controller.meta;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.base.result.Result;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.MetaFieldTestCaseAdminService;
@@ -9,7 +8,6 @@ import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.TestCaseAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.TestCaseQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.TestCaseUpdateReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.TestCaseQueryRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldTestCaseEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

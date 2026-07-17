@@ -42,8 +42,8 @@ interface CustomNodeData {
 
 // ==================== Constants ====================
 
-const NODE_WIDTH = 200;
-const NODE_HEIGHT = 56;
+const NODE_WIDTH = 100;
+const NODE_HEIGHT = 50;
 
 // ==================== Custom Node ====================
 
@@ -123,8 +123,7 @@ const LineageGraph: React.FC<LineageGraphProps> = ({
                                                        resourceType,
                                                        visible,
                                                        onCancel,
-                                                       title,
-                                                       height = 500,
+                                                       title
                                                    }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -164,6 +163,7 @@ const LineageGraph: React.FC<LineageGraphProps> = ({
     }, [flowNodes, flowEdges, setNodes, setEdges]);
 
     // ==================== Loading ====================
+    const height = 500
     if (loading) {
         return (
             <div className="lineage-container" style={{height}}>
@@ -200,8 +200,8 @@ const LineageGraph: React.FC<LineageGraphProps> = ({
 
     // ==================== Normal ====================
     return (
-        <Modal style={{width: '80%', height: height}} open={visible} onCancel={onCancel}>
-            <div className="lineage-container" style={{height}}>
+        <Modal width='90vw' style={{height: '90vh'}} centered open={visible} onCancel={onCancel}>
+            <div className="lineage-container" style={{height: 'calc(90vh - 80px)'}}>
                 {title && <div className="lineage-title">{title}</div>}
                 <div className="lineage-flow-wrapper">
                     <ReactFlow

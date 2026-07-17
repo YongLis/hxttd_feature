@@ -1,13 +1,11 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.factor.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ly.ttd.base.exception.BizException;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FactorMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.AuditQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.MetaFactorAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.MetaFactorAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.factor.req.MetaFactorUpdateReq;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FactorEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FactorMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.feature.admin.api.dto.MetaFactorDto;
 import com.ly.ttd.feature.admin.api.factor.MetaFactorService;
@@ -43,10 +41,7 @@ public class MetaFactorAdminServiceImpl implements MetaFactorAdminService {
         dto.setResourceKey(resourceKey);
 
         // 检查资源键唯一性
-        QueryWrapper<FactorEntity> checkWrapper = new QueryWrapper<>();
-        checkWrapper.eq("resource_key", resourceKey);
-        checkWrapper.eq("deleted", false);
-        if (factorMapper.selectCount(checkWrapper) > 0) {
+        if (factorMapper.selectCountByKey(resourceKey) > 0) {
             throw new BizException("资源键已存在");
         }
 

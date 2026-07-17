@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.FeatureConfigMapper">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.FeatureConfigMapper">
 
     <!-- 结果映射 -->
-    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity">
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity">
         <id column="id" property="id"/>
         <result column="resource_key" property="resourceKey"/>
         <result column="resource_name" property="resourceName"/>
@@ -87,21 +87,21 @@
         AND deleted = 0
     </select>
 
-    <select id="getByResourceKey" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity">
+    <select id="getByResourceKey" resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ttd_feature_config
         where resource_key = #{resourceKey}
         limit 1
     </select>
-    <select id="selectByProjectId" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity">
+    <select id="selectByProjectId" resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ttd_feature_config
         where project_id = #{projectId}
         and deleted = 0
     </select>
-    <select id="selectByFeatureCode" resultType="com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity">
+    <select id="selectByFeatureCode" resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity">
         SELECT
         <include refid="Base_Column_List"/>
         FROM ttd_feature_config
@@ -110,4 +110,21 @@
     </select>
 
 
+
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_feature_config
+        WHERE id = #{id} AND deleted = 0
+    </select>
+
+
+    <!-- 查询总数 -->
+    <select id="selectCountByKey" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ttd_feature_config
+        WHERE deleted = 0
+        AND resource_key = #{key}
+    </select>
 </mapper>

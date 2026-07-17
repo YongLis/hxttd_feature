@@ -1,13 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.user.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ly.ttd.base.exception.BizException;
 import com.ly.ttd.base.result.BaseRequest;
 import com.ly.ttd.biz.feature.dem.sweb.cache.UserCache;
 import com.ly.ttd.biz.feature.dem.sweb.consts.LoginUserUtils;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.ProjectUserEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.ProjectUserMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.account.UserAccountAdminService;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.ProjectUserEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.ProjectUserMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.UserAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.req.UserLoginReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.res.UserCurrentRes;
@@ -101,11 +100,7 @@ public class UserAdminServiceImpl implements UserAdminService {
         }
 
         // 查询用户的项目关联信息
-        LambdaQueryWrapper<ProjectUserEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ProjectUserEntity::getUserAccount, userName);
-        wrapper.eq(ProjectUserEntity::getDeleted, false);
-
-        List<ProjectUserEntity> projectUsers = projectUserMapper.selectList(wrapper);
+        List<ProjectUserEntity> projectUsers = projectUserMapper.selectUserProject(userName, LoginUserUtils.INSTANCE.getProjectId());
 
         UserCurrentRes res = new UserCurrentRes();
         res.setUserAccount(userName);

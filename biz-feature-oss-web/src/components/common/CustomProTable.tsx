@@ -17,6 +17,7 @@ function CustomProTable<T extends Record<string, any>>(
         <div style={{overflowX: 'auto', minWidth: '100%'}}>
             <ProTable<T>
                 {...(rest as ProTableProps<T, any>)}
+                pagination={{pageSize: 10}}
                 scroll={{x: scrollX, ...scroll}}
                 style={{minWidth: scrollX, ...style}}
                 size='small'

@@ -10,7 +10,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.metaField.MetaFieldQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.req.*;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.MetaFieldQueryRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.metaField.res.TestCaseRes;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.MetaFieldEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.MetaFieldEntity;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
 import com.ly.ttd.language.srv.impl.LanguageExecuteFactory;
 import io.swagger.v3.oas.annotations.Operation;

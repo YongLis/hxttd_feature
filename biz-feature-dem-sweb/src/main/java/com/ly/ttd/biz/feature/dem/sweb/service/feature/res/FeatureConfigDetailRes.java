@@ -1,7 +1,7 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.feature.res;
 
 import com.alibaba.fastjson.JSON;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.FeatureConfigEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.FeatureConfigEntity;
 import com.ly.ttd.feature.admin.api.dto.FeatureConfigForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

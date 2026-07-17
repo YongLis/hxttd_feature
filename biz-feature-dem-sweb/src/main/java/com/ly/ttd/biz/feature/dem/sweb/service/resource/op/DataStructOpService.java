@@ -1,7 +1,7 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.resource.op;
 
 import com.ly.ttd.biz.feature.dem.sweb.service.audit.res.AuditDetail;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.DataStructMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.DataStructMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.resource.AbstractResourceOpService;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import jakarta.annotation.Resource;

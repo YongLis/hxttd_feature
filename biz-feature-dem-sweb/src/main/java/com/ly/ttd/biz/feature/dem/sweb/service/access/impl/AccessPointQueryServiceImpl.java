@@ -1,17 +1,16 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.access.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.AccessPointParamEntity;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AccessPointMapper;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.AccessPointParamMapper;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.AccessPointQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.req.AccessPointQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointDocRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.AccessPointQueryRes;
 import com.ly.ttd.biz.feature.dem.sweb.service.access.res.ParamItem;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.entity.AccessPointParamEntity;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointMapper;
-import com.ly.ttd.biz.feature.dem.sweb.service.mybatis.mapper.AccessPointParamMapper;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,8 +40,7 @@ public class AccessPointQueryServiceImpl implements AccessPointQueryService {
         pageResult.setCurrent(req.getCurrent());
         pageResult.setPageSize(req.getPageSize());
         Page<AccessPointEntity> page = new Page<>(req.getCurrent(), req.getPageSize());
-        accessPointMapper.pageQuery(page, req);
-        List<AccessPointEntity> records = page.getRecords();
+        List<AccessPointEntity> records = accessPointMapper.pageQuery(page, req);
         if (CollectionUtils.isNotEmpty(records)) {
             List<AccessPointQueryRes> resList = records.stream().map(entity -> {
                 AccessPointQueryRes res = new AccessPointQueryRes();
@@ -118,12 +116,7 @@ public class AccessPointQueryServiceImpl implements AccessPointQueryService {
     }
 
     private List<ParamItem> queryParams(String accessPointCode, String version) {
-        LambdaQueryWrapper<AccessPointParamEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(AccessPointParamEntity::getAccessPointCode, accessPointCode);
-        wrapper.eq(AccessPointParamEntity::getDeleted, false);
-        wrapper.eq(AccessPointParamEntity::getVersion, version);
-        wrapper.orderByAsc(AccessPointParamEntity::getSortOrder);
-        List<AccessPointParamEntity> allParams = accessPointParamMapper.selectList(wrapper);
+        List<AccessPointParamEntity> allParams = accessPointParamMapper.selectByAccessPointCode(accessPointCode, version);
         return buildParamTree(allParams, null);
     }
 
