@@ -56,4 +56,6 @@ public interface UserAccountService {
     List<UserAccountDto> queryAll() throws BizException;
 
     void updatePassword(UserAccountUpdatePwd updatePwd) throws BizException;
+
+    UserAccountDto getUserAccountByUserAccount(String userName, String pwd);
 }

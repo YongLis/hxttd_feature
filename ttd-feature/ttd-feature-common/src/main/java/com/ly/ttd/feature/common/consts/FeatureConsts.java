@@ -16,4 +16,5 @@ public class FeatureConsts {
      * 接入点
      */
     public static final String ACCESS_POINT = "accessPoint";
+
 }

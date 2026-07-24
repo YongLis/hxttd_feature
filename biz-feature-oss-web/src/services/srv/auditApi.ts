@@ -282,3 +282,80 @@ export function getEsConnectorAuditDetail(id: number) {
 export function getHttpConnectorAuditDetail(id: number) {
     return RemoteRequestGet<{ code: string; data: HttpConnectorAuditDetail }>('/api/audit/getHttpConnectorAuditDetail?id=' + id);
 }
+
+// ============ Kafka Topic 审核详情 ============
+
+export interface KafkaTopicDetailRes {
+    id: string;
+    name: string;
+    partitions: number;
+    replicas: number;
+    consumerGroup?: string;
+    topicStatus: string;
+    remark?: string;
+    auditReason?: string;
+    crtUser?: string;
+    crtTime?: string;
+    deleted: boolean;
+}
+
+export interface KafkaTopicAuditDetail {
+    before?: KafkaTopicDetailRes;
+    after?: KafkaTopicDetailRes;
+}
+
+export function getKafkaTopicAuditDetail(id: number) {
+    return RemoteRequestGet<{ code: string; data: KafkaTopicAuditDetail }>('/api/audit/getKafkaTopicAuditDetail?id=' + id);
+}
+
+// ============ 数据表定义 审核详情 ============
+
+// 复用在 tableDefApi.ts 中定义的 TableColumnDetail
+import type {TableColumnDetail} from '@/services/srv/tableDefApi';
+
+export interface TableDefAuditDetailRes {
+    id: string;
+    tableName: string;
+    dataSource: string;
+    topic?: string;
+    crtUser?: string;
+    crtTime?: string;
+}
+
+export interface TableDefAuditDetail {
+    before?: TableDefAuditDetailRes;
+    after?: TableDefAuditDetailRes;
+    beforeColumns?: TableColumnDetail[];
+    afterColumns?: TableColumnDetail[];
+}
+
+export function getTableDefAuditDetail(id: number) {
+    return RemoteRequestGet<{ code: string; data: TableDefAuditDetail }>('/api/audit/getTableDefAuditDetail?id=' + id);
+}
+
+// ============ 管道任务 审核详情 ============
+
+export interface PipeTaskDetailRes {
+    id: string;
+    pointCode: string;
+    taskCode: string;
+    taskName: string;
+    tableName: string;
+    kafkaTopic: string;
+    taskStatus: string;
+    taskPriority: number;
+    deleted: boolean;
+    crtUser?: string;
+    crtTime?: string;
+    uptUser?: string;
+    uptTime?: string;
+}
+
+export interface PipeTaskAuditDetail {
+    before?: PipeTaskDetailRes;
+    after?: PipeTaskDetailRes;
+}
+
+export function getPipeTaskAuditDetail(id: number) {
+    return RemoteRequestGet<{ code: string; data: PipeTaskAuditDetail }>('/api/audit/getPipeTaskAuditDetail?id=' + id);
+}

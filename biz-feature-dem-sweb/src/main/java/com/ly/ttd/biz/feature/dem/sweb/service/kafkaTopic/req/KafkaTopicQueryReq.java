@@ -17,8 +17,8 @@ public class KafkaTopicQueryReq extends PageQuery {
     @Schema(description = "Topic名称（模糊查询）")
     private String name;
 
-    @Schema(description = "状态：init/created/active")
-    private String status;
+    @Schema(description = "状态：INIT/AUDIT/AUDIT_PASS/AUDIT_REJECT")
+    private String topicStatus;
 
     @Schema(description = "是否删除")
     private String deleted;

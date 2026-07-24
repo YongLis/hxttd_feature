@@ -1,5 +1,5 @@
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import {Button, Form, Input, InputNumber, message, Modal, Popconfirm, Select, Space, Tag} from 'antd';
+import {App, Button, Form, Input, InputNumber, Modal, Popconfirm, Space, Tag} from 'antd';
 import React, {useEffect, useRef, useState} from 'react';
 import {PlusOutlined} from '@ant-design/icons';
 import {CustomProTable} from '@/components';
@@ -13,26 +13,15 @@ import {
 
 const {TextArea} = Input;
 
-const OFFSET_STRATEGY_OPTIONS = [
-    {label: 'latest', value: 'latest'},
-    {label: 'earliest', value: 'earliest'},
-    {label: 'none', value: 'none'},
-];
-
-const DATA_FORMAT_OPTIONS = [
-    {label: 'JSON', value: 'JSON'},
-    {label: 'Avro', value: 'Avro'},
-    {label: 'Protobuf', value: 'Protobuf'},
-    {label: 'Custom', value: 'Custom'},
-];
-
 const STATUS_MAP: Record<string, { color: string; text: string }> = {
-    init: {color: 'default', text: '待创建'},
-    created: {color: 'processing', text: '已创建'},
-    active: {color: 'success', text: '运行中'},
+    INIT: {color: 'default', text: '待创建'},
+    AUDIT: {color: 'processing', text: '审核中'},
+    AUDIT_PASS: {color: 'success', text: '审核通过'},
+    AUDIT_REJECT: {color: 'error', text: '审核驳回'},
 };
 
 const KafkaTopicIndex: React.FC = () => {
+    const {message} = App.useApp();
     const actionRef = useRef<ActionType | null>(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [editMode, setEditMode] = useState<'add' | 'edit'>('add');
@@ -47,10 +36,6 @@ const KafkaTopicIndex: React.FC = () => {
                     partitions: currentRow.partitions,
                     replicas: currentRow.replicas,
                     consumerGroup: currentRow.consumerGroup,
-                    offsetStrategy: currentRow.offsetStrategy,
-                    dataFormat: currentRow.dataFormat,
-                    serializer: currentRow.serializer,
-                    valueDeserializer: currentRow.valueDeserializer,
                     remark: currentRow.remark,
                 });
             } else {
@@ -97,6 +82,7 @@ const KafkaTopicIndex: React.FC = () => {
 
             apiCall
                 .then((res: any) => {
+                    console.log(res)
                     if (res.code === '0000') {
                         message.success(editMode === 'add' ? '添加成功' : '更新成功');
                         setModalVisible(false);
@@ -142,26 +128,13 @@ const KafkaTopicIndex: React.FC = () => {
             search: false,
         },
         {
-            title: '数据格式',
-            dataIndex: 'dataFormat',
-            key: 'dataFormat',
-            width: 100,
-            align: 'center',
-            valueEnum: {
-                JSON: {text: 'JSON'},
-                Avro: {text: 'Avro'},
-                Protobuf: {text: 'Protobuf'},
-                Custom: {text: 'Custom'},
-            },
-        },
-        {
             title: '状态',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'topicStatus',
+            key: 'topicStatus',
             width: 100,
             align: 'center',
             render: (_, record) => {
-                const info = STATUS_MAP[record.status] || {color: 'default', text: record.status};
+                const info = STATUS_MAP[record.topicStatus] || {color: 'default', text: record.topicStatus};
                 return <Tag color={info.color}>{info.text}</Tag>;
             },
         },
@@ -236,9 +209,9 @@ const KafkaTopicIndex: React.FC = () => {
                 destroyOnClose
                 width={600}
             >
-                <Form form={form} layout="vertical">
+                <Form form={form} layout="vertical" initialValues={{partitions: '3', replicas: '3'}}>
                     <Form.Item name="name" label="Topic名称" rules={[{required: true, message: '请输入Topic名称'}]}>
-                        <Input placeholder="请输入Topic名称"/>
+                            <Input placeholder="请输入Topic名称" addonBefore={`${localStorage.getItem('selectedProjectCode')}_T_`}/>
                     </Form.Item>
                     <Space style={{width: '100%'}} align="start">
                         <Form.Item name="partitions" label="分区数" rules={[{required: true, message: '请输入分区数'}]}>
@@ -250,20 +223,6 @@ const KafkaTopicIndex: React.FC = () => {
                     </Space>
                     <Form.Item name="consumerGroup" label="消费者组">
                         <Input placeholder="请输入消费者组"/>
-                    </Form.Item>
-                    <Space style={{width: '100%'}} align="start">
-                        <Form.Item name="offsetStrategy" label="消费偏移策略" initialValue="latest">
-                            <Select options={OFFSET_STRATEGY_OPTIONS} style={{width: 180}}/>
-                        </Form.Item>
-                        <Form.Item name="dataFormat" label="数据格式" initialValue="JSON">
-                            <Select options={DATA_FORMAT_OPTIONS} style={{width: 180}}/>
-                        </Form.Item>
-                    </Space>
-                    <Form.Item name="serializer" label="Key序列化类">
-                        <Input placeholder="如 org.apache.kafka.common.serialization.StringSerializer"/>
-                    </Form.Item>
-                    <Form.Item name="valueDeserializer" label="Value反序列化类">
-                        <Input placeholder="如 org.apache.kafka.common.serialization.StringDeserializer"/>
                     </Form.Item>
                     <Form.Item name="remark" label="备注">
                         <TextArea rows={2} placeholder="请输入备注"/>

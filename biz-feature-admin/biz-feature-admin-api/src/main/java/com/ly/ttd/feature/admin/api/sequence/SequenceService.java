@@ -29,7 +29,7 @@ public interface SequenceService {
      * @param length  序号长度
      * @param seqCode 序列编码
      */
-    public String generateSeq(String prefix, int length, String seqCode);
+    public String generateSeq(String prefix, Integer length, String seqCode);
 
 
     /**

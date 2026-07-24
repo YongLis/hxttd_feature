@@ -57,6 +57,7 @@ public class PipeTaskOpService extends AbstractResourceOpService {
         entity.setTableName(addReq.getTableName());
         entity.setKafkaTopic(addReq.getKafkaTopic());
         entity.setTaskStatus(addReq.getTaskStatus());
+        entity.setTaskPriority(addReq.getTaskPriority());
         entity.setCrtUser(addReq.getCrtUser());
         entity.setDeleted(false);
 
@@ -65,14 +66,22 @@ public class PipeTaskOpService extends AbstractResourceOpService {
                 entity.getTaskName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
     }
 
     @Override
     public void update(BaseDto req) throws FeatureBizException {
         PipeTaskDto updateReq = (PipeTaskDto) req;
 
-        PipeTask entity = pipeTaskMapper.selectById(updateReq.getId());
+        PipeTask entity = null;
+        if(null != updateReq.getId()){
+            entity = pipeTaskMapper.selectById(updateReq.getId());
+        }else{
+            QueryWrapper<PipeTask> wrapper = new QueryWrapper<>();
+            wrapper.eq("task_code", updateReq.getTaskCode());
+            entity = pipeTaskMapper.selectOne(wrapper);
+        }
+
         if (entity == null) {
             throw new FeatureBizException("管道任务不存在");
         }
@@ -85,13 +94,14 @@ public class PipeTaskOpService extends AbstractResourceOpService {
         entity.setKafkaTopic(updateReq.getKafkaTopic());
         entity.setTaskStatus(updateReq.getTaskStatus());
         entity.setUptUser(updateReq.getUptUser());
+        entity.setTaskPriority(updateReq.getTaskPriority());
 
         addAudit(new AuditReq(entity.getTaskCode(),
                 getResourceType(),
                 entity.getTaskName(),
                 OperationTypeEnum.UPDATE.getCode(),
                 beforeJson,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), updateReq.getUptUser()));
     }
 
     @Override
@@ -143,6 +153,6 @@ public class PipeTaskOpService extends AbstractResourceOpService {
                 entity.getTaskName(),
                 OperationTypeEnum.DELETE.getCode(),
                 beforeJson,
-                afterJson));
+                afterJson, userName));
     }
 }

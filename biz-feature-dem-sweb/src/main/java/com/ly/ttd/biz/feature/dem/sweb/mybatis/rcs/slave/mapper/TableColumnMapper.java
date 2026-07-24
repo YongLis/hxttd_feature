@@ -1,8 +1,8 @@
 package com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper;
 
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.TableColumn;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.TableColumn;
 
 import java.util.List;
 
@@ -18,9 +18,25 @@ public interface TableColumnMapper {
     /**
      * 根据ID查询
      */
-    TableColumn selectById(@Param("id") Long id);
+    TableColumn selectById(@Param("id") String id);
+
+    /**
+     * 根据表名查询所有字段
+     */
+    List<TableColumn> selectByTableName(@Param("tableName") String tableName);
+
     /**
      * 查询全部
      */
     List<TableColumn> selectAll(String tableName);
+
+    /**
+     * 批量插入
+     */
+    int insertBatch(@Param("list") List<TableColumn> list);
+
+    /**
+     * 根据表名逻辑删除所有字段
+     */
+    void deleteByTableName(@Param("tableName") String tableName);
 }

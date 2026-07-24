@@ -18,7 +18,7 @@ public class TableColumn extends BaseEntity {
      * 主键ID
      */
     @TableId(type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     /**
      * 表id
@@ -41,11 +41,12 @@ public class TableColumn extends BaseEntity {
     /**
      * 是否允许为空：Y是 N否
      */
-    private String empty;
+    @TableField("`null_able`")
+    private String nullAble;
 
     /**
      * 指标编码
      */
-    @TableField("feature_code")
-    private String featureCode;
+    @TableField("factor_code")
+    private String factorCode;
 }

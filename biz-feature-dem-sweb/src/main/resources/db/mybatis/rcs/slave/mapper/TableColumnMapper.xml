@@ -9,8 +9,8 @@
         <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
         <result property="columnName" column="column_name" jdbcType="VARCHAR"/>
         <result property="columnType" column="column_type" jdbcType="VARCHAR"/>
-        <result property="empty" column="empty" jdbcType="VARCHAR"/>
-        <result property="featureCode" column="feature_code" jdbcType="VARCHAR"/>
+        <result property="nullAble" column="null_able" jdbcType="VARCHAR"/>
+        <result property="factorCode" column="factor_code" jdbcType="VARCHAR"/>
         <result property="crtUser" column="crt_user" jdbcType="VARCHAR"/>
         <result property="uptUser" column="upt_user" jdbcType="VARCHAR"/>
         <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
@@ -20,7 +20,7 @@
 
     <sql id="Base_Column_List">
         id,table_name,column_name,
-        column_type,empty,feature_code,
+        column_type,null_able,factor_code,
         crt_user,upt_user,crt_time,
         upt_time,deleted
     </sql>
@@ -33,6 +33,15 @@
         WHERE id = #{id} AND deleted = 0
     </select>
 
+    <!-- 根据表名查询所有字段 -->
+    <select id="selectByTableName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_table_column
+        WHERE deleted = 0
+        and table_name = #{tableName}
+        ORDER BY id ASC
+    </select>
+
     <!-- 查询全部 -->
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/>
@@ -41,5 +50,4 @@
         and table_name = #{tableName}
         ORDER BY id DESC
     </select>
-
 </mapper>

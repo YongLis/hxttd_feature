@@ -72,7 +72,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
                 addReq.getResourceName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
     }
 
     @Override
@@ -93,14 +93,14 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
 
         JdbcConnectorModel model = buildModel(updateReq);
         entity.setResourceJson(JSON.toJSONString(model));
-        entity.setCrtUser(updateReq.getUptUser());
+        entity.setUptUser(updateReq.getUptUser());
         entity.setDeleted(false);
 
         addAudit(new AuditReq(entity.getResourceKey(),
                 getResourceType(),
                 updateReq.getResourceName(),
                 OperationTypeEnum.UPDATE.getCode(),
-                beforeJson, JSON.toJSONString(entity)));
+                beforeJson, JSON.toJSONString(entity), updateReq.getUptUser()));
     }
 
     @Override
@@ -146,7 +146,7 @@ public class JdbcConnectorOpService extends AbstractResourceOpService {
         entity.setUptUser(userName);
         String afterJson = JSON.toJSONString(entity);
         addAudit(new AuditReq(entity.getResourceKey(), getResourceType(), entity.getResourceName(),
-                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson));
+                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson, userName));
     }
 
     private JdbcConnectorModel buildModel(JdbcConnectorDto req) {

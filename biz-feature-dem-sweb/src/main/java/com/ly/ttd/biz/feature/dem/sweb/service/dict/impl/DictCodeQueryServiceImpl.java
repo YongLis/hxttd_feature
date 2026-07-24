@@ -9,7 +9,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.dict.req.DictCodeQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.dict.res.DictCodeQueryRes;
 import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import jakarta.annotation.Resource;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

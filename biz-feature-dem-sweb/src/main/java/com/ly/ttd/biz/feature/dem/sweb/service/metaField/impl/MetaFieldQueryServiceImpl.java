@@ -11,7 +11,7 @@ import com.ly.ttd.feature.common.enums.FeatureResultCodeEnum;
 import com.ly.ttd.feature.common.enums.ObjectTypeEnum;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

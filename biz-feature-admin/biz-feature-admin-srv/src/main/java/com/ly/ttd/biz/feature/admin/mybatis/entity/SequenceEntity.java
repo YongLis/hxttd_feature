@@ -32,5 +32,5 @@ public class SequenceEntity {
     /**
      * 序列值
      */
-    private Long val;
+    private Integer val;
 }

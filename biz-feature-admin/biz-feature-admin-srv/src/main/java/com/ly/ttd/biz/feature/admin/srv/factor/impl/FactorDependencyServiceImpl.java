@@ -6,7 +6,7 @@ import com.ly.ttd.biz.feature.admin.mybatis.mapper.FactorDependencyMapper;
 import com.ly.ttd.feature.admin.api.dto.FactorDependencyDto;
 import com.ly.ttd.feature.admin.api.factor.FactorDependencyService;
 import jakarta.annotation.Resource;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

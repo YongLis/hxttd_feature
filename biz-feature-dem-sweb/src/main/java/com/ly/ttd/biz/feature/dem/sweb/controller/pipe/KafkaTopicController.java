@@ -3,6 +3,7 @@ package com.ly.ttd.biz.feature.dem.sweb.controller.pipe;
 import com.ly.ttd.base.exception.BizException;
 import com.ly.ttd.base.result.PageResult;
 import com.ly.ttd.base.result.Result;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.KafkaTopic;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.KafkaTopicAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.KafkaTopicQueryService;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicAddReq;
@@ -15,7 +16,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Kafka Topic 管理 Controller（已接入统一审核流程）
@@ -92,4 +96,16 @@ public class KafkaTopicController {
         }
         return Result.success(topic);
     }
+
+
+    /**
+     * 查询可用topic
+     */
+    @Operation(summary = "查询可用topic")
+    @PostMapping("/getAvailable")
+    public Result<List<KafkaTopic>> getAvailable() {
+        List<KafkaTopic> topics = kafkaTopicQueryService.getAvailable();
+        return Result.success(CollectionUtils.isNotEmpty(topics) ? topics : List.of());
+    }
+
 }

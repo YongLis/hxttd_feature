@@ -16,7 +16,7 @@ public class TableColumnDto extends BaseDto {
     @Schema(description = "列类型")
     private String columnType;
     @Schema(description = "是否允许为空(Y/N)")
-    private String empty;
+    private String nullAble;
     @Schema(description = "指标编码")
-    private String featureCode;
+    private String factorCode;
 }

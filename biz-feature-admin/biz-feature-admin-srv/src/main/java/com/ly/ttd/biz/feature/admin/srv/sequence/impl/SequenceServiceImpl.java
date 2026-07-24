@@ -34,7 +34,7 @@ public class SequenceServiceImpl implements SequenceService {
             entity = new SequenceEntity();
             entity.setSeqCode(seqCode);
             entity.setSeqName(seqCode);
-            entity.setVal(1L);
+            entity.setVal(1);
             sequenceMapper.insert(entity);
             return 1L;
         }
@@ -58,7 +58,7 @@ public class SequenceServiceImpl implements SequenceService {
     }
 
     @Override
-    public String generateSeq(String prefix, int length, String seqCode) {
+    public String generateSeq(String prefix, Integer length, String seqCode) {
 
         Long seqVal = nextVal(seqCode);
 

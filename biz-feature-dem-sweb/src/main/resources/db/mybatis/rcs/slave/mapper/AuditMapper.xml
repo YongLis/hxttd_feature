@@ -71,7 +71,6 @@
         select count(*) as num from
         ttd_audit where resource_key = #{resourceKey}
         and audit_status = 'PENDING'
-        and deleted = 0
     </select>
 
 </mapper>

@@ -34,12 +34,13 @@ public class AuditReq {
 
     private String userName;
 
-    public AuditReq(String resourceKey, String resourceType, String resourceName, String operationType, String beforeJson, String afterJson) {
+    public AuditReq(String resourceKey, String resourceType, String resourceName, String operationType, String beforeJson, String afterJson,String userName) {
         this.resourceKey = resourceKey;
         this.resourceType = resourceType;
         this.resourceName = resourceName;
         this.operationType = operationType;
         this.beforeJson = beforeJson;
         this.afterJson = afterJson;
+        this.userName = userName;
     }
 }

@@ -6,7 +6,7 @@ import com.ly.ttd.biz.feature.admin.mybatis.mapper.MetaFieldMapper;
 import com.ly.ttd.feature.admin.api.dto.MetaFieldDto;
 import com.ly.ttd.feature.admin.api.metaField.MetaFieldService;
 import jakarta.annotation.Resource;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

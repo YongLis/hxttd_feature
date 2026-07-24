@@ -62,7 +62,7 @@ public class TableDefOpService extends AbstractResourceOpService {
                 entity.getTableName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TableDefOpService extends AbstractResourceOpService {
                 entity.getTableName(),
                 OperationTypeEnum.UPDATE.getCode(),
                 beforeJson,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), updateReq.getUptUser()));
     }
 
     @Override
@@ -136,6 +136,6 @@ public class TableDefOpService extends AbstractResourceOpService {
                 entity.getTableName(),
                 OperationTypeEnum.DELETE.getCode(),
                 beforeJson,
-                afterJson));
+                afterJson,userName));
     }
 }

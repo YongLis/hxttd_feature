@@ -14,6 +14,8 @@ enum ErrorShowType {
 // 与后端约定的响应数据格式
 interface ResponseStructure {
     success: boolean;
+    code: string;
+    message: string;
     data: any;
     errorCode?: number;
     errorMessage?: string;
@@ -34,7 +36,8 @@ export const errorConfig: RequestConfig = {
                 res as unknown as ResponseStructure;
             // 仅当 success 明确为 false 时抛错，undefined（后端无此字段）时跳过，由业务代码自行处理
             if (success === false) {
-                const error: any = new Error(errorMessage);
+                const errMsg = errorMessage || (res as any).message || '请求失败';
+                const error: any = new Error(errMsg);
                 error.name = 'BizError';
                 error.info = {errorCode, errorMessage, showType, data};
                 throw error;

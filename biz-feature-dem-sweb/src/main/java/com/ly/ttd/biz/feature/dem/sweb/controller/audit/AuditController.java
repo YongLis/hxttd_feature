@@ -193,6 +193,36 @@ public class AuditController {
         return Result.error("get kafka topic audit detail error");
     }
 
+    @Operation(summary = "数据表定义审核详情")
+    @GetMapping("/getTableDefAuditDetail")
+    public Result<AuditDetail> getTableDefAuditDetail(@Parameter(description = "审核记录ID") @RequestParam Long id) {
+        try {
+            AuditDetail detail = ResourceOpFactory.getService(FeatureResourceType.TABLE_DEF.getType())
+                    .getDetail(id);
+            return Result.success(detail);
+        } catch (BizException e1) {
+            return Result.error(e1.getMessage());
+        } catch (Exception e) {
+            log.error("get table def audit detail error, id={}", id, e);
+        }
+        return Result.error("get table def audit detail error");
+    }
+
+    @Operation(summary = "管道任务审核详情")
+    @GetMapping("/getPipeTaskAuditDetail")
+    public Result<PipeTaskAuditDetail> getPipeTaskAuditDetail(@Parameter(description = "审核记录ID") @RequestParam Long id) {
+        try {
+            PipeTaskAuditDetail detail = (PipeTaskAuditDetail) ResourceOpFactory.getService(FeatureResourceType.PIPE_TASK.getType())
+                    .getDetail(id);
+            return Result.success(detail);
+        } catch (BizException e1) {
+            return Result.error(e1.getMessage());
+        } catch (Exception e) {
+            log.error("get pipe task audit detail error, id={}", id, e);
+        }
+        return Result.error("get pipe task audit detail error");
+    }
+
     @Operation(summary = "提交审核结果", description = "审核通过(APPROVED)或驳回(REJECTED)")
     @PostMapping("/submit")
     public Result<Boolean> submit(@Valid @RequestBody AuditApproveReq req) {

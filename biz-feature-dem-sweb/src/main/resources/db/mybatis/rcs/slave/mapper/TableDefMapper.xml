@@ -8,7 +8,6 @@
         <id property="id" column="id" jdbcType="VARCHAR"/>
         <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
         <result property="dataSource" column="data_source" jdbcType="VARCHAR"/>
-        <result property="topic" column="topic" jdbcType="VARCHAR"/>
         <result property="crtUser" column="crt_user" jdbcType="VARCHAR"/>
         <result property="uptUser" column="upt_user" jdbcType="VARCHAR"/>
         <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
@@ -17,8 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,table_name,data_source,
-        topic,crt_user,upt_user,
+        id,table_name,data_source,crt_user,upt_user,
         crt_time,upt_time,deleted
     </sql>
 
@@ -30,8 +28,35 @@
         WHERE id = #{id} AND deleted = 0
     </select>
 
-    <!-- 查询全部 -->
-    <select id="selectAll" resultMap="BaseResultMap">
+    <!-- 根据表名查询 -->
+    <select id="selectByTableName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_table_def
+        WHERE table_name = #{tableName} AND deleted = 0
+    </select>
+
+    <!-- 分页查询（带模糊搜索） -->
+    <select id="pageQuery" resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.TableDef">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_table_def
+        <include refid="Query_Condition"/>
+        ORDER BY id DESC
+    </select>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.tableName != null and req.tableName != ''">
+                AND table_name LIKE CONCAT('%', #{req.tableName}, '%')
+            </if>
+            <if test="req.dataSource != null and req.dataSource != ''">
+                AND data_source = #{req.dataSource}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 查询所有有效的表定义 -->
+    <select id="selectAllValid" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List"/>
         FROM ttd_table_def
         WHERE deleted = 0

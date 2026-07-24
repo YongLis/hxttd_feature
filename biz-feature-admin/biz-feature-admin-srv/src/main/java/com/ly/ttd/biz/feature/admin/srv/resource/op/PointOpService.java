@@ -27,7 +27,7 @@ import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import com.ly.ttd.feature.common.exception.FeatureBizException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +78,7 @@ public class PointOpService extends AbstractResourceOpService {
         AccessPointEntity entity = new AccessPointEntity();
         entity.setCode(key);
         entity.setName(addReq.getName());
+        entity.setCrtUser(addReq.getCrtUser());
         entity.setVersion("V" + System.currentTimeMillis());
         for (AccessPointParamDto item : addReq.getParamItems()) {
             item.setVersion(entity.getVersion());
@@ -91,7 +92,7 @@ public class PointOpService extends AbstractResourceOpService {
                 addReq.getName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
 
     }
 
@@ -111,12 +112,13 @@ public class PointOpService extends AbstractResourceOpService {
             item.setVersion(entity.getVersion());
         }
         entity.setApiJson(JSON.toJSONString(updateReq.getParamItems()));
+        entity.setUptUser(updateReq.getUptUser());
 
         addAudit(new AuditReq(entity.getCode(),
                 getResourceType(),
                 updateReq.getName(),
                 OperationTypeEnum.UPDATE.getCode(),
-                beforeJson, JSON.toJSONString(entity)));
+                beforeJson, JSON.toJSONString(entity), updateReq.getUptUser()));
     }
 
     private void saveDict(String pointCode, String name) {
@@ -191,7 +193,7 @@ public class PointOpService extends AbstractResourceOpService {
         entity.setUptUser(userName);
         String afterJson = JSON.toJSONString(entity);
         addAudit(new AuditReq(entity.getCode(), getResourceType(), entity.getName(),
-                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson));
+                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson,userName));
     }
 
     private void saveParams(String accessPointCode, String version, List<AccessPointParamDto> items) {

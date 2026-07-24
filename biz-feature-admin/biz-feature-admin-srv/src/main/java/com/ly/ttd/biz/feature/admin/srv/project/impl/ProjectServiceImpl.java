@@ -7,7 +7,7 @@ import com.ly.ttd.biz.feature.admin.mybatis.mapper.ProjectMapper;
 import com.ly.ttd.feature.admin.api.dto.ProjectDto;
 import com.ly.ttd.feature.admin.api.project.ProjectService;
 import jakarta.annotation.Resource;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

@@ -249,6 +249,16 @@ export default [
                 name: '主题管理',
                 component: './kafkaTopic/KafkaTopicIndex'
             },
+            {
+                path: '/data-pipeline/table-def',
+                name: '表定义管理',
+                component: './tableDef/TableDefIndex'
+            },
+            {
+                path: '/data-pipeline/pipe-task',
+                name: '任务管理',
+                component: './pipeTask/PipeTaskIndex'
+            },
         ]
     },
 

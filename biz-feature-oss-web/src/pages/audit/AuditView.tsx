@@ -13,6 +13,9 @@ import FeatureFactorCompareView from './FeatureFactorCompareView';
 import JdbcConnectorCompareView from './JdbcConnectorCompareView';
 import EsConnectorCompareView from './EsConnectorCompareView';
 import HttpConnectorCompareView from './HttpConnectorCompareView';
+import KafkaTopicCompareView from './KafkaTopicCompareView';
+import TableDefCompareView from './TableDefCompareView';
+import PipeTaskCompareView from './PipeTaskCompareView';
 
 const {Text} = Typography;
 const {TextArea} = Input;
@@ -111,6 +114,27 @@ const AuditView: React.FC = () => {
                 {
                     resourceType === 'CONNECTOR_HTTP' &&
                     <HttpConnectorCompareView
+                        visible={true}
+                        id={Number(id)}
+                    />
+                }
+                {
+                    resourceType === 'KAFKA_TOPIC' &&
+                    <KafkaTopicCompareView
+                        visible={true}
+                        id={Number(id)}
+                    />
+                }
+                {
+                    resourceType === 'TABLE_DEF' &&
+                    <TableDefCompareView
+                        visible={true}
+                        id={Number(id)}
+                    />
+                }
+                {
+                    resourceType === 'PIPE_TASK' &&
+                    <PipeTaskCompareView
                         visible={true}
                         id={Number(id)}
                     />

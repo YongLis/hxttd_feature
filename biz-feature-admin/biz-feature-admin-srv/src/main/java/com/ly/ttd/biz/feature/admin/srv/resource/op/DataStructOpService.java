@@ -56,6 +56,7 @@ public class DataStructOpService extends AbstractResourceOpService {
         entity.setResourceName(addReq.getResourceName());
         entity.setVersion("V" + System.currentTimeMillis());
 
+        entity.setCrtUser(addReq.getCrtUser());
         entity.setDeleted(false);
 
         addAudit(new AuditReq(addReq.getResourceKey(),
@@ -63,7 +64,7 @@ public class DataStructOpService extends AbstractResourceOpService {
                 addReq.getResourceName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
 
     }
 
@@ -79,12 +80,13 @@ public class DataStructOpService extends AbstractResourceOpService {
 
         entity.setResourceName(updateReq.getResourceName());
         entity.setVersion("V" + System.currentTimeMillis());
+        entity.setUptUser(updateReq.getUptUser());
 
         addAudit(new AuditReq(entity.getResourceKey(),
                 getResourceType(),
                 updateReq.getResourceName(),
                 OperationTypeEnum.UPDATE.getCode(),
-                beforeJson, JSON.toJSONString(entity)));
+                beforeJson, JSON.toJSONString(entity), updateReq.getUptUser()));
 
     }
 
@@ -133,6 +135,6 @@ public class DataStructOpService extends AbstractResourceOpService {
         entity.setUptUser(userName);
         String afterJson = JSON.toJSONString(entity);
         addAudit(new AuditReq(entity.getResourceKey(), getResourceType(), entity.getResourceName(),
-                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson));
+                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson,userName));
     }
 }

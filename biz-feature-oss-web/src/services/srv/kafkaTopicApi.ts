@@ -6,12 +6,7 @@ export interface KafkaTopicDetail {
     partitions: number;
     replicas: number;
     consumerGroup?: string;
-    offsetStrategy: string;
-    dataFormat: string;
-    status: string;
-    serializer?: string;
-    valueDeserializer?: string;
-    extraConfig?: { key: string; value: string }[];
+    topicStatus: string;
     remark?: string;
     auditReason?: string;
     crtTime?: string;
@@ -61,4 +56,19 @@ export function deleteKafkaTopic(id: string) {
  */
 export function getKafkaTopicDetail(id: string) {
     return RemoteRequestPost<KafkaTopicDetail>('/api/kafka-topic/detail?id=' + id, {});
+}
+
+/**
+ * Kafka Topic 列表元素
+ */
+export interface KafkaTopicItem {
+    id: string;
+    name: string;
+}
+
+/**
+ * 查询可用Topic列表（供Select下拉使用）
+ */
+export function getAvailableTopics() {
+    return RemoteRequestPost<{ code: string; data: KafkaTopicItem[] }>('/api/kafka-topic/getAvailable', {});
 }

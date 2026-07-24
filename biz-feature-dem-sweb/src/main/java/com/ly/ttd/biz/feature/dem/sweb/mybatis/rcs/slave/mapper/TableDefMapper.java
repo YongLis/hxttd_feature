@@ -1,8 +1,12 @@
 package com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.TableDef;
+import com.ly.ttd.biz.feature.dem.sweb.service.tableDef.req.TableDefQueryReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author yong
@@ -17,5 +21,20 @@ public interface TableDefMapper {
     /**
      * 根据ID查询
      */
-    TableDef selectById(@Param("id") Long id);
+    TableDef selectById(@Param("id") String id);
+
+    /**
+     * 分页查询
+     */
+    List<TableDef> pageQuery(Page<TableDef> page, @Param("req") TableDefQueryReq req);
+
+    /**
+     * 根据表名查询
+     */
+    TableDef selectByTableName(@Param("tableName") String tableName);
+
+    /**
+     * 查询所有有效的表定义（下拉列表用）
+     */
+    List<TableDef> selectAllValid();
 }

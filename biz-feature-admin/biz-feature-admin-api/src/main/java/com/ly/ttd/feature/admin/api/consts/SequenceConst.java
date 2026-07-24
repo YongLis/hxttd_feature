@@ -16,5 +16,9 @@ public class SequenceConst {
      */
     public static final String VELOCITY_CODE = "VELOCITY_CODE";
 
+    /**
+     * 数据管道任务
+     */
+    public static final String DATA_PIPE_TASK = "DATA_PIPE_TASK";
 
 }

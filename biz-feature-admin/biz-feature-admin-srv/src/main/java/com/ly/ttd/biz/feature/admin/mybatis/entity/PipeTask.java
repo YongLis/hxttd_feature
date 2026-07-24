@@ -57,4 +57,8 @@ public class PipeTask extends BaseEntity {
      */
     @TableField("task_status")
     private String taskStatus;
+
+    @TableField("task_priority")
+    private String taskPriority;
+
 }

@@ -1,8 +1,11 @@
 package com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic;
 
 import com.ly.ttd.base.result.PageResult;
+import com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.KafkaTopic;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicQueryReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.res.KafkaTopicDetail;
+
+import java.util.List;
 
 /**
  * Kafka Topic 查询服务
@@ -19,4 +22,6 @@ public interface KafkaTopicQueryService {
 
 
     KafkaTopicDetail getByName(String topicName);
+
+    List<KafkaTopic> getAvailable();
 }

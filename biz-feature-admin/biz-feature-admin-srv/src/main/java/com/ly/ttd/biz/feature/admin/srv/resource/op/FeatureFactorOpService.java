@@ -63,7 +63,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
                 entity.getResourceName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity),addReq.getCrtUser()));
 
     }
 
@@ -107,6 +107,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
         entity.setCrtUser(old.getCrtUser());
         entity.setCrtTime(old.getCrtTime());
         entity.setDeleted(old.getDeleted());
+        entity.setUptUser(updateReq.getUptUser());
 
         String beforeJson = JSON.toJSONString(old);
 
@@ -116,7 +117,7 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
                 getResourceType(),
                 entity.getResourceName(),
                 OperationTypeEnum.UPDATE.getCode(),
-                beforeJson, JSON.toJSONString(entity)));
+                beforeJson, JSON.toJSONString(entity),updateReq.getUptUser()));
 
     }
 
@@ -191,6 +192,6 @@ public class FeatureFactorOpService extends AbstractResourceOpService {
         entity.setUptUser(userName);
         String afterJson = JSON.toJSONString(entity);
         addAudit(new AuditReq(entity.getResourceKey(), getResourceType(), entity.getResourceName(),
-                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson));
+                OperationTypeEnum.DELETE.getCode(), beforeJson, afterJson,userName));
     }
 }

@@ -18,7 +18,7 @@ public class TableDef extends BaseEntity {
      * 主键ID
      */
     @TableId(type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     /**
      * 表名
@@ -31,9 +31,4 @@ public class TableDef extends BaseEntity {
      */
     @TableField("data_source")
     private String dataSource;
-
-    /**
-     * 关联topic
-     */
-    private String topic;
 }

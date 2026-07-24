@@ -65,7 +65,7 @@ public class KafkaTopicOpService extends AbstractResourceOpService {
                 entity.getName(),
                 OperationTypeEnum.ADD.getCode(),
                 null,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), addReq.getCrtUser()));
     }
 
     @Override
@@ -85,12 +85,13 @@ public class KafkaTopicOpService extends AbstractResourceOpService {
         entity.setRemark(updateReq.getRemark());
         entity.setAuditReason(updateReq.getAuditReason());
         entity.setTopicStatus(updateReq.getTopicStatus());
+        entity.setUptUser(updateReq.getUptUser());
         addAudit(new AuditReq(entity.getName(),
                 getResourceType(),
                 entity.getName(),
                 OperationTypeEnum.UPDATE.getCode(),
                 beforeJson,
-                JSON.toJSONString(entity)));
+                JSON.toJSONString(entity), updateReq.getUptUser()));
     }
 
     @Override
@@ -142,6 +143,6 @@ public class KafkaTopicOpService extends AbstractResourceOpService {
                 entity.getName(),
                 OperationTypeEnum.DELETE.getCode(),
                 beforeJson,
-                afterJson));
+                afterJson, userName));
     }
 }

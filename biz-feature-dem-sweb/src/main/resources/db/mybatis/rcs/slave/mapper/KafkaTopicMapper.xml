@@ -40,8 +40,8 @@
             <if test="req.name != null and req.name != ''">
                 AND name LIKE CONCAT('%', #{req.name}, '%')
             </if>
-            <if test="req.status != null and req.status != ''">
-                AND status = #{req.status}
+            <if test="req.topicStatus != null and req.topicStatus != ''">
+                AND topic_status = #{req.topicStatus}
             </if>
         </where>
     </sql>
@@ -63,5 +63,12 @@
         select count(*) from ttd_kafka_topic
         where deleted = 0
         and name= #{topicName}
+    </select>
+    <select id="selectAvailable"
+            resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.KafkaTopic">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_kafka_topic
+        WHERE deleted = 0
+        AND name not in (select kafka_topic from ttd_pipe_task where deleted = 0 and kafka_topic is not null)
     </select>
 </mapper>

@@ -8,8 +8,10 @@ import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicAddReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicUpdateReq;
 import com.ly.ttd.biz.feature.dem.sweb.service.project.ProjectAdminService;
 import com.ly.ttd.biz.feature.dem.sweb.service.user.LoginUser;
+import com.ly.ttd.feature.admin.api.consts.KafkaTopicStatusEnum;
 import com.ly.ttd.feature.admin.api.dto.KafkaTopicDto;
 import com.ly.ttd.feature.admin.api.pipe.KafkaTopicService;
+import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import com.ly.ttd.inf.rpc.api.annotation.Rpcwired;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -36,13 +38,14 @@ public class KafkaTopicAdminServiceImpl implements KafkaTopicAdminService {
     @Override
     public void addTopic(KafkaTopicAddReq req) throws BizException {
         KafkaTopicDto dto = convertDto(req);
-
+        dto.setTopicStatus(KafkaTopicStatusEnum.INIT.getCode());
+        String key = projectAdminService.getResourceKey(req.getProjectId(), FeatureResourceType.KAFKA_TOPIC.getPrefix(), req.getName());
+        dto.setName(key);
         // 检查资源键唯一性
-
-        if (kafkaTopicMapper.selectCountByName(req.getName()) > 0) {
+        if (kafkaTopicMapper.selectCountByName(dto.getName()) > 0) {
             throw new BizException("topic已存在");
         }
-        auditQueryService.waitAuditCheck(req.getName());
+        auditQueryService.waitAuditCheck(dto.getName());
         kafkaTopicService.add(dto);
     }
 

@@ -16,7 +16,7 @@ import com.ly.ttd.feature.admin.api.res.Edge;
 import com.ly.ttd.feature.admin.api.res.Node;
 import com.ly.ttd.feature.common.enums.FeatureResourceType;
 import jakarta.annotation.Resource;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

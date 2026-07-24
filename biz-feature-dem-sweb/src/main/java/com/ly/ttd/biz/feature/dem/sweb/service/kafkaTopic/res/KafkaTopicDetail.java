@@ -32,6 +32,9 @@ public class KafkaTopicDetail extends BaseRequest {
     @Schema(description = "消费者组")
     private String consumerGroup;
 
+    @Schema(description = "状态：INIT/AUDIT/AUDIT_PASS/AUDIT_REJECT")
+    private String topicStatus;
+
     @Schema(description = "备注")
     private String remark;
 

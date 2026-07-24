@@ -35,7 +35,7 @@ public class KafkaTopicAddReq extends BaseRequest {
     @Schema(description = "消费者组")
     private String consumerGroup;
 
-    @Schema(description = "状态：初始化INIT,审核中AUDIT，AUDIT_PASS, AUDIT_REJECT")
+    @Schema(description = "状态：INIT(待创建)/AUDIT(审核中)/AUDIT_PASS/AUDIT_REJECT")
     private String topicStatus;
 
     @Schema(description = "备注")

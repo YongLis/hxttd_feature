@@ -9,7 +9,7 @@ import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.req.KafkaTopicQueryReq
 import com.ly.ttd.biz.feature.dem.sweb.service.kafkaTopic.res.KafkaTopicDetail;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,6 +50,11 @@ public class KafkaTopicQueryServiceImpl implements KafkaTopicQueryService {
         return entityConvert(topic);
     }
 
+    @Override
+    public List<KafkaTopic> getAvailable() {
+        return kafkaTopicMapper.selectAvailable();
+    }
+
     private KafkaTopicDetail entityConvert(KafkaTopic e) {
         KafkaTopicDetail res = new KafkaTopicDetail();
         res.setId(e.getId());
@@ -57,7 +62,7 @@ public class KafkaTopicQueryServiceImpl implements KafkaTopicQueryService {
         res.setPartitions(e.getPartitions());
         res.setReplicas(e.getReplicas());
         res.setConsumerGroup(e.getConsumerGroup());
-
+        res.setTopicStatus(e.getTopicStatus());
         res.setRemark(e.getRemark());
         res.setAuditReason(e.getAuditReason());
         res.setCrtUser(e.getCrtUser());

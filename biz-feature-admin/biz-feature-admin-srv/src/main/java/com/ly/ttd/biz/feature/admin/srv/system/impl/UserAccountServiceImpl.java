@@ -78,4 +78,18 @@ public class UserAccountServiceImpl implements UserAccountService {
         entity.setPassword(updatePwd.getNewPassword());
         userAccountMapper.updateById(entity);
     }
+
+    @Override
+    public UserAccountDto getUserAccountByUserAccount(String userName, String pwd) {
+        QueryWrapper<UserAccountEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_account", userName);
+        queryWrapper.eq("password", pwd);
+        UserAccountEntity entity = userAccountMapper.selectOne(queryWrapper);
+        if (entity == null) {
+            throw new BizException("用户不存在或密码错误");
+        }
+        UserAccountDto dto = new UserAccountDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
+    }
 }

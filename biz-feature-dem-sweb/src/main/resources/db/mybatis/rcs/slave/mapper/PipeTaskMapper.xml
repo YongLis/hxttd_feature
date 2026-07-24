@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.mapper.PipeTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.PipeTask">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="pointCode" column="point_code" jdbcType="VARCHAR"/>
+        <result property="taskCode" column="task_code" jdbcType="VARCHAR"/>
+        <result property="taskName" column="task_name" jdbcType="VARCHAR"/>
+        <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
+        <result property="kafkaTopic" column="kafka_topic" jdbcType="VARCHAR"/>
+        <result property="taskStatus" column="task_status" jdbcType="VARCHAR"/>
+        <result property="crtUser" column="crt_user" jdbcType="VARCHAR"/>
+        <result property="uptUser" column="upt_user" jdbcType="VARCHAR"/>
+        <result property="crtTime" column="crt_time" jdbcType="TIMESTAMP"/>
+        <result property="uptTime" column="upt_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,point_code,task_code,task_name,table_name,
+        kafka_topic,task_status,crt_user,upt_user,
+        crt_time,upt_time,deleted
+    </sql>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_pipe_task
+        WHERE id = #{id} AND deleted = 0
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="pageQuery" resultType="com.ly.ttd.biz.feature.dem.sweb.mybatis.rcs.slave.entity.PipeTask">
+        SELECT <include refid="Base_Column_List"/>
+        FROM ttd_pipe_task
+        <include refid="Query_Condition"/>
+        ORDER BY crt_time DESC
+    </select>
+
+    <sql id="Query_Condition">
+        <where>
+            deleted = 0
+            <if test="req.taskCode != null and req.taskCode != ''">
+                AND task_code =  #{req.taskCode}
+            </if>
+            <if test="req.taskName != null and req.taskName != ''">
+                AND task_name LIKE CONCAT('%', #{req.taskName}, '%')
+            </if>
+            <if test="req.pointCode != null and req.pointCode != ''">
+                AND point_code = #{req.pointCode}
+            </if>
+            <if test="req.tableName != null and req.tableName != ''">
+                AND table_name = #{req.tableName}
+            </if>
+            <if test="req.kafkaTopic != null and req.kafkaTopic != ''">
+                AND kafka_topic = #{req.kafkaTopic}
+            </if>
+            <if test="req.taskStatus != null and req.taskStatus != ''">
+                AND task_status = #{req.taskStatus}
+            </if>
+        </where>
+    </sql>
+
+</mapper>

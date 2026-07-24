@@ -29,4 +29,5 @@ public interface KafkaTopicMapper {
 
     long selectCountByName(String topicName);
 
+    List<KafkaTopic> selectAvailable();
 }
